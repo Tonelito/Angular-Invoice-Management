@@ -1,0 +1,23 @@
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background-color: #3d4fb0;
+  z-index: -1;
+}
+
+.circle1 {
+  width: 300px;
+  height: 300px;
+  top: -150px;
+  right: -150px;
+  background-color: #3d4fb0;
+}
+
+.circle2 {
+  width: 200px;
+  height: 200px;
+  bottom: -100px;
+  left: -100px;
+  border: 30px solid #3d4fb0;
+  background-color: transparent;
+}

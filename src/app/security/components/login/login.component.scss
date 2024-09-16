@@ -58,8 +58,8 @@
         color: black;
       }
     }
-
-    mat-form-field,
+    app-email-input,
+    app-password-input,
     .mat-raised-button {
       width: 350px;
       @media (min-width: 700px) {
