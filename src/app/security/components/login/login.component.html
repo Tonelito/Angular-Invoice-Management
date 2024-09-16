@@ -1,0 +1,69 @@
+<div class="login-container">
+  <div class="circle circle1"></div>
+  <div class="circle circle2"></div>
+  <div class="logo">
+    <img src="../../../../assets/vault-tec.png" alt="Vault-Tec logo" />
+    <h1>VAULT-TEC</h1>
+  </div>
+  <h2>Log in to access your account</h2>
+  <!-- Login Form -->
+  <form class="login-form">
+    <!-- email input -->
+    <mat-form-field class="email" hideRequiredMarker>
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        matInput
+        [formControl]="emailFormControl"
+        [errorStateMatcher]="matcher"
+        placeholder="Enter your email"
+      />
+      <!-- @ on email required -->
+      <mat-error
+        *ngIf="
+          emailFormControl.hasError('email') &&
+          !emailFormControl.hasError('required')
+        "
+      >
+        Please enter a valid email address
+      </mat-error>
+      <!-- email required -->
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <!-- Password Input -->
+    <mat-form-field class="password" hideRequiredMarker>
+      <mat-label>Password</mat-label>
+      <input
+        [type]="hide ? 'password' : 'text'"
+        matInput
+        [formControl]="passwordFormControl"
+        [errorStateMatcher]="matcher"
+        placeholder="Enter your password"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide"
+      >
+        <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+      <!-- password required -->
+      <mat-error *ngIf="passwordFormControl.hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <!-- Options -->
+    <div class="options">
+      <label>
+        <mat-checkbox>Remember Me</mat-checkbox>
+      </label>
+      <a href="#">Forgot your password?</a>
+    </div>
+    <!-- Submit Button -->
+    <button mat-raised-button color="accent">Log In</button>
+  </form>
+</div>
