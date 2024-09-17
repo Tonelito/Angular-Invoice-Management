@@ -17,7 +17,7 @@
       <label>
         <mat-checkbox>Remember Me</mat-checkbox>
       </label>
-      <a href="/security/password-recovery">Forgot your password?</a>
+      <a [routerLink]="['/password-recovery']" routerLinkActive="router-link-active">Forgot your password?</a>
     </div>
     <!-- Submit Button -->
     <button mat-raised-button color="accent">Log In</button>
