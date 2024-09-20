@@ -9,6 +9,8 @@ export class PasswordChangeComponent {
 
   hideCurrentPassword = true;
   hideNewPassword = true;
+  
+  confirmNewPassword = true;
 
   toggleCurrentPasswordVisibility() {
     this.hideCurrentPassword = !this.hideCurrentPassword;
@@ -16,5 +18,9 @@ export class PasswordChangeComponent {
 
   toggleNewPasswordVisibility() {
     this.hideNewPassword = !this.hideNewPassword;
+  }
+  
+  toggleConfirmNewPasswordVisibility() {
+    this.confirmNewPassword = !this.confirmNewPassword;
   }
 }
