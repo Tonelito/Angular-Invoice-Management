@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  overflow: hidden;
+
+  form {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    button {
+      height: 58px;
+    }
+
+    mat-form-field {
+      width: 250px;
+    }
+  }
+
+  @media (max-width: 1400px) {
+    gap: 30px;
+    form {
+      display: flex;
+      flex-direction: column;
+      mat-form-field {
+        width: 100%;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  app-mat-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
