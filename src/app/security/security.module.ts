@@ -5,6 +5,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SharedModule } from '../shared/shared.module';
 import { LoginComponent } from './components/login/login.component';
 import { SecurityRoutingModule } from './security-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [LoginComponent],
   imports: [
@@ -12,7 +16,12 @@ import { SecurityRoutingModule } from './security-routing.module';
     SecurityRoutingModule,
     MatButtonModule,
     MatCheckboxModule,
-    SharedModule
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    SharedModule,
+    MatIconModule
   ],
   exports: [LoginComponent]
 })
