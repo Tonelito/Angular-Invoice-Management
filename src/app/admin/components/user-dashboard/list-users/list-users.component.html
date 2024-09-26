@@ -1,0 +1,21 @@
+<div class="container-LU">
+    <mat-list>
+        <div class="title" mat-subheader>
+            User
+        </div>
+        <!-- barra de busqueda -->
+        <div class="search">
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Filter">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </div>
+        <!-- barra de busqueda -->
+        <mat-list-item *ngFor="let user of users">
+            <mat-icon matListItemIcon>person</mat-icon>
+            <div matListItemTitle>{{user.email}}</div>
+            <div matListItemLine>{{user.username }}</div>
+        </mat-list-item>
+        <mat-paginator [length]="100" [pageSize]="10" aria-label="Select page">
+        </mat-paginator>
+    </mat-list>
