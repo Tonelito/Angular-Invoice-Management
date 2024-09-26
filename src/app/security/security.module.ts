@@ -9,6 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { BlockUIModule } from 'ng-block-ui';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { TranslateModule } from '@ngx-translate/core';
+
 @NgModule({
   declarations: [LoginComponent],
   imports: [
@@ -21,7 +25,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     ReactiveFormsModule,
     SharedModule,
-    MatIconModule
+    MatIconModule,
+    BlockUIModule.forRoot(),
+    SimpleNotificationsModule.forRoot(),
+    TranslateModule
   ],
   exports: [LoginComponent]
 })

@@ -1,0 +1,26 @@
+{
+  "LOGIN": {
+    "TITLE": "Login",
+    "EMAIL": "Email",
+    "EMAIL_PLACEHOLDER": "Enter your email",
+    "PASSWORD": "Password",
+    "PASSWORD_PLACEHOLDER": "Enter your password",
+    "CHECKBOX": "Remember me",
+    "FORGOT_PASSWORD": "Forgot your password?",
+    "SUBMIT": "Log In",
+    "ERRORS": {
+      "INVALID_EMAIL": "Please enter a valid email address",
+      "REQUIRED_EMAIL": "Email is required",
+      "REQUIRED_PASSWORD": "Password is required"
+    },
+    "NOTIFICATIONS": {
+      "SUCCESS": "Login Successful",
+      "SUCCESS_DESC": "You have logged in successfully",
+      "FAILURE": "Login Failed",
+      "FAILURE_DESC": "Invalid username or password",
+      "INVALID_FORM": "Invalid Form",
+      "INVALID_FORM_DESC": "Please fill in the fields correctly",
+      "LOGGING_IN": "Logging in"
+    }
+  }
+}

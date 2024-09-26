@@ -1,0 +1,26 @@
+{
+  "LOGIN": {
+    "TITLE": "Iniciar Sesión",
+    "EMAIL": "Correo",
+    "EMAIL_PLACEHOLDER": "Ingresa tu correo",
+    "PASSWORD": "Contraseña",
+    "PASSWORD_PLACEHOLDER": "Ingresa tu contraseña",
+    "CHECKBOX": "Recuérdame",
+    "FORGOT_PASSWORD": "¿Olvidaste tu contraseña?",
+    "SUBMIT": "Iniciar Sesión",
+    "ERRORS": {
+      "INVALID_EMAIL": "Por favor ingresa una dirección de correo válida",
+      "REQUIRED_EMAIL": "El correo es obligatorio",
+      "REQUIRED_PASSWORD": "La contraseña es obligatoria"
+    },
+    "NOTIFICATIONS": {
+      "SUCCESS": "Inicio de sesión exitoso",
+      "SUCCESS_DESC": "Te has iniciado sesión exitosamente",
+      "FAILURE": "Error al iniciar sesión",
+      "FAILURE_DESC": "Usuario o contraseña incorrectos",
+      "INVALID_FORM": "Formulario inválido",
+      "INVALID_FORM_DESC": "Por favor rellena los campos correctamente",
+      "LOGGING_IN": "Iniciando Sesión"
+    }
+  }
+}
