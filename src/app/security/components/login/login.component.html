@@ -1,25 +1,78 @@
-<div class="login-container">
-  <!-- Circles Component -->
-  <app-circles></app-circles>
-  <div class="logo">
-    <img src="../../../../assets/vault-tec.png" alt="Vault-Tec logo" />
-    <h1>VAULT-TEC</h1>
-  </div>
-  <h2>Log in to access your account</h2>
-  <!-- Login Form -->
-  <form class="login-form">
-    <!-- Email Input -->
-    <app-email-input></app-email-input>
-    <!-- Password Input -->
-    <app-password-input></app-password-input>
-    <!-- Options -->
-    <div class="options">
-      <label>
-        <mat-checkbox>Remember Me</mat-checkbox>
-      </label>
-      <a [routerLink]="['/password-recovery']" routerLinkActive="router-link-active">Forgot your password?</a>
+<block-ui>
+  <div class="login-container">
+    <!-- Circles Background -->
+    <app-circles></app-circles>
+
+    <div class="logo">
+      <img src="../../../../assets/vault-tec.png" alt="Vault-Tec logo" />
+      <h1>VAULT-TEC</h1>
     </div>
-    <!-- Submit Button -->
-    <button mat-raised-button color="accent">Log In</button>
-  </form>
-</div>
+
+    <h2>{{ 'LOGIN.TITLE' | translate }}</h2>
+
+    <!-- Login Form -->
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Email Input -->
+      <mat-form-field class="email" hideRequiredMarker>
+        <mat-label>{{ 'LOGIN.EMAIL' | translate }}</mat-label>
+        <input
+          type="email"
+          matInput
+          formControlName="email"
+          [errorStateMatcher]="matcher"
+          placeholder="{{ 'LOGIN.EMAIL_PLACEHOLDER' | translate }}"
+        />
+        <!-- Invalid email -->
+        <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+          {{ 'LOGIN.ERRORS.INVALID_EMAIL' | translate }}
+        </mat-error>
+        <!-- Email required -->
+        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+          {{ 'LOGIN.ERRORS.REQUIRED_EMAIL' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Password Input -->
+      <mat-form-field class="password" hideRequiredMarker>
+        <mat-label>{{ 'LOGIN.PASSWORD' | translate }}</mat-label>
+        <input
+          [type]="hide ? 'password' : 'text'"
+          matInput
+          formControlName="password"
+          [errorStateMatcher]="matcher"
+          placeholder="{{ 'LOGIN.PASSWORD_PLACEHOLDER' | translate }}"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+          type="button"
+        >
+          <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <!-- Password required -->
+        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+          {{ 'LOGIN.ERRORS.REQUIRED_PASSWORD' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Options -->
+      <div class="options">
+        <label>
+          <mat-checkbox>{{ 'LOGIN.CHECKBOX' | translate }}</mat-checkbox>
+        </label>
+        <a href="/security/password-recovery">{{
+          'LOGIN.FORGOT_PASSWORD' | translate
+        }}</a>
+      </div>
+
+      <!-- Submit Button -->
+      <button mat-raised-button color="accent" type="submit">
+        {{ 'LOGIN.SUBMIT' | translate }}
+      </button>
+    </form>
+  </div>
+</block-ui>
+<simple-notifications [options]="options"></simple-notifications>

@@ -6,12 +6,15 @@ import { SharedModule } from '../shared/shared.module';
 import { LoginComponent } from './components/login/login.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { SecurityRoutingModule } from './security-routing.module';
-import { PasswordChangeComponent } from './components/password-change/password-change.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatStepperModule } from '@angular/material/stepper';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BlockUIModule } from 'ng-block-ui';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { TranslateModule } from '@ngx-translate/core';
+import { PasswordChangeComponent } from './components/password-change/password-change.component';
+
 @NgModule({
   declarations: [LoginComponent, PasswordChangeComponent,PasswordRecoveryComponent],
   imports: [
@@ -19,13 +22,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SecurityRoutingModule,
     MatButtonModule,
     MatCheckboxModule,
-    SharedModule,
-    MatInputModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatStepperModule,
     FormsModule,
-    ReactiveFormsModule
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    SharedModule,
+    MatIconModule,
+    BlockUIModule.forRoot(),
+    SimpleNotificationsModule.forRoot(),
+    TranslateModule
   ],
   exports: [LoginComponent]
 })

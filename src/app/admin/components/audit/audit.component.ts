@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 
-/** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
     control: FormControl | null,
@@ -22,12 +21,14 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 }
 @Component({
-  selector: 'app-password-input',
-  templateUrl: './password-input.component.html',
-  styleUrls: ['./password-input.component.scss']
+  selector: 'app-audit',
+  templateUrl: './audit.component.html',
+  styleUrls: ['./audit.component.scss']
 })
-export class PasswordInputComponent {
-  hide = true;
+export class AuditComponent {
+  startDate = new FormControl('', Validators.required);
+  endDate = new FormControl('', [Validators.required]);
+  entityControl = new FormControl('', [Validators.required]);
+  operationControl = new FormControl('', [Validators.required]);
   matcher = new MyErrorStateMatcher();
-  passwordFormControl = new FormControl('', [Validators.required]);
 }

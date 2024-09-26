@@ -1,36 +1,31 @@
+import { CommonModule, NgIf } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
-import { FormUserComponent } from './components/user-dashboard/form-user/form-user.component';
-import { ListUsersComponent } from './components/user-dashboard/list-users/list-users.component';
-import { AdminRoutingModule } from './admin-routing.module';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { SharedModule } from '../shared/shared.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { SharedModule } from '../shared/shared.module';
+import { AdminRoutingModule } from './admin-routing.module';
+import { AuditComponent } from './components/audit/audit.component';
 
 @NgModule({
-  declarations: [
-    UserDashboardComponent,
-    FormUserComponent,
-    ListUsersComponent
-  ],
+  declarations: [AuditComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    MatListModule,
-    MatIconModule,
-    SharedModule,
     MatFormFieldModule,
-    MatSelectModule,
     MatInputModule,
-    MatPaginatorModule
-  ],
-  exports: [
-    UserDashboardComponent
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    NgIf,
+    SharedModule,
   ]
 })
-  export class AdminModule { }
+export class AdminModule {}
