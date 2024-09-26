@@ -10,13 +10,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatStepperModule } from '@angular/material/stepper';
 import { BlockUIModule } from 'ng-block-ui';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { TranslateModule } from '@ngx-translate/core';
 import { PasswordChangeComponent } from './components/password-change/password-change.component';
 
 @NgModule({
-  declarations: [LoginComponent, PasswordChangeComponent,PasswordRecoveryComponent],
+  declarations: [LoginComponent, PasswordChangeComponent, PasswordRecoveryComponent],
   imports: [
     CommonModule,
     SecurityRoutingModule,
@@ -25,13 +26,14 @@ import { PasswordChangeComponent } from './components/password-change/password-c
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatIconModule,
+    MatStepperModule,
     ReactiveFormsModule,
     SharedModule,
-    MatIconModule,
     BlockUIModule.forRoot(),
     SimpleNotificationsModule.forRoot(),
     TranslateModule
   ],
   exports: [LoginComponent]
 })
-export class SecurityModule {}
+export class SecurityModule { }

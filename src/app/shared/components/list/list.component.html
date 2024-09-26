@@ -1,0 +1,19 @@
+<div class="container-LU">
+    <div class="search">
+        <mat-form-field appearance="outline">
+            <input matInput type="text" (input)="applyFilter($event)" placeholder="Search...">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-list>
+            <ng-container *ngFor="let item of paginatedItems">
+                <mat-list-item>
+                    <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"></ng-container>
+                </mat-list-item>
+            </ng-container>
+            <mat-paginator [length]="filteredItems.length" [pageSize]="pageSize" hidePageSize
+                (page)="onPageChange($event)"></mat-paginator>
+        </mat-list>
+    </div>
+</div>

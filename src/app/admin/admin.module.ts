@@ -10,9 +10,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from '../shared/shared.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AuditComponent } from './components/audit/audit.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { ListUsersComponent } from './components/user-dashboard/list-users/list-users.component';
+import { MatListModule } from '@angular/material/list';
+import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
+import { FormUserComponent } from './components/user-dashboard/form-user/form-user.component';
 
 @NgModule({
-  declarations: [AuditComponent],
+  declarations: [AuditComponent, UserDashboardComponent, FormUserComponent, ListUsersComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -22,10 +28,15 @@ import { AuditComponent } from './components/audit/audit.component';
     MatNativeDateModule,
     MatSelectModule,
     FormsModule,
+    MatListModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MatInputModule,
+    MatIconModule,
+    MatPaginatorModule,
     NgIf,
     SharedModule,
-  ]
+  ],
+  exports: [AuditComponent, ListUsersComponent]
 })
-export class AdminModule {}
+export class AdminModule { }
