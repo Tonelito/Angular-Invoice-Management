@@ -22,5 +22,65 @@
       "INVALID_FORM_DESC": "Please fill in the fields correctly",
       "LOGGING_IN": "Logging in"
     }
+  },
+  "AUDIT": {
+    "START_DATE": "Start Date",
+    "END_DATE": "End Date",
+    "ENTITY": "Entity",
+    "OPERATION": "Operation",
+    "USER": "User",
+    "USER_PLACEHOLDER": "Enter the user's name",
+    "SEARCH": "Search",
+    "ERRORS": {
+      "REQUIRED_START_DATE": "Start date is required",
+      "REQUIRED_END_DATE": "End date is required",
+      "REQUIRED_ENTITY": "Entity is required",
+      "REQUIRED_OPERATION": "Operation is required"
+    },
+    "NOTIFICATIONS": {
+      "SENDING_REQUEST": "Sending audit request...",
+      "SUCCCESS": "Audit Successful",
+      "SUCCCESS_DESC": "The audit data has been successfully retrieved",
+      "FAILURE": "Audit Failed",
+      "FAILURE_DESC": "Unable to retrieve audit data. Please try again",
+      "INVALID_FORM": "Invalid Form",
+      "INVALID_FORM_DESC": "Please complete the form correctly"
+    }
+  },
+
+  "PROFILES": {
+    "TITLE": "Profiles",
+    "SEARCH": "Search...",
+    "SEARCH_PLACEHOLDER": "Profile Name",
+    "FORM_TITLE": "Add Profile",
+    "NAME": "Profile Name",
+    "DESCRIPTION": "Description",
+    "SAVE": "Save",
+    "ERRORS": {
+      "REQUIRED_NAME": "Profile name is required",
+      "REQUIRED_DESCRIPTION": "Description is required"
+    },
+    "NOTIFICATIONS": {
+      "CREATING_PROFILE": "Creating profile...",
+      "PROFILE_CREATED": "Profile created",
+      "PROFILE_CREATED_DESC": "The profile has been created successfully",
+      "PROFILE_CREATION_FAILURE": "Profile creation failed",
+      "PROFILE_CREATION_FAILURE_DESC": "Unable to create the profile. Please try again",
+      "INVALID_FORM": "Invalid form",
+      "INVALID_FORM_DESC": "Please complete the form correctly",
+      "DELETING_PROFILE": "Deleting profile...",
+      "PROFILE_DELETED": "Profile deleted",
+      "PROFILE_DELETED_DESC": "The profile has been successfully deleted.",
+      "PROFILE_DELETE_FAILED": "Profile deletion failed",
+      "PROFILE_DELETE_FAILED_DESC": "There was an error deleting the profile."
+    },
+    "DIALOG": {
+      "TITLE": "Delete Profile",
+      "MESSAGE": "Are you sure you want to delete the profile \"{{ profileName }}\"?"
+    },
+    "COMMON": {
+      "CANCEL": "Cancel",
+      "CONFIRM": "Confirm"
+    }
   }
 }

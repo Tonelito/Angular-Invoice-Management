@@ -1,0 +1,106 @@
+<block-ui>
+  <div class="profiles-container">
+    <h1>{{ 'PROFILES.TITLE' | translate }}</h1>
+    <div class="profiles-dashboard">
+      <div class="profiles-column">
+        <!-- Searchbar -->
+        <mat-form-field>
+          <mat-label>{{ 'PROFILES.SEARCH' | translate }}</mat-label>
+          <input
+            matInput
+            placeholder="{{ 'PROFILES.SEARCH_PLACEHOLDER' | translate }}"
+            (input)="searchProfiles($event)"
+          />
+        </mat-form-field>
+        <div class="profiles-list-container">
+          <!-- Profiles List -->
+          <div class="profiles-list">
+            <!-- Item Profile -->
+            <div
+              class="profile-item"
+              *ngFor="let profile of filteredProfiles.filteredData"
+            >
+              <!-- Profile Info -->
+              <div class="profile-info">
+                <!-- Status Circle -->
+                <div class="status-circle"></div>
+                <!-- Profile Name -->
+                <p>{{ profile.name }}</p>
+              </div>
+              <!-- Action Buttons -->
+              <div class="buttons">
+                <button mat-icon-button color="accent">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="accent"
+                  (click)="confirmDeleteProfile(profile)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Paginator-->
+          <mat-paginator
+            [pageSize]="10"
+            showFirstLastButtons
+            hidePageSize
+          ></mat-paginator>
+        </div>
+      </div>
+      <div class="profiles-form-container">
+        <!-- Add Profile -->
+        <div class="form-container">
+          <h1>{{ 'PROFILES.FORM_TITLE' | translate }}</h1>
+          <form [formGroup]="profileForm" (ngSubmit)="postProfile()">
+            <div class="inputs-button">
+              <!-- Name Input -->
+              <mat-form-field hideRequiredMarker>
+                <mat-label>{{ 'PROFILES.NAME' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="name"
+                  [errorStateMatcher]="matcher"
+                />
+                <!-- Required Name -->
+                <mat-error
+                  *ngIf="profileForm.get('name')?.hasError('required')"
+                >
+                  {{ 'PROFILES.ERRORS.REQUIRED_NAME' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Description Input -->
+              <mat-form-field hideRequiredMarker>
+                <mat-label>{{ 'PROFILES.DESCRIPTION' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="description"
+                  [errorStateMatcher]="matcher"
+                />
+                <!-- Required Description -->
+                <mat-error
+                  *ngIf="profileForm.get('description')?.hasError('required')"
+                >
+                  {{ 'PROFILES.ERRORS.REQUIRED_DESCRIPTION' | translate }}
+                </mat-error>
+              </mat-form-field>
+              <button mat-flat-button color="accent" type="submit">
+                {{ 'PROFILES.SAVE' | translate }}
+              </button>
+            </div>
+            <!-- Toggles -->
+            <div class="toggle-container">
+              <mat-slide-toggle *ngFor="let role of roles">
+                {{ role.name }}
+              </mat-slide-toggle>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</block-ui>
+<simple-notifications [options]="options"></simple-notifications>

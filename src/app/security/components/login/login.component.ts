@@ -53,11 +53,7 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
-    this.translate.use('en');
-  }
-
-  switchLanguage(lang: string) {
-    this.translate.use(lang);
+    this.translate.use('es');
   }
 
   onSubmit() {
@@ -72,7 +68,6 @@ export class LoginComponent {
 
       this.service.login(loginData).subscribe({
         next: (response: any) => {
-          // Use translated success message
           this._notifications.success(
             this.translate.instant('LOGIN.NOTIFICATIONS.SUCCESS'),
             this.translate.instant('LOGIN.NOTIFICATIONS.SUCCESS_DESC')
@@ -81,7 +76,6 @@ export class LoginComponent {
           this.blockUI.stop();
         },
         error: error => {
-          // Use translated error message
           this._notifications.error(
             this.translate.instant('LOGIN.NOTIFICATIONS.FAILURE'),
             this.translate.instant('LOGIN.NOTIFICATIONS.FAILURE_DESC')
@@ -91,7 +85,6 @@ export class LoginComponent {
         }
       });
     } else {
-      // Use translated form error message
       this._notifications.error(
         this.translate.instant('LOGIN.NOTIFICATIONS.INVALID_FORM'),
         this.translate.instant('LOGIN.NOTIFICATIONS.INVALID_FORM_DESC')

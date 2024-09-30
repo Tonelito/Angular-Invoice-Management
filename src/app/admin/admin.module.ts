@@ -10,9 +10,18 @@ import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from '../shared/shared.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AuditComponent } from './components/audit/audit.component';
+import { ProfilesComponent } from './components/profiles/profiles.component';
+import { BlockUIModule } from 'ng-block-ui';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatIconModule } from '@angular/material/icon';
+import { ConfirmDialogComponent } from './utilities/confirmDialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [AuditComponent],
+  declarations: [AuditComponent, ProfilesComponent, ConfirmDialogComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -25,7 +34,14 @@ import { AuditComponent } from './components/audit/audit.component';
     ReactiveFormsModule,
     MatButtonModule,
     NgIf,
-    SharedModule
+    SharedModule,
+    BlockUIModule.forRoot(),
+    SimpleNotificationsModule.forRoot(),
+    TranslateModule,
+    MatPaginatorModule,
+    MatSlideToggleModule,
+    MatIconModule,
+    MatDialogModule
   ]
 })
 export class AdminModule {}

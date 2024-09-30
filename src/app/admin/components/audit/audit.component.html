@@ -1,70 +1,82 @@
-<div class="container">
-  <h1>Audit</h1>
-  <div class="input-container">
-    <form>
-      <!-- Start Date -->
-      <mat-form-field>
-        <mat-label>Start Date</mat-label>
-        <input
-          matInput
-          [matDatepicker]="pickerStart"
-          [formControl]="startDate"
-        />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="pickerStart"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #pickerStart></mat-datepicker>
-        <mat-error *ngIf="startDate.hasError('required')">
-          You must select a <strong>start date</strong>
-        </mat-error>
-      </mat-form-field>
-      <!-- End Date -->
-      <mat-form-field>
-        <mat-label>End Date</mat-label>
-        <input matInput [matDatepicker]="pickerEnd" [formControl]="endDate" />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="pickerEnd"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #pickerEnd></mat-datepicker>
-        <mat-error *ngIf="endDate.hasError('required')">
-          You must select a <strong>end date</strong>
-        </mat-error>
-      </mat-form-field>
-      <!-- Entity -->
-      <mat-form-field>
-        <mat-label>Choose an entity</mat-label>
-        <mat-select [formControl]="entityControl" [errorStateMatcher]="matcher">
-          <mat-option value="one">Entity one</mat-option>
-          <mat-option value="two">Entity two</mat-option>
-        </mat-select>
-        <mat-error *ngIf="entityControl.hasError('required')">
-          You must make select a <strong>entity</strong>
-        </mat-error>
-      </mat-form-field>
-      <!-- Operation -->
-      <mat-form-field>
-        <mat-label>Choose an operation</mat-label>
-        <mat-select
-          [formControl]="operationControl"
-          [errorStateMatcher]="matcher"
-        >
-          <mat-option value="one">Operation 1</mat-option>
-          <mat-option value="two">Operation 2</mat-option>
-        </mat-select>
-        <mat-error *ngIf="operationControl.hasError('required')">
-          You must select a <strong>operation</strong>
-        </mat-error>
-      </mat-form-field>
-      <!-- User -->
-      <mat-form-field>
-        <mat-label>User</mat-label>
-        <input matInput placeholder="Name" />
-      </mat-form-field>
-      <button mat-flat-button color="accent">SEARCH</button>
-    </form>
+<block-ui>
+  <div class="container">
+    <h1>Audit</h1>
+    <div class="input-container">
+      <form class="audit-form" [formGroup]="auditForm" (ngSubmit)="onSubmit()">
+        <!-- Start Date -->
+        <mat-form-field>
+          <mat-label>{{ 'AUDIT.START_DATE' | translate }}</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerStart"
+            formControlName="startDate"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="pickerStart"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #pickerStart></mat-datepicker>
+          <mat-error *ngIf="auditForm.get('startDate')?.hasError('required')">
+            {{ 'AUDIT.ERRORS.REQUIRED_START_DATE' | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- End Date -->
+        <mat-form-field>
+          <mat-label>{{ 'AUDIT.END_DATE' | translate }}</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerEnd"
+            formControlName="endDate"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="pickerEnd"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #pickerEnd></mat-datepicker>
+          <mat-error *ngIf="auditForm.get('endDate')?.hasError('required')">
+            {{ 'AUDIT.ERRORS.REQUIRED_END_DATE' | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Entity -->
+        <mat-form-field>
+          <mat-label>{{ 'AUDIT.ENTITY' | translate }}</mat-label>
+          <mat-select formControlName="entity" [errorStateMatcher]="matcher">
+            <mat-option value="one">Entity one</mat-option>
+            <mat-option value="two">Entity two</mat-option>
+          </mat-select>
+          <mat-error *ngIf="auditForm.get('entity')?.hasError('required')">
+            {{ 'AUDIT.ERRORS.REQUIRED_ENTITY' | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Operation -->
+        <mat-form-field>
+          <mat-label>{{ 'AUDIT.OPERATION' | translate }}</mat-label>
+          <mat-select formControlName="operation" [errorStateMatcher]="matcher">
+            <mat-option value="one">Operation 1</mat-option>
+            <mat-option value="two">Operation 2</mat-option>
+          </mat-select>
+          <mat-error *ngIf="auditForm.get('operation')?.hasError('required')">
+            {{ 'AUDIT.ERRORS.REQUIRED_OPERATION' | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- User -->
+        <mat-form-field>
+          <mat-label>{{ 'AUDIT.USER' | translate }}</mat-label>
+          <input
+            matInput
+            placeholder="{{ 'AUDIT.USER_PLACEHOLDER' | translate }}"
+          />
+        </mat-form-field>
+        <button mat-flat-button color="accent" type="submit">
+          {{ 'AUDIT.SEARCH' | translate }}
+        </button>
+      </form>
+    </div>
+    <!-- Table -->
+    <app-mat-table></app-mat-table>
   </div>
-  <!-- Table -->
-  <app-mat-table></app-mat-table>
-</div>
+</block-ui>
