@@ -15,9 +15,10 @@ import { BlockUIModule } from 'ng-block-ui';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { TranslateModule } from '@ngx-translate/core';
 import { PasswordChangeComponent } from './components/password-change/password-change.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 @NgModule({
-  declarations: [LoginComponent, PasswordChangeComponent, PasswordRecoveryComponent],
+  declarations: [LoginComponent, PasswordChangeComponent, PasswordRecoveryComponent, SignUpComponent],
   imports: [
     CommonModule,
     SecurityRoutingModule,

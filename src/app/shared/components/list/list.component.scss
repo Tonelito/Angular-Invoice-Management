@@ -9,7 +9,8 @@
     mat-list {
         box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
         border-radius: 25px;
-        max-height: 90vh;
+        max-height: 85vh;
+        min-height: 85vh;
 
         mat-list-item {
             margin-top: 10px;

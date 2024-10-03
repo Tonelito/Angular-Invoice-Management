@@ -16,11 +16,15 @@
             border-radius: 25px;
 
             mat-list-item {
-                margin-top: 10px;
-                margin-bottom: 10px;
+
                 &:hover {
                     background-color: #f0f0f0;
                 }
+            }
+
+            mat-paginator {
+                justify-content: center;
+                margin-bottom: 10px;
             }
         }
 

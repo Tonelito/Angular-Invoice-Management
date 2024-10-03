@@ -18,6 +18,7 @@ export class ListComponent implements OnInit {
   currentPage = 0;
 
   ngOnInit() {
+    console.log('Items received:', this.items);
     this.filteredItems = [...this.items];
     this.updatePaginatedItems();
   }
@@ -26,6 +27,7 @@ export class ListComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.filteredItems = this.items.filter(item => Object.values(item).some(value => value.toString().toLowerCase().includes(filterValue.toLowerCase()))
     );
+    console.log('Filtered items:', this.filteredItems);
     this.currentPage = 0;
     this.updatePaginatedItems();
   }
@@ -37,9 +39,11 @@ export class ListComponent implements OnInit {
   }
 
   updatePaginatedItems(): void {
+    console.log('Filtered items:', this.filteredItems);
     const startIndex = this.currentPage * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.paginatedItems = this.filteredItems.slice(startIndex, endIndex);
+    console.log('Paginated items:', this.paginatedItems);
   }
 
 }

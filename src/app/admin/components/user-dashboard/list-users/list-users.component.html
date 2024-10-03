@@ -1,11 +1,25 @@
-<mat-list>
-    <ng-template #itemTemplate let-user>
-        <mat-list-item>
+<div class="container-LU">
+    <!-- Barra de búsqueda -->
+    <div class="search">
+        <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput placeholder="Search" (input)="applyFilter($event)">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+    </div>
+    <mat-list>
+        <div class="title" mat-subheader>
+            Users
+        </div>
+        <!-- Lista de usuarios con paginación -->
+        <mat-list-item *ngFor="let user of paginatedUsers">
             <mat-icon matListItemIcon>person</mat-icon>
-            <div matListItemTitle>{{user.email}}</div>
-            <div matListItemLine>{{user.username }}</div>
+            <div matListItemTitle>{{ user.email }}</div>
+            <div matListItemLine>{{ user.fullName }}</div>
         </mat-list-item>
-    </ng-template>
-</mat-list>
+        <mat-paginator #paginator [length]="filteredUsers.length" [pageSize]="pageSize" hidePageSize
+            (page)="onPageChange($event)">
+        </mat-paginator>
+    </mat-list>
 
-<app-list [items]="users" [itemTemplate]="itemTemplate"></app-list>
+</div>

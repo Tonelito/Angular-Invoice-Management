@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ListUserService } from 'src/app/admin/services/list-user.service';
 
 export interface Section {
   email: string;
-  username: string;
+  fullName: string;
 }
 
 @Component({
@@ -10,75 +11,51 @@ export interface Section {
   templateUrl: './list-users.component.html',
   styleUrls: ['./list-users.component.scss']
 })
-export class ListUsersComponent {
-  users: Section[] = [
-    {
-      email: 'uriel@gmail.com', username: 'uriel',
-    },
-    {
-      email: 'galicia@gmail.com', username: 'galicia',
-    },
-    {
-      email: 'douglas@gmial.com', username: 'douglas',
-    },
-    {
-      email: 'uriel@gmail.com', username: 'uriel',
-    },
-    {
-      email: 'galicia@gmail.com', username: 'galicia',
-    },
-    {
-      email: 'douglas@gmial.com', username: 'douglas',
-    },
-    {
-      email: 'uriel@gmail.com', username: 'uriel',
-    },
-    {
-      email: 'galicia@gmail.com', username: 'galicia',
-    },
-    {
-      email: 'douglasqq@gmial.com', username: 'douglas',
-    },
-    {
-      email: 'uriel@gmail.com', username: 'uriel',
-    }, {
-      email: 'uriel@gmail.com', username: 'uriel',
-    },
-    {
-      email: 'galicia@gmail.com', username: 'galicia',
-    },
-    {
-      email: 'douglas@gmial.com', username: 'douglas',
-    },
-    {
-      email: 'uriel@gmail.com', username: 'uriel',
-    },
-    {
-      email: 'galicia@gmail.com', username: 'galicia',
-    },
-    {
-      email: 'douglasw@gmial.com', username: 'douglas',
-    },
-    {
-      email: 'uriel@gmail.com', username: 'uriel',
-    },
-    {
-      email: 'galicia@gmail.com', username: 'galicia',
-    },
-    {
-      email: 'douglas@gmial.com', username: 'douglas',
-    },
-    {
-      email: 'urielw@gmail.com', username: 'uriel',
-    },
+export class ListUsersComponent implements OnInit {
+  users: Section[] = [];
 
-  ];
+  filteredUsers: Section[] = [];
+  paginatedUsers: Section[] = [];
+  pageSize = 10;
+  currentPage = 0;
 
-  itemTemplate = (user: Section) => {
-    return `
-      <mat-icon matListItemIcon>person</mat-icon>
-      <div matListItemTitle>${user.email}</div>
-      <div matListItemLine>${user.username}</div>
-    `;
-  };
+  constructor(private listUserService: ListUserService) { }
+
+  ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
+    this.listUserService.getUsers().subscribe({
+      next: (response) => {
+        this.users = response.object;
+        this.filteredUsers = [...this.users];
+        this.updatePaginatedUsers();
+      },
+      error: (err) => {
+        console.error('Error al cargar usuarios:', err);
+      }
+    });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.filteredUsers = this.users.filter(user =>
+      user.email.toLowerCase().includes(filterValue) || user.fullName.toLowerCase().includes(filterValue)
+    );
+    this.currentPage = 0;
+    this.updatePaginatedUsers();
+  }
+
+  onPageChange(event: any): void {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.updatePaginatedUsers();
+  }
+
+  updatePaginatedUsers(): void {
+    const startIndex = this.currentPage * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedUsers = this.filteredUsers.slice(startIndex, endIndex);
+  }
 }

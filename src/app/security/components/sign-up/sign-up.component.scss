@@ -1,0 +1,52 @@
+.container-SU {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+
+    .logo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+
+        h1 {
+            color: #e6ae2a;
+            font-weight: bold;
+        }
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            a {
+                color: black;
+            }
+        }
+
+        mat-form-field {
+            width: 100%;
+        }
+
+        mat-form-field,
+        .mat-raised-button {
+            width: 350px;
+
+            @media (min-width: 700px) {
+                width: 600px;
+            }
+        }
+    }
+}
