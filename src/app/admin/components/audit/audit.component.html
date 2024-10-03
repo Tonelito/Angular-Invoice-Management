@@ -1,41 +1,23 @@
 <block-ui>
   <div class="container">
-    <h1>Audit</h1>
+    <h1>{{ 'AUDIT.TITLE' | translate }}</h1>
     <div class="input-container">
       <form class="audit-form" [formGroup]="auditForm" (ngSubmit)="onSubmit()">
-        <!-- Start Date -->
+        <!-- Date Picker -->
         <mat-form-field>
-          <mat-label>{{ 'AUDIT.START_DATE' | translate }}</mat-label>
+          <mat-label>{{ 'AUDIT.DATE' | translate }}</mat-label>
           <input
             matInput
             [matDatepicker]="pickerStart"
-            formControlName="startDate"
+            formControlName="date"
           />
           <mat-datepicker-toggle
             matIconSuffix
             [for]="pickerStart"
           ></mat-datepicker-toggle>
           <mat-datepicker #pickerStart></mat-datepicker>
-          <mat-error *ngIf="auditForm.get('startDate')?.hasError('required')">
-            {{ 'AUDIT.ERRORS.REQUIRED_START_DATE' | translate }}
-          </mat-error>
-        </mat-form-field>
-
-        <!-- End Date -->
-        <mat-form-field>
-          <mat-label>{{ 'AUDIT.END_DATE' | translate }}</mat-label>
-          <input
-            matInput
-            [matDatepicker]="pickerEnd"
-            formControlName="endDate"
-          />
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="pickerEnd"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #pickerEnd></mat-datepicker>
-          <mat-error *ngIf="auditForm.get('endDate')?.hasError('required')">
-            {{ 'AUDIT.ERRORS.REQUIRED_END_DATE' | translate }}
+          <mat-error *ngIf="auditForm.get('date')?.hasError('required')">
+            {{ 'AUDIT.ERRORS.REQUIRED_DATE' | translate }}
           </mat-error>
         </mat-form-field>
 
@@ -43,40 +25,30 @@
         <mat-form-field>
           <mat-label>{{ 'AUDIT.ENTITY' | translate }}</mat-label>
           <mat-select formControlName="entity" [errorStateMatcher]="matcher">
-            <mat-option value="one">Entity one</mat-option>
-            <mat-option value="two">Entity two</mat-option>
+            <mat-option value="Users">Users</mat-option>
+            <mat-option value="Profile">Profiles</mat-option>
+            <mat-option value="Product">Products</mat-option>
+            <mat-option value="Client">Clients</mat-option>
           </mat-select>
           <mat-error *ngIf="auditForm.get('entity')?.hasError('required')">
             {{ 'AUDIT.ERRORS.REQUIRED_ENTITY' | translate }}
           </mat-error>
         </mat-form-field>
 
-        <!-- Operation -->
-        <mat-form-field>
-          <mat-label>{{ 'AUDIT.OPERATION' | translate }}</mat-label>
-          <mat-select formControlName="operation" [errorStateMatcher]="matcher">
-            <mat-option value="one">Operation 1</mat-option>
-            <mat-option value="two">Operation 2</mat-option>
-          </mat-select>
-          <mat-error *ngIf="auditForm.get('operation')?.hasError('required')">
-            {{ 'AUDIT.ERRORS.REQUIRED_OPERATION' | translate }}
-          </mat-error>
-        </mat-form-field>
-
-        <!-- User -->
-        <mat-form-field>
-          <mat-label>{{ 'AUDIT.USER' | translate }}</mat-label>
-          <input
-            matInput
-            placeholder="{{ 'AUDIT.USER_PLACEHOLDER' | translate }}"
-          />
-        </mat-form-field>
+        <!-- Submit Button -->
         <button mat-flat-button color="accent" type="submit">
           {{ 'AUDIT.SEARCH' | translate }}
         </button>
       </form>
     </div>
+
     <!-- Table -->
-    <app-mat-table></app-mat-table>
+    <app-mat-table
+      [displayedColumns]="displayedColumns"
+      [tableData]="tableData"
+    >
+    </app-mat-table>
   </div>
 </block-ui>
+
+<simple-notifications [options]="options"></simple-notifications>

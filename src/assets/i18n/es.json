@@ -23,26 +23,28 @@
       "LOGGING_IN": "Iniciando sesión"
     }
   },
+
   "AUDIT": {
-    "START_DATE": "Fecha de inicio",
-    "END_DATE": "Fecha de fin",
+    "TITLE": "Auditoria",
+    "DATE": "Fecha a auditar",
     "ENTITY": "Entidad",
-    "OPERATION": "Operación",
-    "USER": "Usuario",
-    "USER_PLACEHOLDER": "Ingresa el nombre del usuario",
     "SEARCH": "Buscar",
     "ERRORS": {
-      "REQUIRED_START_DATE": "La fecha de inicio es obligatoria",
-      "REQUIRED_END_DATE": "La fecha de fin es obligatoria",
-      "REQUIRED_ENTITY": "La entidad es obligatoria",
-      "REQUIRED_OPERATION": "La operación es obligatoria"
+      "REQUIRED_DATE": "La fecha de auditoria es obligatoria",
+      "REQUIRED_ENTITY": "La entidad es obligatoria"
+    },
+    "TABLE_HEADERS": {
+      "ENTITY": "Entidad",
+      "USER": "Usuario",
+      "OPERATION": "Operación",
+      "DATE": "Fecha"
     },
     "NOTIFICATIONS": {
       "SENDING_REQUEST": "Enviando solicitud de auditoría...",
       "SUCCESS": "Auditoría exitosa",
-      "SUCCESS_DESC": "Los datos de la auditoría se han recuperado con éxito",
+      "SUCCESS_DESC": "Los datos de la auditoría se han listado con éxito",
       "FAILURE": "Auditoría fallida",
-      "FAILURE_DESC": "No se pudieron recuperar los datos de la auditoría. Inténtalo de nuevo",
+      "FAILURE_DESC": "No se pudieron listar los datos de la auditoría. Inténtalo de nuevo",
       "INVALID_FORM": "Formulario inválido",
       "INVALID_FORM_DESC": "Por favor, completa el formulario correctamente"
     }

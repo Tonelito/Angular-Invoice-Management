@@ -33,6 +33,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./audit.component.scss']
 })
 export class AuditComponent {
+  //table data
+  displayedColumns: string[] = ['entity', 'user', 'operation', 'date'];
+  tableData: any[] = [];
   //form variables
   matcher = new MyErrorStateMatcher();
   auditForm: FormGroup;
@@ -53,10 +56,8 @@ export class AuditComponent {
     private _notifications: NotificationsService
   ) {
     this.auditForm = this.fb.group({
-      startDate: ['', [Validators.required]],
-      endDate: ['', [Validators.required]],
-      entity: ['', [Validators.required]],
-      operation: ['', [Validators.required]]
+      date: ['', [Validators.required]],
+      entity: ['', [Validators.required]]
     });
     this.translate.use('es');
   }
@@ -64,22 +65,27 @@ export class AuditComponent {
   onSubmit() {
     if (this.auditForm.valid) {
       const auditData = {
-        startDate: this.auditForm.value.startDate,
-        endDate: this.auditForm.value.endDate,
-        entity: this.auditForm.value.entity,
-        operation: this.auditForm.value.operation
+        date: this.auditForm.value.date,
+        entity: this.auditForm.value.entity
       };
+
       this.blockUI.start(
         this.translate.instant('AUDIT.NOTIFICATIONS.SENDING_REQUEST')
       );
 
       this.service.postAudit(auditData).subscribe({
         next: (response: any) => {
+          console.log(response);
+          this.tableData = response.content.map((entry: any) => ({
+            entity: entry.entity,
+            user: entry.fullName,
+            operation: entry.operation,
+            date: new Date(entry.datetime).toLocaleDateString('en-GB')
+          }));
           this._notifications.success(
-            this.translate.instant('AUDIT.NOTIFICATIONS.SUCCCESS'),
-            this.translate.instant('AUDIT.NOTIFICATIONS.SUCCCESS_DESC')
+            this.translate.instant('AUDIT.NOTIFICATIONS.SUCCESS'),
+            this.translate.instant('AUDIT.NOTIFICATIONS.SUCCESS_DESC')
           );
-          //handle success logic
           this.blockUI.stop();
         },
         error: error => {

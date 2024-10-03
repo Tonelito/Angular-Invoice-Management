@@ -23,24 +23,26 @@
       "LOGGING_IN": "Logging in"
     }
   },
+
   "AUDIT": {
-    "START_DATE": "Start Date",
-    "END_DATE": "End Date",
+    "TITLE": "Audit",
+    "DATE": "Date to audit",
     "ENTITY": "Entity",
-    "OPERATION": "Operation",
-    "USER": "User",
-    "USER_PLACEHOLDER": "Enter the user's name",
     "SEARCH": "Search",
+    "ENTITIES": {
+      "ENTITY": "Entity",
+      "USER": "User",
+      "OPERATION": "Operation",
+      "DATE": "Date"
+    },
     "ERRORS": {
-      "REQUIRED_START_DATE": "Start date is required",
-      "REQUIRED_END_DATE": "End date is required",
-      "REQUIRED_ENTITY": "Entity is required",
-      "REQUIRED_OPERATION": "Operation is required"
+      "REQUIRED_DATE": "date is required",
+      "REQUIRED_ENTITY": "entity is required"
     },
     "NOTIFICATIONS": {
       "SENDING_REQUEST": "Sending audit request...",
-      "SUCCCESS": "Audit Successful",
-      "SUCCCESS_DESC": "The audit data has been successfully retrieved",
+      "SUCCESS": "Audit Successful",
+      "SUCCESS_DESC": "The audit data has been successfully retrieved",
       "FAILURE": "Audit Failed",
       "FAILURE_DESC": "Unable to retrieve audit data. Please try again",
       "INVALID_FORM": "Invalid Form",
