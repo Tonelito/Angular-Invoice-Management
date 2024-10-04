@@ -7,19 +7,24 @@
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
     </div>
-    <mat-list>
+    <mat-list *ngIf="filteredUsers.length > 0">
         <div class="title" mat-subheader>
             Users
         </div>
         <!-- Lista de usuarios con paginación -->
-        <mat-list-item *ngFor="let user of paginatedUsers">
+        <mat-list-item *ngFor="let user of filteredUsers">
             <mat-icon matListItemIcon>person</mat-icon>
             <div matListItemTitle>{{ user.email }}</div>
             <div matListItemLine>{{ user.fullName }}</div>
         </mat-list-item>
-        <mat-paginator #paginator [length]="filteredUsers.length" [pageSize]="pageSize" hidePageSize
-            (page)="onPageChange($event)">
-        </mat-paginator>
     </mat-list>
 
+    <mat-paginator #paginator [length]="totalUsers" [pageSize]="pageSize" hidePageSize (page)="onPageChange($event)">
+    </mat-paginator>
 </div>
+<!-- <button mat-icon-button>
+    <mat-icon>edit</mat-icon>
+</button>
+<button mat-icon-button color="warn">
+    <mat-icon>delete</mat-icon>
+</button> -->

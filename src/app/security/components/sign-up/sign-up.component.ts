@@ -28,7 +28,7 @@ export class SignUpComponent {
     const signUpData = {
       email: this.signUpForm.get('email')?.value,
       fullName: this.signUpForm.get('fullName')?.value,
-      profileId: 1,
+      profileId: 2,
       dateOfBirth: new Date(Date.now()),
     }
     console.log('Data : ', signUpData);
