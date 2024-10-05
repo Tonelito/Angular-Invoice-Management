@@ -1,0 +1,47 @@
+<h1>Edit Profile</h1>
+<p>
+  Update the name, description, and roles associated with this user profile.
+  Ensure the correct roles are selected before saving your changes.
+</p>
+<form [formGroup]="editProfileForm" (ngSubmit)="saveChanges()">
+  <div class="inputs">
+    <!-- Name Field -->
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" placeholder="Profile name" />
+      <mat-error *ngIf="editProfileForm.get('name')?.invalid">
+        Name is required
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Description Field -->
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <input
+        matInput
+        formControlName="description"
+        placeholder="Profile description"
+      />
+      <mat-error *ngIf="editProfileForm.get('description')?.invalid">
+        Description is required
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Roles Toggles -->
+  <div class="toggles">
+    <mat-slide-toggle
+      *ngFor="let role of roles"
+      [checked]="selectedRoles.includes(role.rolId)"
+      (change)="toggleRole(role.rolId, $event.checked)"
+    >
+      {{ role.name }}
+    </mat-slide-toggle>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="actions">
+    <button mat-button type="button" (click)="cancel()">Cancel</button>
+    <button mat-flat-button color="accent" type="submit">Save</button>
+  </div>
+</form>

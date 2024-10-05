@@ -9,7 +9,7 @@ import { cookieUtil } from 'src/app/shared/utilities/storage-utility';
 })
 export class AuditService {
   url = API_URL_AUDIT;
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   postAudit(auditData: any): Observable<any> {
     const token = cookieUtil.getValue('token');

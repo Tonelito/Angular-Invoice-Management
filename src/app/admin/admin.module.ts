@@ -17,11 +17,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
-import { ConfirmDialogComponent } from './utilities/confirmDialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { EditDialogComponent } from './components/profiles/edit-dialog/edit-dialog.component';
 
 @NgModule({
-  declarations: [AuditComponent, ProfilesComponent, ConfirmDialogComponent],
+  declarations: [AuditComponent, ProfilesComponent, EditDialogComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

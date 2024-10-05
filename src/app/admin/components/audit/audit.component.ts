@@ -1,31 +1,10 @@
 import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  NgForm,
-  Validators
-} from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'angular2-notifications';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { AuditService } from '../../services/audit.service';
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
-  }
-}
+import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
 
 @Component({
   selector: 'app-audit',
@@ -33,12 +12,12 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./audit.component.scss']
 })
 export class AuditComponent {
-  //table data
+  auditForm: FormGroup;
+  //error handler
+  matcher = new MyErrorStateMatcher();
+  //table
   displayedColumns: string[] = ['entity', 'user', 'operation', 'date'];
   tableData: any[] = [];
-  //form variables
-  matcher = new MyErrorStateMatcher();
-  auditForm: FormGroup;
   //blockUI
   @BlockUI() blockUI!: NgBlockUI;
   //angular2-notifications options
@@ -50,10 +29,10 @@ export class AuditComponent {
   };
 
   constructor(
-    private translate: TranslateService,
-    private service: AuditService,
-    private fb: FormBuilder,
-    private _notifications: NotificationsService
+    private readonly translate: TranslateService,
+    private readonly service: AuditService,
+    private readonly fb: FormBuilder,
+    private readonly _notifications: NotificationsService
   ) {
     this.auditForm = this.fb.group({
       date: ['', [Validators.required]],

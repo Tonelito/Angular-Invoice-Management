@@ -29,7 +29,11 @@
               </div>
               <!-- Action Buttons -->
               <div class="buttons">
-                <button mat-icon-button color="accent">
+                <button
+                  mat-icon-button
+                  color="accent"
+                  (click)="openEditDialog(profile)"
+                >
                   <mat-icon>edit</mat-icon>
                 </button>
                 <button
@@ -54,7 +58,7 @@
         <!-- Add Profile -->
         <div class="form-container">
           <h1>{{ 'PROFILES.FORM_TITLE' | translate }}</h1>
-          <form [formGroup]="profileForm" (ngSubmit)="postProfile()">
+          <form [formGroup]="profileForm" (submit)="submitProfile()">
             <div class="inputs-button">
               <!-- Name Input -->
               <mat-form-field hideRequiredMarker>
@@ -93,7 +97,10 @@
             </div>
             <!-- Toggles -->
             <div class="toggle-container">
-              <mat-slide-toggle *ngFor="let role of roles">
+              <mat-slide-toggle
+                *ngFor="let role of roles"
+                (change)="toggleRole(role.rolId, $event.checked)"
+              >
                 {{ role.name }}
               </mat-slide-toggle>
             </div>

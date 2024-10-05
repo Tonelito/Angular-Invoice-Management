@@ -2,51 +2,20 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { ProfilesService } from '../../services/profiles.service';
-import { RolesService } from '../../services/roles.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  NgForm,
-  Validators
-} from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { ProfileRoleDetailsService } from '../../services/profile-role-details.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../utilities/confirmDialog.component';
-
-interface Profile {
-  profileId: number;
-  name: string;
-  description: string;
-  status: boolean;
-}
-
-interface Role {
-  roleId: number;
-  name: string;
-  description: string;
-  status: boolean;
-}
-
-/* Error matcher for material inputs */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
-  }
-}
+import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
+import {
+  CreateProfile,
+  Profile,
+  Role
+} from '../../utilities/models/profile.model';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { switchMap } from 'rxjs';
+import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 
 @Component({
   selector: 'app-profiles',
@@ -54,8 +23,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./profiles.component.scss']
 })
 export class ProfilesComponent implements OnInit {
-  matcher = new MyErrorStateMatcher();
   profileForm: FormGroup;
+  matcher = new MyErrorStateMatcher();
   @BlockUI() blockUI!: NgBlockUI;
   public options = {
     timeOut: 3000,
@@ -64,21 +33,19 @@ export class ProfilesComponent implements OnInit {
     clickToClose: true
   };
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   profiles: Profile[] = [];
-  filteredProfiles: MatTableDataSource<Profile> = new MatTableDataSource();
   roles: Role[] = [];
+  filteredProfiles: MatTableDataSource<Profile> = new MatTableDataSource();
+  selectedRoles: number[] = [];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   searchQuery = '';
 
   constructor(
-    private _notifications: NotificationsService,
-    private translate: TranslateService,
-    private profilesService: ProfilesService,
-    private profileRoleDetailsService: ProfileRoleDetailsService,
-    private rolesService: RolesService,
-    private fb: FormBuilder,
-    private dialog: MatDialog
+    private readonly _notifications: NotificationsService,
+    private readonly translate: TranslateService,
+    private readonly profilesService: ProfilesService,
+    private readonly fb: FormBuilder,
+    private readonly dialog: MatDialog
   ) {
     this.profileForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -95,9 +62,9 @@ export class ProfilesComponent implements OnInit {
   fetchProfiles(): void {
     this.blockUI.start();
     this.profilesService.getProfiles().subscribe({
-      next: data => {
-        if (data.object) {
-          this.profiles = data.object;
+      next: profiles => {
+        if (profiles.object) {
+          this.profiles = profiles.object;
           this.filteredProfiles = new MatTableDataSource(this.profiles);
           this.filteredProfiles.paginator = this.paginator;
         }
@@ -112,10 +79,10 @@ export class ProfilesComponent implements OnInit {
 
   fetchRoles(): void {
     this.blockUI.start();
-    this.rolesService.getRoles().subscribe({
-      next: data => {
-        if (data.object) {
-          this.roles = data.object;
+    this.profilesService.getRoles().subscribe({
+      next: roles => {
+        if (roles.object) {
+          this.roles = roles.object;
         }
         this.blockUI.stop();
       },
@@ -126,18 +93,28 @@ export class ProfilesComponent implements OnInit {
     });
   }
 
-  postProfile() {
+  toggleRole(roleId: number, checked: boolean): void {
+    if (checked) {
+      this.selectedRoles.push(roleId);
+    } else {
+      this.selectedRoles = this.selectedRoles.filter(id => id !== roleId);
+    }
+  }
+
+  submitProfile(): void {
     if (this.profileForm.valid) {
-      const profileData = {
+      const profileData: CreateProfile = {
         name: this.profileForm.value.name,
-        description: this.profileForm.value.description
+        description: this.profileForm.value.description,
+        rolsId: this.selectedRoles
       };
+      console.log(profileData);
       this.blockUI.start(
         this.translate.instant('PROFILES.NOTIFICATIONS.CREATING_PROFILE')
       );
 
       this.profilesService.postProfile(profileData).subscribe({
-        next: (response: any) => {
+        next: response => {
           this._notifications.success(
             this.translate.instant('PROFILES.NOTIFICATIONS.PROFILE_CREATED'),
             this.translate.instant(
@@ -145,18 +122,21 @@ export class ProfilesComponent implements OnInit {
             )
           );
           this.fetchProfiles();
+          this.fetchRoles();
+          this.profileForm.reset();
+          this.selectedRoles = [];
           this.blockUI.stop();
         },
         error: error => {
+          console.error('Error saving profile:', error);
           this._notifications.error(
             this.translate.instant(
               'PROFILES.NOTIFICATIONS.PROFILE_CREATION_FAILURE'
             ),
             this.translate.instant(
-              'PROFILES.NOTIFICAITONS.PROFILE_CREATION_FAILURE_DESC'
+              'PROFILES.NOTIFICATIONS.PROFILE_CREATION_FAILURE_DESC'
             )
           );
-          console.log(error);
           this.blockUI.stop();
         }
       });
@@ -168,9 +148,20 @@ export class ProfilesComponent implements OnInit {
     }
   }
 
+  openEditDialog(profile: Profile): void {
+    const dialogRef = this.dialog.open(EditDialogComponent, {
+      data: { profileId: profile.profileId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.fetchProfiles();
+      }
+    });
+  }
+
   confirmDeleteProfile(profile: Profile): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '350px',
       data: {
         title: this.translate.instant('PROFILES.DIALOG.TITLE'),
         message: this.translate.instant('PROFILES.DIALOG.MESSAGE', {
@@ -191,33 +182,37 @@ export class ProfilesComponent implements OnInit {
       this.translate.instant('PROFILES.NOTIFICATIONS.DELETING_PROFILE')
     );
 
-    this.profilesService.deleteProfile(profileId).subscribe({
-      next: () => {
-        this._notifications.success(
-          this.translate.instant('PROFILES.NOTIFICATIONS.PROFILE_DELETED'),
-          this.translate.instant('PROFILES.NOTIFICATIONS.PROFILE_DELETED_DESC')
-        );
-        this.fetchProfiles();
-        this.blockUI.stop();
-      },
-      error: error => {
-        this._notifications.error(
-          this.translate.instant(
-            'PROFILES.NOTIFICATIONS.PROFILE_DELETE_FAILED'
-          ),
-          this.translate.instant(
-            'PROFILES.NOTIFICATIONS.PROFILE_DELETE_FAILED_DESC'
-          )
-        );
-        this.blockUI.stop();
-      }
-    });
+    this.profilesService
+      .deleteProfileDetails(profileId)
+      .pipe(switchMap(() => this.profilesService.deleteProfile(profileId)))
+      .subscribe({
+        next: () => {
+          this._notifications.success(
+            this.translate.instant('PROFILES.NOTIFICATIONS.PROFILE_DELETED'),
+            this.translate.instant(
+              'PROFILES.NOTIFICATIONS.PROFILE_DELETED_DESC'
+            )
+          );
+          this.fetchProfiles();
+          this.blockUI.stop();
+        },
+        error: error => {
+          this._notifications.error(
+            this.translate.instant(
+              'PROFILES.NOTIFICATIONS.PROFILE_DELETE_FAILED'
+            ),
+            this.translate.instant(
+              'PROFILES.NOTIFICATIONS.PROFILE_DELETE_FAILED_DESC'
+            )
+          );
+          this.blockUI.stop();
+        }
+      });
   }
 
   searchProfiles(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.searchQuery = filterValue.trim().toLowerCase();
-
     this.filteredProfiles.filter = this.searchQuery;
 
     if (this.filteredProfiles.paginator) {
