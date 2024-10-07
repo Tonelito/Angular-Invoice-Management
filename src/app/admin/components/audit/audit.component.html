@@ -3,21 +3,39 @@
     <h1>{{ 'AUDIT.TITLE' | translate }}</h1>
     <div class="input-container">
       <form class="audit-form" [formGroup]="auditForm" (ngSubmit)="onSubmit()">
-        <!-- Date Picker -->
+        <!-- Start Date -->
         <mat-form-field>
-          <mat-label>{{ 'AUDIT.DATE' | translate }}</mat-label>
+          <mat-label>{{ 'AUDIT.START_DATE' | translate }}</mat-label>
           <input
             matInput
             [matDatepicker]="pickerStart"
-            formControlName="date"
+            formControlName="startDate"
           />
           <mat-datepicker-toggle
             matIconSuffix
             [for]="pickerStart"
           ></mat-datepicker-toggle>
           <mat-datepicker #pickerStart></mat-datepicker>
-          <mat-error *ngIf="auditForm.get('date')?.hasError('required')">
-            {{ 'AUDIT.ERRORS.REQUIRED_DATE' | translate }}
+          <mat-error *ngIf="auditForm.get('startDate')?.hasError('required')">
+            {{ 'AUDIT.ERRORS.REQUIRED_START_DATE' | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- End Date-->
+        <mat-form-field>
+          <mat-label>{{ 'AUDIT.END_DATE' | translate }}</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerEnd"
+            formControlName="endDate"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="pickerEnd"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #pickerEnd></mat-datepicker>
+          <mat-error *ngIf="auditForm.get('endDate')?.hasError('required')">
+            {{ 'AUDIT.ERRORS.REQUIRED_END_DATE' | translate }}
           </mat-error>
         </mat-form-field>
 

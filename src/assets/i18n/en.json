@@ -26,7 +26,8 @@
 
   "AUDIT": {
     "TITLE": "Audit",
-    "DATE": "Date to audit",
+    "START_DATE": "Start date",
+    "END_DATE": "End date",
     "ENTITY": "Entity",
     "SEARCH": "Search",
     "ENTITIES": {
@@ -36,7 +37,8 @@
       "DATE": "Date"
     },
     "ERRORS": {
-      "REQUIRED_DATE": "date is required",
+      "REQUIRED_START_DATE": "Start date is required",
+      "REQUIRED_END_DATE": "End date is required",
       "REQUIRED_ENTITY": "entity is required"
     },
     "NOTIFICATIONS": {

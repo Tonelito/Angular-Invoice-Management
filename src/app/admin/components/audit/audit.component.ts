@@ -35,7 +35,8 @@ export class AuditComponent {
     private readonly _notifications: NotificationsService
   ) {
     this.auditForm = this.fb.group({
-      date: ['', [Validators.required]],
+      startDate: ['', [Validators.required]],
+      endDate: ['', [Validators.required]],
       entity: ['', [Validators.required]]
     });
     this.translate.use('es');
@@ -44,7 +45,8 @@ export class AuditComponent {
   onSubmit() {
     if (this.auditForm.valid) {
       const auditData = {
-        date: this.auditForm.value.date,
+        startDate: this.auditForm.value.startDate,
+        endDate: this.auditForm.value.endDate,
         entity: this.auditForm.value.entity
       };
 
@@ -55,7 +57,7 @@ export class AuditComponent {
       this.service.postAudit(auditData).subscribe({
         next: (response: any) => {
           console.log(response);
-          this.tableData = response.content.map((entry: any) => ({
+          this.tableData = response.object.map((entry: any) => ({
             entity: entry.entity,
             user: entry.fullName,
             operation: entry.operation,

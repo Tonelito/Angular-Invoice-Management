@@ -26,11 +26,13 @@
 
   "AUDIT": {
     "TITLE": "Auditoria",
-    "DATE": "Fecha a auditar",
+    "START_DATE": "Fecha de inicio",
+    "END_DATE": "Fecha final",
     "ENTITY": "Entidad",
     "SEARCH": "Buscar",
     "ERRORS": {
-      "REQUIRED_DATE": "La fecha de auditoria es obligatoria",
+      "REQUIRED_START_DATE": "La fecha inicial es obligatoria",
+      "REQUIRED_END_DATE": "La fecha final es obligatoria",
       "REQUIRED_ENTITY": "La entidad es obligatoria"
     },
     "TABLE_HEADERS": {
