@@ -7,6 +7,7 @@ import {
   Role
 } from '../../../utilities/models/profile.model';
 import { NotificationsService } from 'angular2-notifications';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-dialog',
@@ -22,6 +23,7 @@ export class EditDialogComponent implements OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private readonly profilesService: ProfilesService,
+    private readonly translate: TranslateService,
     private readonly _notifications: NotificationsService,
     public dialogRef: MatDialogRef<EditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { profileId: number }
@@ -48,7 +50,10 @@ export class EditDialogComponent implements OnInit {
         this.selectedRoles = this.profile.rolsId.map(role => role.rolId);
       },
       error: error => {
-        console.error('Error fetching profile details', error);
+        console.error(
+          this.translate.instant('PROFILES.ERRORS.FETCH_PROFILE'),
+          error
+        );
       }
     });
   }
@@ -59,7 +64,10 @@ export class EditDialogComponent implements OnInit {
         this.roles = roles.object;
       },
       error: error => {
-        console.error('Error fetching roles', error);
+        console.error(
+          this.translate.instant('PROFILES.ERRORS.FETCH_ROLES'),
+          error
+        );
       }
     });
   }
@@ -70,6 +78,29 @@ export class EditDialogComponent implements OnInit {
     } else {
       this.selectedRoles = this.selectedRoles.filter(id => id !== roleId);
     }
+  }
+
+  changeStatus(profileId: number): void {
+    this.profilesService.changeStatus(profileId).subscribe({
+      next: () => {
+        this.fetchProfileDetails(profileId);
+        this._notifications.success(
+          this.translate.instant('PROFILES.NOTIFICATIONS.STATUS_SUCCESS'),
+          ''
+        );
+        this.dialogRef.close(true);
+      },
+      error: error => {
+        console.error(
+          this.translate.instant('PROFILES.ERRORS.STATUS_TOGGLE'),
+          error
+        );
+        this._notifications.error(
+          this.translate.instant('PROFILES.NOTIFICATIONS.STATUS_FAILURE'),
+          ''
+        );
+      }
+    });
   }
 
   saveChanges(): void {
@@ -84,12 +115,21 @@ export class EditDialogComponent implements OnInit {
         .putProfile(this.data.profileId, updatedProfile)
         .subscribe({
           next: () => {
-            this._notifications.success('Profile updated successfully', '');
+            this._notifications.success(
+              this.translate.instant('PROFILES.NOTIFICATIONS.UPDATE_SUCCESS'),
+              ''
+            );
             this.dialogRef.close(true);
           },
           error: error => {
-            console.error('Error updating profile', error);
-            this._notifications.error('Failed to update profile', '');
+            console.error(
+              this.translate.instant('PROFILES.ERRORS.UPDATE_PROFILE'),
+              error
+            );
+            this._notifications.error(
+              this.translate.instant('PROFILES.NOTIFICATIONS.UPDATE_FAILURE'),
+              ''
+            );
           }
         });
     }

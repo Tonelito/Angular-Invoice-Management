@@ -23,7 +23,13 @@
               <!-- Profile Info -->
               <div class="profile-info">
                 <!-- Status Circle -->
-                <div class="status-circle"></div>
+                <div
+                  class="status-circle"
+                  [ngClass]="{
+                    active: profile.status,
+                    inactive: !profile.status
+                  }"
+                ></div>
                 <!-- Profile Name -->
                 <p>{{ profile.name }}</p>
               </div>

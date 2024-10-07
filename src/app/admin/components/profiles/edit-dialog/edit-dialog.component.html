@@ -1,29 +1,42 @@
-<h1>Edit Profile</h1>
+<div class="change-status">
+  <h1>{{ 'PROFILES.FORM.EDIT_PROFILE' | translate }}</h1>
+  <button
+    mat-mini-fab
+    color="primary"
+    matTooltip="{{ 'PROFILES.TOOLTIP.DISABLE_PROFILE' | translate }}"
+    (click)="changeStatus(data.profileId)"
+  >
+    <mat-icon>person_off</mat-icon>
+  </button>
+</div>
 <p>
-  Update the name, description, and roles associated with this user profile.
-  Ensure the correct roles are selected before saving your changes.
+  {{ 'PROFILES.FORM.EDIT_DESCRIPTION' | translate }}
 </p>
 <form [formGroup]="editProfileForm" (ngSubmit)="saveChanges()">
   <div class="inputs">
     <!-- Name Field -->
     <mat-form-field appearance="fill">
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="name" placeholder="Profile name" />
+      <mat-label>{{ 'PROFILES.NAME' | translate }}</mat-label>
+      <input
+        matInput
+        formControlName="name"
+        placeholder="{{ 'PROFILES.NAME' | translate }}"
+      />
       <mat-error *ngIf="editProfileForm.get('name')?.invalid">
-        Name is required
+        {{ 'PROFILES.ERRORS.REQUIRED_NAME' | translate }}
       </mat-error>
     </mat-form-field>
 
     <!-- Description Field -->
     <mat-form-field appearance="fill">
-      <mat-label>Description</mat-label>
+      <mat-label>{{ 'PROFILES.DESCRIPTION' | translate }}</mat-label>
       <input
         matInput
         formControlName="description"
-        placeholder="Profile description"
+        placeholder="{{ 'PROFILES.DESCRIPTION' | translate }}"
       />
       <mat-error *ngIf="editProfileForm.get('description')?.invalid">
-        Description is required
+        {{ 'PROFILES.ERRORS.REQUIRED_DESCRIPTION' | translate }}
       </mat-error>
     </mat-form-field>
   </div>
@@ -41,7 +54,11 @@
 
   <!-- Action Buttons -->
   <div class="actions">
-    <button mat-button type="button" (click)="cancel()">Cancel</button>
-    <button mat-flat-button color="accent" type="submit">Save</button>
+    <button mat-button type="button" (click)="cancel()">
+      {{ 'PROFILES.ACTIONS.CANCEL' | translate }}
+    </button>
+    <button mat-flat-button color="accent" type="submit">
+      {{ 'PROFILES.ACTIONS.SAVE_CHANGES' | translate }}
+    </button>
   </div>
 </form>

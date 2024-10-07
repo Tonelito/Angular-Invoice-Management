@@ -60,7 +60,11 @@
     "SAVE": "Save",
     "ERRORS": {
       "REQUIRED_NAME": "Profile name is required",
-      "REQUIRED_DESCRIPTION": "Description is required"
+      "REQUIRED_DESCRIPTION": "Description is required",
+      "FETCH_PROFILE": "Error fetching profile details.",
+      "FETCH_ROLES": "Error fetching roles.",
+      "STATUS_TOGGLE": "Error changing status.",
+      "UPDATE_PROFILE": "Error updating profile."
     },
     "NOTIFICATIONS": {
       "CREATING_PROFILE": "Creating profile...",
@@ -74,11 +78,26 @@
       "PROFILE_DELETED": "Profile deleted",
       "PROFILE_DELETED_DESC": "The profile has been successfully deleted.",
       "PROFILE_DELETE_FAILED": "Profile deletion failed",
-      "PROFILE_DELETE_FAILED_DESC": "There was an error deleting the profile."
+      "PROFILE_DELETE_FAILED_DESC": "There was an error deleting the profile.",
+      "STATUS_SUCCESS": "Profile status changed successfully.",
+      "STATUS_FAILURE": "Failed to change profile status.",
+      "UPDATE_SUCCESS": "Profile updated successfully.",
+      "UPDATE_FAILURE": "Failed to update profile."
     },
     "DIALOG": {
       "TITLE": "Delete Profile",
       "MESSAGE": "Are you sure you want to delete the profile \"{{ profileName }}\"?"
+    },
+    "FORM": {
+      "EDIT_PROFILE": "Edit Profile",
+      "EDIT_DESCRIPTION": "Update the name, description, and roles associated with this user profile. Ensure the correct roles are selected before saving your changes."
+    },
+    "TOOLTIP": {
+      "DISABLE_PROFILE": "Disable Profile"
+    },
+    "ACTIONS": {
+      "CANCEL": "Cancel",
+      "SAVE_CHANGES": "Save Changes"
     },
     "COMMON": {
       "CANCEL": "Cancel",

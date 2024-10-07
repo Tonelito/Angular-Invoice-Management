@@ -19,6 +19,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditDialogComponent } from './components/profiles/edit-dialog/edit-dialog.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [AuditComponent, ProfilesComponent, EditDialogComponent],
@@ -41,7 +42,8 @@ import { EditDialogComponent } from './components/profiles/edit-dialog/edit-dial
     MatPaginatorModule,
     MatSlideToggleModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule
   ]
 })
 export class AdminModule {}

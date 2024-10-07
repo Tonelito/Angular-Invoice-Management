@@ -108,7 +108,6 @@ export class ProfilesComponent implements OnInit {
         description: this.profileForm.value.description,
         rolsId: this.selectedRoles
       };
-      console.log(profileData);
       this.blockUI.start(
         this.translate.instant('PROFILES.NOTIFICATIONS.CREATING_PROFILE')
       );

@@ -60,7 +60,11 @@
     "SAVE": "Guardar",
     "ERRORS": {
       "REQUIRED_NAME": "El nombre del perfil es obligatorio",
-      "REQUIRED_DESCRIPTION": "La descripción es obligatoria"
+      "REQUIRED_DESCRIPTION": "La descripción es obligatoria",
+      "FETCH_PROFILE": "Error al obtener los detalles del perfil.",
+      "FETCH_ROLES": "Error al obtener los roles.",
+      "STATUS_TOGGLE": "Error al cambiar el estado.",
+      "UPDATE_PROFILE": "Error al actualizar el perfil."
     },
     "NOTIFICATIONS": {
       "CREATING_PROFILE": "Creando perfil...",
@@ -74,11 +78,26 @@
       "PROFILE_DELETED": "Perfil eliminado",
       "PROFILE_DELETED_DESC": "El perfil ha sido eliminado correctamente.",
       "PROFILE_DELETE_FAILED": "Error al eliminar el perfil",
-      "PROFILE_DELETE_FAILED_DESC": "Hubo un error al eliminar el perfil."
+      "PROFILE_DELETE_FAILED_DESC": "Hubo un error al eliminar el perfil.",
+      "STATUS_SUCCESS": "Estado del perfil cambiado con éxito.",
+      "STATUS_FAILURE": "No se pudo cambiar el estado del perfil.",
+      "UPDATE_SUCCESS": "Perfil actualizado con éxito.",
+      "UPDATE_FAILURE": "No se pudo actualizar el perfil."
     },
     "DIALOG": {
       "TITLE": "Eliminar Perfil",
       "MESSAGE": "¿Estás seguro de que deseas eliminar el perfil \"{{ profileName }}\"?"
+    },
+    "FORM": {
+      "EDIT_PROFILE": "Editar Perfil",
+      "EDIT_DESCRIPTION": "Actualiza el nombre, la descripción y los roles asociados con este perfil de usuario. Asegúrate de que se seleccionen los roles correctos antes de guardar los cambios."
+    },
+    "TOOLTIP": {
+      "DISABLE_PROFILE": "Deshabilitar Perfil"
+    },
+    "ACTIONS": {
+      "CANCEL": "Cancelar",
+      "SAVE_CHANGES": "Guardar Cambios"
     }
   },
   "COMMON": {
