@@ -34,26 +34,33 @@ export class ProfilesService {
 
   getRoles(): Observable<Roles> {
     const headers = this.getHeaders();
-    return this.http.get<Roles>(`${this.role_url}s`, { headers });
+    return this.http.get<Roles>(`${this.role_url}/show-all`, { headers });
   }
 
   getProfiles(): Observable<Profiles> {
     const headers = this.getHeaders();
-    return this.http.get<Profiles>(`${this.profile_url}s`, { headers });
+    return this.http.get<Profiles>(`${this.profile_url}/show-all`, { headers });
   }
 
   getProfile(id: number): Observable<ProfileResponse> {
     const headers = this.getHeaders();
-    return this.http.get<ProfileResponse>(`${this.profile_url}/${id}`, {
-      headers
-    });
+    return this.http.get<ProfileResponse>(
+      `${this.profile_url}/show-by-id/${id}`,
+      {
+        headers
+      }
+    );
   }
 
   postProfile(profileData: CreateProfile): Observable<ProfileResponse> {
     const headers = this.getHeaders();
-    return this.http.post<ProfileResponse>(`${this.profile_url}`, profileData, {
-      headers
-    });
+    return this.http.post<ProfileResponse>(
+      `${this.profile_url}/create`,
+      profileData,
+      {
+        headers
+      }
+    );
   }
 
   putProfile(
@@ -62,7 +69,7 @@ export class ProfilesService {
   ): Observable<ProfileResponse> {
     const headers = this.getHeaders();
     return this.http.put<ProfileResponse>(
-      `${this.profile_url}/${id}`,
+      `${this.profile_url}/update/${id}`,
       profileData,
       { headers }
     );
@@ -70,20 +77,25 @@ export class ProfilesService {
 
   changeStatus(id: number): Observable<ProfileResponse> {
     const headers = this.getHeaders();
-    return this.http.patch<ProfileResponse>(`${this.profile_url}/${id}`, {
-      headers
-    });
+    return this.http.patch<ProfileResponse>(
+      `${this.profile_url}/status-change/${id}`,
+      {
+        headers
+      }
+    );
   }
 
   deleteProfileDetails(id: number): Observable<void> {
     const headers = this.getHeaders();
-    return this.http.delete<void>(`${this.profileDetails_url}/${id}`, {
+    return this.http.delete<void>(`${this.profileDetails_url}/delete/${id}`, {
       headers
     });
   }
 
   deleteProfile(id: number): Observable<void> {
     const headers = this.getHeaders();
-    return this.http.delete<void>(`${this.profile_url}/${id}`, { headers });
+    return this.http.delete<void>(`${this.profile_url}/delete/${id}`, {
+      headers
+    });
   }
 }

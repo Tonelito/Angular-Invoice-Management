@@ -20,7 +20,14 @@ export interface Roles {
 
 export interface Profiles {
   note: string;
-  object: Profile[];
+  object: {
+    note: string;
+    object: Profile[];
+    totalElements: number;
+    totalPages: number;
+    currentPage: number;
+    pageSize: number;
+  };
 }
 
 export interface ProfileWithRoles extends Profile {

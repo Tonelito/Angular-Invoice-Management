@@ -64,7 +64,7 @@ export class ProfilesComponent implements OnInit {
     this.profilesService.getProfiles().subscribe({
       next: profiles => {
         if (profiles.object) {
-          this.profiles = profiles.object;
+          this.profiles = profiles.object.object;
           this.filteredProfiles = new MatTableDataSource(this.profiles);
           this.filteredProfiles.paginator = this.paginator;
         }
