@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { ProfilesService } from '../../services/profiles.service';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
@@ -39,6 +39,9 @@ export class ProfilesComponent implements OnInit {
   selectedRoles: number[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   searchQuery = '';
+  totalProfiles = 0;
+  pageSize = 10;
+  currentPage = 0;
 
   constructor(
     private readonly _notifications: NotificationsService,
@@ -59,14 +62,16 @@ export class ProfilesComponent implements OnInit {
     this.fetchRoles();
   }
 
-  fetchProfiles(): void {
+  fetchProfiles(page: number = 0, pageSize: number = 10): void {
     this.blockUI.start();
-    this.profilesService.getProfiles().subscribe({
-      next: profiles => {
-        if (profiles.object) {
-          this.profiles = profiles.object.object;
+    this.profilesService.getProfiles(page, pageSize).subscribe({
+      next: response => {
+        if (response.object && response.object.object) {
+          this.profiles = response.object.object;
           this.filteredProfiles = new MatTableDataSource(this.profiles);
-          this.filteredProfiles.paginator = this.paginator;
+          this.totalProfiles = response.object.totalElements;
+          this.currentPage = response.object.currentPage;
+          this.pageSize = response.object.pageSize;
         }
         this.blockUI.stop();
       },
@@ -75,6 +80,10 @@ export class ProfilesComponent implements OnInit {
         this.blockUI.stop();
       }
     });
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.fetchProfiles(event.pageIndex, event.pageSize);
   }
 
   fetchRoles(): void {

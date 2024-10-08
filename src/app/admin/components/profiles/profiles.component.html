@@ -54,9 +54,13 @@
           </div>
           <!-- Paginator-->
           <mat-paginator
-            [pageSize]="10"
-            showFirstLastButtons
             hidePageSize
+            [length]="totalProfiles"
+            [pageSize]="pageSize"
+            [pageIndex]="currentPage"
+            [pageSizeOptions]="[10]"
+            (page)="onPageChange($event)"
+            showFirstLastButtons
           ></mat-paginator>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
@@ -37,9 +37,12 @@ export class ProfilesService {
     return this.http.get<Roles>(`${this.role_url}/show-all`, { headers });
   }
 
-  getProfiles(): Observable<Profiles> {
+  getProfiles(page: number = 0, pageSize: number = 10): Observable<Profiles> {
     const headers = this.getHeaders();
-    return this.http.get<Profiles>(`${this.profile_url}/show-all`, { headers });
+    return this.http.get<Profiles>(
+      `${this.profile_url}/show-all?page=${page}&size=${pageSize}`,
+      { headers }
+    );
   }
 
   getProfile(id: number): Observable<ProfileResponse> {
