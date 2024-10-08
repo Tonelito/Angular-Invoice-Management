@@ -82,9 +82,8 @@ export class ProfilesService {
     const headers = this.getHeaders();
     return this.http.patch<ProfileResponse>(
       `${this.profile_url}/status-change/${id}`,
-      {
-        headers
-      }
+      {},
+      { headers }
     );
   }
 
