@@ -4,26 +4,19 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { CirclesComponent } from './components/circles/circles.component';
 import { MatTableComponent } from './components/mat-table/mat-table.component';
-import { ListComponent } from './components/list/list.component';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  declarations: [CirclesComponent, MatTableComponent, ListComponent],
+  declarations: [CirclesComponent, MatTableComponent, ConfirmDialogComponent],
   imports: [
     CommonModule,
     MatTableModule,
     MatPaginatorModule,
-    MatListModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule ,
-    NgIf
+    TranslateModule,
+    MatButtonModule
   ],
-  exports: [CirclesComponent, MatTableComponent, ListComponent]
+  exports: [CirclesComponent, MatTableComponent]
 })
 export class SharedModule { }

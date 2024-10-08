@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { confirmPasswordValidator } from 'src/app/shared/utilities/confirm-password.validator';
-import { ChangePasswordService } from '../../services/change-password.service';
 import { jwtDecode } from 'jwt-decode';
+import { AuthService } from '../../services/auth.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
+import { TranslateService } from '@ngx-translate/core';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-password-change',
@@ -17,9 +21,21 @@ export class PasswordChangeComponent implements OnInit {
   passwordChangeForm!: FormGroup;
   sub!: string;
 
+  matcher = new MyErrorStateMatcher();
+  @BlockUI() blockUI!: NgBlockUI;
+  public options = {
+    timeOut: 3000,
+    showProgressBar: false,
+    pauseOnHover: true,
+    clickToClose: true
+  }
+
+
   constructor(
     private _formBuilder: FormBuilder,
-    private service: ChangePasswordService
+    private serviceAuth: AuthService,
+    private readonly translate: TranslateService,
+    private readonly _notifications: NotificationsService,
   ) { }
 
   ngOnInit() {
@@ -30,6 +46,7 @@ export class PasswordChangeComponent implements OnInit {
     }, { validators: confirmPasswordValidator });
 
     this.getEmail();
+    this.translate.use('es')
   };
 
   toggleCurrentPasswordVisibility() {
@@ -46,19 +63,17 @@ export class PasswordChangeComponent implements OnInit {
 
   getEmail() {
     const token = localStorage.getItem('token');
-    console.log('Token:', token);
     if (token) {
       const decodedToken: any = jwtDecode(token);
       this.sub = decodedToken.sub;
     }
-    console.log('Email:', this.sub);
   }
 
   onSubmit() {
     if (this.passwordChangeForm.invalid) {
       return;
     }
-
+  
     const passwordChangeData = {
       email: this.sub,
       newPassword: this.passwordChangeForm.get('newPassword')?.value,
@@ -67,12 +82,14 @@ export class PasswordChangeComponent implements OnInit {
 
     console.log('Password change data:', passwordChangeData);
 
-    this.service.changePassword(passwordChangeData).subscribe({
+    this.serviceAuth.changePassword(passwordChangeData).subscribe({
       next: (response) => {
         console.log('Password changed', response);
+        this._notifications.success('Password changed successfully');
       },
       error: (err) => {
         console.error('Error changing password', err);
+        this._notifications.error('Error changing password');
       }
     });
   }

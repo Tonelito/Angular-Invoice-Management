@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { confirmPasswordValidator } from 'src/app/shared/utilities/confirm-password.validator';
-import { RecoverPasswordService } from '../../services/recover-password.service';
-import { VerificCodeService } from '../../services/verific-code.service';
+import { AuthService } from '../../services/auth.service';
+import { NotificationsService } from 'angular2-notifications';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
   selector: 'app-password-recovery',
@@ -14,11 +15,19 @@ export class PasswordRecoveryComponent implements OnInit {
   secondFormGroup!: FormGroup;
   hideNewConfirmPassword = true;
   hideNewPassword = true;
+  @BlockUI() blockUI!: NgBlockUI;
+  public options = {
+    timeOut: 3000,
+    showProgressBar: false,
+    pauseOnHover: true,
+    clickToClose: true
+  }
 
   constructor(
     private _formBuilder: FormBuilder,
-    private service: RecoverPasswordService,
-    private serviceVerify: VerificCodeService) { }
+    private serviceAuth: AuthService,
+    private readonly _notifications: NotificationsService,
+  ) { }
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -53,12 +62,14 @@ export class PasswordRecoveryComponent implements OnInit {
 
     const email = this.firstFormGroup.get('email')?.value;
     console.log('Email:', email);
-    this.service.passwordRecovery(email).subscribe({
+    this.serviceAuth.passwordRecovery(email).subscribe({
       next: (response) => {
         console.log('Email sent', response);
+        this._notifications.success('Email sent', 'Check your email for the recovery code');
       },
       error: (err) => {
         console.error('Error sending email:', err);
+        this._notifications.error('Error sending email', 'Please try again');
       }
     });
   }
@@ -80,12 +91,14 @@ export class PasswordRecoveryComponent implements OnInit {
 
     console.log('Verify Data:', verifyData);
 
-    this.serviceVerify.verifyCode(verifyData).subscribe({
+    this.serviceAuth.verifyCode(verifyData).subscribe({
       next: (response) => {
         console.log('Verification successful', response);
+        this._notifications.success('Verification successful', 'Password Recovery successfully');
       },
       error: (err) => {
         console.error('Error during verification:', err);
+        this._notifications.error('Error during verification', 'Please try again');
       }
     });
   }

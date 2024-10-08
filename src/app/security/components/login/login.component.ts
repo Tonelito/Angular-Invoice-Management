@@ -1,26 +1,10 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { NotificationsService } from 'angular2-notifications';
 import { TranslateService } from '@ngx-translate/core';
-
-/* Error matcher for material inputs */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
-  }
-}
+import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
 
 @Component({
   selector: 'app-login',
@@ -28,11 +12,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  //form variables
-  matcher = new MyErrorStateMatcher();
   loginForm: FormGroup;
   //password hide
   hide = true;
+  //error handler
+  matcher = new MyErrorStateMatcher();
   //blockUI
   @BlockUI() blockUI!: NgBlockUI;
   //angular2-notifications options
@@ -44,20 +28,16 @@ export class LoginComponent {
   };
 
   constructor(
-    private translate: TranslateService,
-    private service: LoginService,
-    private fb: FormBuilder,
-    private _notifications: NotificationsService
+    private readonly translate: TranslateService,
+    private readonly service: LoginService,
+    private readonly fb: FormBuilder,
+    private readonly _notifications: NotificationsService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
-    this.translate.use('en');
-  }
-
-  switchLanguage(lang: string) {
-    this.translate.use(lang);
+    this.translate.use('es');
   }
 
   onSubmit() {
@@ -72,7 +52,6 @@ export class LoginComponent {
 
       this.service.login(loginData).subscribe({
         next: (response: any) => {
-          // Use translated success message
           this._notifications.success(
             this.translate.instant('LOGIN.NOTIFICATIONS.SUCCESS'),
             this.translate.instant('LOGIN.NOTIFICATIONS.SUCCESS_DESC')
@@ -81,7 +60,6 @@ export class LoginComponent {
           this.blockUI.stop();
         },
         error: error => {
-          // Use translated error message
           this._notifications.error(
             this.translate.instant('LOGIN.NOTIFICATIONS.FAILURE'),
             this.translate.instant('LOGIN.NOTIFICATIONS.FAILURE_DESC')
@@ -91,7 +69,6 @@ export class LoginComponent {
         }
       });
     } else {
-      // Use translated form error message
       this._notifications.error(
         this.translate.instant('LOGIN.NOTIFICATIONS.INVALID_FORM'),
         this.translate.instant('LOGIN.NOTIFICATIONS.INVALID_FORM_DESC')

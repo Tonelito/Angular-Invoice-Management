@@ -22,5 +22,141 @@
       "INVALID_FORM_DESC": "Please fill in the fields correctly",
       "LOGGING_IN": "Logging in"
     }
+  },
+  "AUDIT": {
+    "TITLE": "Audit",
+    "DATE": "Date to audit",
+    "ENTITY": "Entity",
+    "SEARCH": "Search",
+    "ENTITIES": {
+      "ENTITY": "Entity",
+      "USER": "User",
+      "OPERATION": "Operation",
+      "DATE": "Date"
+    },
+    "ERRORS": {
+      "REQUIRED_DATE": "date is required",
+      "REQUIRED_ENTITY": "entity is required"
+    },
+    "NOTIFICATIONS": {
+      "SENDING_REQUEST": "Sending audit request...",
+      "SUCCESS": "Audit Successful",
+      "SUCCESS_DESC": "The audit data has been successfully retrieved",
+      "FAILURE": "Audit Failed",
+      "FAILURE_DESC": "Unable to retrieve audit data. Please try again",
+      "INVALID_FORM": "Invalid Form",
+      "INVALID_FORM_DESC": "Please complete the form correctly"
+    }
+  },
+  "PROFILES": {
+    "TITLE": "Profiles",
+    "SEARCH": "Search...",
+    "SEARCH_PLACEHOLDER": "Profile Name",
+    "FORM_TITLE": "Add Profile",
+    "NAME": "Profile Name",
+    "DESCRIPTION": "Description",
+    "SAVE": "Save",
+    "ERRORS": {
+      "REQUIRED_NAME": "Profile name is required",
+      "REQUIRED_DESCRIPTION": "Description is required",
+      "FETCH_PROFILE": "Error fetching profile details.",
+      "FETCH_ROLES": "Error fetching roles.",
+      "STATUS_TOGGLE": "Error changing status.",
+      "UPDATE_PROFILE": "Error updating profile."
+    },
+    "NOTIFICATIONS": {
+      "CREATING_PROFILE": "Creating profile...",
+      "PROFILE_CREATED": "Profile created",
+      "PROFILE_CREATED_DESC": "The profile has been created successfully",
+      "PROFILE_CREATION_FAILURE": "Profile creation failed",
+      "PROFILE_CREATION_FAILURE_DESC": "Unable to create the profile. Please try again",
+      "INVALID_FORM": "Invalid form",
+      "INVALID_FORM_DESC": "Please complete the form correctly",
+      "DELETING_PROFILE": "Deleting profile...",
+      "PROFILE_DELETED": "Profile deleted",
+      "PROFILE_DELETED_DESC": "The profile has been successfully deleted.",
+      "PROFILE_DELETE_FAILED": "Profile deletion failed",
+      "PROFILE_DELETE_FAILED_DESC": "There was an error deleting the profile.",
+      "STATUS_SUCCESS": "Profile status changed successfully.",
+      "STATUS_FAILURE": "Failed to change profile status.",
+      "UPDATE_SUCCESS": "Profile updated successfully.",
+      "UPDATE_FAILURE": "Failed to update profile."
+    },
+    "DIALOG": {
+      "TITLE": "Delete Profile",
+      "MESSAGE": "Are you sure you want to delete the profile \"{{ profileName }}\"?"
+    },
+    "FORM": {
+      "EDIT_PROFILE": "Edit Profile",
+      "EDIT_DESCRIPTION": "Update the name, description, and roles associated with this user profile. Ensure the correct roles are selected before saving your changes."
+    },
+    "TOOLTIP": {
+      "DISABLE_PROFILE": "Disable Profile"
+    },
+    "ACTIONS": {
+      "CANCEL": "Cancel",
+      "SAVE_CHANGES": "Save Changes"
+    },
+    "COMMON": {
+      "CANCEL": "Cancel",
+      "CONFIRM": "Confirm"
+    }
+  },
+  "USERS": {
+    "TITLE": "Users",
+    "SEARCH": "Search...",
+    "SEARCH_PLACEHOLDER": "User Email or Name",
+    "FORM_TITLE": "Add User",
+    "EMAIL": "Email",
+    "FULL_NAME": "Full Name",
+    "PROFILE": "Profile",
+    "SAVE": "Save",
+    "ERRORS": {
+      "REQUIRED_EMAIL": "User email is required",
+      "REQUIRED_FULL_NAME": "Full name is required",
+      "REQUIRED_PROFILE": "Profile is required",
+      "INVALID_EMAIL": "Please enter a valid email",
+      "FETCH_USERS": "Error fetching users.",
+      "FETCH_PROFILES": "Error fetching profiles.",
+      "STATUS_TOGGLE": "Error changing user status.",
+      "UPDATE_USER": "Error updating user."
+    },
+    "NOTIFICATIONS": {
+      "CREATING_USER": "Creating user...",
+      "USER_CREATED": "User created",
+      "USER_CREATED_DESC": "The user has been created successfully",
+      "USER_CREATION_FAILURE": "User creation failed",
+      "USER_CREATION_FAILURE_DESC": "Unable to create the user. Please try again",
+      "INVALID_FORM": "Invalid form",
+      "INVALID_FORM_DESC": "Please complete the form correctly",
+      "DELETING_USER": "Deleting user...",
+      "USER_DELETED": "User deleted",
+      "USER_DELETED_DESC": "The user has been successfully deleted.",
+      "USER_DELETE_FAILED": "User deletion failed",
+      "USER_DELETE_FAILED_DESC": "There was an error deleting the user.",
+      "STATUS_SUCCESS": "User status changed successfully.",
+      "STATUS_FAILURE": "Failed to change user status.",
+      "UPDATE_SUCCESS": "User updated successfully.",
+      "UPDATE_FAILURE": "Failed to update user."
+    },
+    "DIALOG": {
+      "TITLE": "Delete User",
+      "MESSAGE": "Are you sure you want to delete the user \"{{ userName }}\"?"
+    },
+    "FORM": {
+      "EDIT_USER": "Edit User",
+      "EDIT_DESCRIPTION": "Update the email, full name, and profile associated with this user. Ensure the correct profile is selected before saving your changes."
+    },
+    "TOOLTIP": {
+      "DISABLE_USER": "Disable User"
+    },
+    "ACTIONS": {
+      "CANCEL": "Cancel",
+      "SAVE_CHANGES": "Save Changes"
+    },
+    "COMMON": {
+      "CANCEL": "Cancel",
+      "CONFIRM": "Confirm"
+    }
   }
 }

@@ -1,15 +1,15 @@
 {
   "LOGIN": {
-    "TITLE": "Iniciar Sesión",
+    "TITLE": "Iniciar sesión",
     "EMAIL": "Correo",
     "EMAIL_PLACEHOLDER": "Ingresa tu correo",
     "PASSWORD": "Contraseña",
     "PASSWORD_PLACEHOLDER": "Ingresa tu contraseña",
     "CHECKBOX": "Recuérdame",
     "FORGOT_PASSWORD": "¿Olvidaste tu contraseña?",
-    "SUBMIT": "Iniciar Sesión",
+    "SUBMIT": "Iniciar sesión",
     "ERRORS": {
-      "INVALID_EMAIL": "Por favor ingresa una dirección de correo válida",
+      "INVALID_EMAIL": "Por favor, ingresa una dirección de correo válida",
       "REQUIRED_EMAIL": "El correo es obligatorio",
       "REQUIRED_PASSWORD": "La contraseña es obligatoria"
     },
@@ -19,8 +19,145 @@
       "FAILURE": "Error al iniciar sesión",
       "FAILURE_DESC": "Usuario o contraseña incorrectos",
       "INVALID_FORM": "Formulario inválido",
-      "INVALID_FORM_DESC": "Por favor rellena los campos correctamente",
-      "LOGGING_IN": "Iniciando Sesión"
+      "INVALID_FORM_DESC": "Por favor, rellena los campos correctamente",
+      "LOGGING_IN": "Iniciando sesión"
+    }
+  },
+  "AUDIT": {
+    "TITLE": "Auditoria",
+    "DATE": "Fecha a auditar",
+    "ENTITY": "Entidad",
+    "SEARCH": "Buscar",
+    "ERRORS": {
+      "REQUIRED_DATE": "La fecha de auditoria es obligatoria",
+      "REQUIRED_ENTITY": "La entidad es obligatoria"
+    },
+    "TABLE_HEADERS": {
+      "ENTITY": "Entidad",
+      "USER": "Usuario",
+      "OPERATION": "Operación",
+      "DATE": "Fecha"
+    },
+    "NOTIFICATIONS": {
+      "SENDING_REQUEST": "Enviando solicitud de auditoría...",
+      "SUCCESS": "Auditoría exitosa",
+      "SUCCESS_DESC": "Los datos de la auditoría se han listado con éxito",
+      "FAILURE": "Auditoría fallida",
+      "FAILURE_DESC": "No se pudieron listar los datos de la auditoría. Inténtalo de nuevo",
+      "INVALID_FORM": "Formulario inválido",
+      "INVALID_FORM_DESC": "Por favor, completa el formulario correctamente"
+    }
+  },
+  "PROFILES": {
+    "TITLE": "Perfiles",
+    "SEARCH": "Buscar...",
+    "SEARCH_PLACEHOLDER": "Nombre del perfil",
+    "FORM_TITLE": "Agregar perfil",
+    "NAME": "Nombre del perfil",
+    "DESCRIPTION": "Descripción",
+    "SAVE": "Guardar",
+    "ERRORS": {
+      "REQUIRED_NAME": "El nombre del perfil es obligatorio",
+      "REQUIRED_DESCRIPTION": "La descripción es obligatoria",
+      "FETCH_PROFILE": "Error al obtener los detalles del perfil.",
+      "FETCH_ROLES": "Error al obtener los roles.",
+      "STATUS_TOGGLE": "Error al cambiar el estado.",
+      "UPDATE_PROFILE": "Error al actualizar el perfil."
+    },
+    "NOTIFICATIONS": {
+      "CREATING_PROFILE": "Creando perfil...",
+      "PROFILE_CREATED": "Perfil creado",
+      "PROFILE_CREATED_DESC": "El perfil ha sido creado exitosamente",
+      "PROFILE_CREATION_FAILURE": "Error al crear perfil",
+      "PROFILE_CREATION_FAILURE_DESC": "No se pudo crear el perfil. Inténtalo de nuevo",
+      "INVALID_FORM": "Formulario inválido",
+      "INVALID_FORM_DESC": "Por favor, completa el formulario correctamente",
+      "DELETING_PROFILE": "Eliminando perfil...",
+      "PROFILE_DELETED": "Perfil eliminado",
+      "PROFILE_DELETED_DESC": "El perfil ha sido eliminado correctamente.",
+      "PROFILE_DELETE_FAILED": "Error al eliminar el perfil",
+      "PROFILE_DELETE_FAILED_DESC": "Hubo un error al eliminar el perfil.",
+      "STATUS_SUCCESS": "Estado del perfil cambiado con éxito.",
+      "STATUS_FAILURE": "No se pudo cambiar el estado del perfil.",
+      "UPDATE_SUCCESS": "Perfil actualizado con éxito.",
+      "UPDATE_FAILURE": "No se pudo actualizar el perfil."
+    },
+    "DIALOG": {
+      "TITLE": "Eliminar Perfil",
+      "MESSAGE": "¿Estás seguro de que deseas eliminar el perfil \"{{ profileName }}\"?"
+    },
+    "FORM": {
+      "EDIT_PROFILE": "Editar Perfil",
+      "EDIT_DESCRIPTION": "Actualiza el nombre, la descripción y los roles asociados con este perfil de usuario. Asegúrate de que se seleccionen los roles correctos antes de guardar los cambios."
+    },
+    "TOOLTIP": {
+      "DISABLE_PROFILE": "Deshabilitar Perfil"
+    },
+    "ACTIONS": {
+      "CANCEL": "Cancelar",
+      "SAVE_CHANGES": "Guardar Cambios"
+    }
+  },
+  "COMMON": {
+    "CANCEL": "Cancelar",
+    "CONFIRM": "Confirmar"
+  },
+  "USERS": {
+    "TITLE": "Usuarios",
+    "SEARCH": "Buscar...",
+    "SEARCH_PLACEHOLDER": "Nombre de Usuario",
+    "FORM_TITLE": "Agregar Usuario",
+    "EMAIL": "Correo Electrónico",
+    "FULL_NAME": "Nombre Completo",
+    "USER":"Usuario",
+    "PROFILE": "Perfil",
+    "SAVE": "Guardar",
+    "ERRORS": {
+      "REQUIRED_EMAIL": "El correo del usuario es obligatorio",
+      "REQUIRED_FULL_NAME": "El nombre es obligatorio",
+      "REQUIRED_PROFILE": "El perfil es obligatorio",
+      "INVALID_EMAIL": "Por favor, ingresa un correo electrónico válido",
+      "FETCH_USERS": "Error al cargar los usuarios.",
+      "FETCH_PROFILES": "Error al cargar los perfiles.",
+      "STATUS_TOGGLE": "Error al cambiar el estado del usuario.",
+      "UPDATE_USER": "Error al actualizar el usuario."
+    },
+    "NOTIFICATIONS": {
+      "CREATING_USER": "Creando usuario...",
+      "USER_CREATED": "Usuario creado",
+      "USER_CREATED_DESC": "El usuario ha sido creado exitosamente",
+      "USER_CREATION_FAILURE": "Error al crear el usuario",
+      "USER_CREATION_FAILURE_DESC": "No se pudo crear el usuario. Por favor, inténtalo nuevamente",
+      "INVALID_FORM": "Formulario inválido",
+      "INVALID_FORM_DESC": "Por favor, completa correctamente el formulario",
+      "DELETING_USER": "Eliminando usuario...",
+      "USER_DELETED": "Usuario eliminado",
+      "USER_DELETED_DESC": "El usuario ha sido eliminado exitosamente.",
+      "USER_DELETE_FAILED": "Error al eliminar el usuario",
+      "USER_DELETE_FAILED_DESC": "Hubo un error al eliminar el usuario.",
+      "STATUS_SUCCESS": "Estado del usuario cambiado exitosamente.",
+      "STATUS_FAILURE": "No se pudo cambiar el estado del usuario.",
+      "UPDATE_SUCCESS": "Usuario actualizado exitosamente.",
+      "UPDATE_FAILURE": "Error al actualizar el usuario."
+    },
+    "DIALOG": {
+      "TITLE": "Eliminar Usuario",
+      "MESSAGE": "¿Estás seguro de que quieres eliminar al usuario \"{{ userName }}\"?"
+    },
+    "FORM": {
+      "EDIT_USER": "Editar Usuario",
+      "EDIT_DESCRIPTION": "Actualiza el nombre completo y perfil asociado con este usuario. Asegúrate de seleccionar el perfil correcto antes de guardar los cambios."
+    },
+    "TOOLTIP": {
+      "DISABLE_USER": "Deshabilitar Usuario"
+    },
+    "ACTIONS": {
+      "CANCEL": "Cancelar",
+      "SAVE_CHANGES": "Guardar Cambios"
+    },
+    "COMMON": {
+      "CANCEL": "Cancelar",
+      "CONFIRM": "Confirmar"
     }
   }
 }

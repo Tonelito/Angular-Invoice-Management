@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class LoginService {
   url = API_URL_SECURITY;
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   login(loginData: any): Observable<any> {
     const headers = new HttpHeaders({

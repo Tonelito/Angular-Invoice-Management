@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuditComponent } from './components/audit/audit.component';
-import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
+import { ProfilesComponent } from './components/profiles/profiles.component';
+import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
   {
@@ -9,8 +10,12 @@ const routes: Routes = [
     component: AuditComponent
   },
   {
-    path: 'dashboard',
-    component: UserDashboardComponent
+    path: 'profiles',
+    component: ProfilesComponent
+  },
+  {
+    path: 'users',
+    component: UsersComponent
   }
 ];
 
@@ -18,4 +23,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AdminRoutingModule {}
+export class AdminRoutingModule { }

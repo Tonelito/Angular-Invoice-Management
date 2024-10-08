@@ -1,5 +1,9 @@
 export const environment = {
-  apiSecurity: 'http://52.15.49.162:8080/invoice-management/v0.1/auth',
-  apiUser: 'http://52.15.49.162:8080/invoice-management/v0.1/user',
-  apiProfile: 'http://52.15.49.162:8080/invoice-management/v0.1/profile',
+  apiSecurity: 'http://54.91.73.65:8080/invoice-management/v0.1/auth',
+  apiProfiles: 'http://54.91.73.65:8080/invoice-management/v0.1/profile',
+  apiRoles: 'http://54.91.73.65:8080/invoice-management/v0.1/rol',
+  apiProfileRoleDetail:
+    'http://54.91.73.65:8080/invoice-management/v0.1/profile-rol-detail',
+  apiAudit: 'http://54.91.73.65:8080/invoice-management/v0.1/audit',
+  apiUser: 'http://54.91.73.65:8080/invoice-management/v0.1/user',
 };

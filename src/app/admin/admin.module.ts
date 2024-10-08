@@ -10,15 +10,23 @@ import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from '../shared/shared.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AuditComponent } from './components/audit/audit.component';
-import { MatIconModule } from '@angular/material/icon';
+import { ProfilesComponent } from './components/profiles/profiles.component';
+import { BlockUIModule } from 'ng-block-ui';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { TranslateModule } from '@ngx-translate/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { ListUsersComponent } from './components/user-dashboard/list-users/list-users.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { EditDialogComponent } from './components/profiles/edit-dialog/edit-dialog.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatListModule } from '@angular/material/list';
-import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
-import { FormUserComponent } from './components/user-dashboard/form-user/form-user.component';
+import { UsersComponent } from './components/users/users.component';
+import { EditDialogUserComponent } from './components/users/edit-dialog-user/edit-dialog-user.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
-  declarations: [AuditComponent, UserDashboardComponent, FormUserComponent, ListUsersComponent],
+  declarations: [AuditComponent, ProfilesComponent, EditDialogComponent, UsersComponent, EditDialogUserComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -31,12 +39,17 @@ import { FormUserComponent } from './components/user-dashboard/form-user/form-us
     MatListModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatInputModule,
     MatIconModule,
     MatPaginatorModule,
     NgIf,
     SharedModule,
-  ],
-  exports: [AuditComponent, ListUsersComponent]
+    BlockUIModule.forRoot(),
+    SimpleNotificationsModule.forRoot(),
+    TranslateModule,
+    MatSlideToggleModule,
+    MatDialogModule,
+    MatTooltipModule,
+    MatAutocompleteModule
+  ]
 })
 export class AdminModule { }

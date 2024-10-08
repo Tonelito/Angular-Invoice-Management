@@ -1,0 +1,172 @@
+.profiles-container {
+  display: flex;
+  padding: 25px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+
+  .profiles-dashboard {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    flex: 1 0 0;
+    align-self: stretch;
+
+    .profiles-column {
+      display: flex;
+      padding: 10px;
+      flex-direction: column;
+      align-items: flex-start;
+      align-self: stretch;
+      width: 350px;
+
+      @media (max-width: 900px) {
+        width: 100%;
+      }
+
+      mat-form-field {
+        width: 100%;
+      }
+
+      .profiles-list-container {
+        display: flex;
+        padding: 10px;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        flex: 1 0 0;
+        align-self: stretch;
+        border-radius: 15px;
+        background: #fff;
+        box-shadow:
+          0px 1px 1px 0px rgba(0, 0, 0, 0.25),
+          0px 2px 2px 0px rgba(0, 0, 0, 0.25),
+          0px 1px 5px 0px rgba(0, 0, 0, 0.25);
+
+        .profiles-list {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: flex-start;
+          flex: 1 0 0;
+          align-self: stretch;
+
+          .profile-item {
+            width: 100%;
+            display: flex;
+            padding: 7px 11px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+
+            .profile-info {
+              display: flex;
+              align-items: center;
+
+              .status-circle {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                margin-right: 10px;
+                display: inline-block;
+                background-color: #48e13a;
+                &.active {
+                  background-color: #48e13a;
+                }
+
+                &.inactive {
+                  background-color: red;
+                }
+              }
+
+              p {
+                font-weight: 500;
+                margin: 0;
+              }
+            }
+
+            .buttons {
+              display: flex;
+              gap: 5px;
+              button {
+                width: 36px;
+                height: 36px;
+                padding: 0;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                mat-icon {
+                  font-size: 23px;
+                }
+              }
+            }
+
+            @media (max-width: 900px) {
+              justify-content: center;
+            }
+          }
+        }
+      }
+    }
+
+    .profiles-form-container {
+      display: flex;
+      padding: 10px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      flex: 1 0 0;
+      align-self: stretch;
+
+      .form-container {
+        display: flex;
+        padding: 16px 29px;
+        flex-direction: column;
+        gap: 10px;
+        align-self: stretch;
+        border-radius: 20px;
+        background: #c8c8c8;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+          .inputs-button {
+            display: flex;
+            gap: 10px;
+
+            mat-form-field {
+              width: 50%;
+              @media (max-width: 900px) {
+                width: 100%;
+              }
+            }
+
+            button {
+              height: 58px;
+            }
+
+            @media (max-width: 900px) {
+              display: flex;
+              flex-direction: column;
+            }
+          }
+        }
+      }
+    }
+
+    .toggle-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding: 10px 0;
+      justify-content: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
