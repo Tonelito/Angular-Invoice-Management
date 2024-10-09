@@ -8,6 +8,7 @@
     "CHECKBOX": "Recuérdame",
     "FORGOT_PASSWORD": "¿Olvidaste tu contraseña?",
     "SUBMIT": "Iniciar sesión",
+    "REGISTER": "¿Aún no tienes cuenta? Regístrate aquí",
     "ERRORS": {
       "INVALID_EMAIL": "Por favor, ingresa una dirección de correo válida",
       "REQUIRED_EMAIL": "El correo es obligatorio",

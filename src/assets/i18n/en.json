@@ -8,6 +8,7 @@
     "CHECKBOX": "Remember me",
     "FORGOT_PASSWORD": "Forgot your password?",
     "SUBMIT": "Log In",
+    "REGISTER": "You don't have an account? Sign Up",
     "ERRORS": {
       "INVALID_EMAIL": "Please enter a valid email address",
       "REQUIRED_EMAIL": "Email is required",
