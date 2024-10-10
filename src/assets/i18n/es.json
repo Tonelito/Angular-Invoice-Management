@@ -109,7 +109,7 @@
     "FORM_TITLE": "Agregar Usuario",
     "EMAIL": "Correo Electrónico",
     "FULL_NAME": "Nombre Completo",
-    "USER":"Usuario",
+    "USER": "Usuario",
     "PROFILE": "Perfil",
     "SAVE": "Guardar",
     "ERRORS": {
@@ -149,6 +149,7 @@
       "EDIT_DESCRIPTION": "Actualiza el nombre completo y perfil asociado con este usuario. Asegúrate de seleccionar el perfil correcto antes de guardar los cambios."
     },
     "TOOLTIP": {
+      "ENABLE_USER": "Habilitar Usuario",
       "DISABLE_USER": "Deshabilitar Usuario"
     },
     "ACTIONS": {

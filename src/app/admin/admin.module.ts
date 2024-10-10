@@ -18,15 +18,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
-import { EditDialogComponent } from './components/profiles/edit-dialog/edit-dialog.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatListModule } from '@angular/material/list';
 import { UsersComponent } from './components/users/users.component';
-import { EditDialogUserComponent } from './components/users/edit-dialog-user/edit-dialog-user.component';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
-  declarations: [AuditComponent, ProfilesComponent, EditDialogComponent, UsersComponent, EditDialogUserComponent],
+  declarations: [AuditComponent, ProfilesComponent, UsersComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

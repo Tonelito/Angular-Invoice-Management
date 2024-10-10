@@ -15,7 +15,6 @@ import {
 } from '../../utilities/models/profile.model';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { switchMap } from 'rxjs';
-import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 
 @Component({
   selector: 'app-profiles',
@@ -39,6 +38,9 @@ export class ProfilesComponent implements OnInit {
   selectedRoles: number[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   searchQuery = '';
+  selectedProfileId!: number;
+  isEditing: boolean = false;
+  profileStatus!: boolean;
 
   constructor(
     private readonly _notifications: NotificationsService,
@@ -57,6 +59,29 @@ export class ProfilesComponent implements OnInit {
   ngOnInit(): void {
     this.fetchProfiles();
     this.fetchRoles();
+  }
+
+  fetchProfileDetails(profileId: number): void {
+    this.profilesService.getProfile(profileId).subscribe({
+      next: response => {
+        this.selectedProfileId = response.object.profileId;
+        this.profileForm.patchValue({
+          name: response.object.name,
+          description: response.object.description,
+          status: response.object.status
+        });
+        this.selectedRoles = response.object.rolsId.map(role => role.rolId);
+        this.isEditing = true;
+        this.profileStatus = response.object.status;
+        console.log('Profile details:', response);
+      },
+      error: error => {
+        console.error(
+          this.translate.instant('PROFILES.ERRORS.FETCH_PROFILE'),
+          error
+        );
+      }
+    });
   }
 
   fetchProfiles(): void {
@@ -93,15 +118,32 @@ export class ProfilesComponent implements OnInit {
     });
   }
 
-  toggleRole(roleId: number, checked: boolean): void {
-    if (checked) {
-      this.selectedRoles.push(roleId);
-    } else {
-      this.selectedRoles = this.selectedRoles.filter(id => id !== roleId);
+  updateProfiles(): void {
+    if (this.profileForm.valid) {
+      const updatedProfile = {
+        name: this.profileForm.value.name,
+        description: this.profileForm.value.description,
+        rolsId: this.selectedRoles
+      };
+
+      this.profilesService
+        .putProfile(this.selectedProfileId, updatedProfile)
+        .subscribe({
+          next: () => {
+            this._notifications.success(this.translate.instant('PROFILES.NOTIFICATIONS.UPDATE_SUCCESS'), '');
+            this.fetchProfiles();
+            this.profileForm.reset();
+          },
+          error: error => {
+            console.error(
+              this.translate.instant('PROFILES.ERRORS.UPDATE_PROFILE'), error);
+            this._notifications.error(this.translate.instant('PROFILES.NOTIFICATIONS.UPDATE_FAILURE'), '');
+          }
+        });
     }
   }
 
-  submitProfile(): void {
+  addProfile(): void {
     if (this.profileForm.valid) {
       const profileData: CreateProfile = {
         name: this.profileForm.value.name,
@@ -147,16 +189,38 @@ export class ProfilesComponent implements OnInit {
     }
   }
 
-  openEditDialog(profile: Profile): void {
-    const dialogRef = this.dialog.open(EditDialogComponent, {
-      data: { profileId: profile.profileId }
-    });
+  changeStatus(profileId: number): void {
+    this.profilesService.changeStatus(profileId).subscribe({
+      next: response => {
+        this.fetchProfileDetails(profileId);
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+        console.log('Profile update: ', response);
+        this._notifications.success(
+          this.translate.instant('PROFILES.NOTIFICATIONS.STATUS_SUCCESS', ''),
+          ''
+        );
         this.fetchProfiles();
+      },
+      error: error => {
+        console.log(profileId)
+        console.error(
+          this.translate.instant('PROFILES.ERRORS.STATUS_TOGGLE'),
+          error
+        );
+        this._notifications.error(
+          this.translate.instant('PROFILES.NOTIFICATIONS.STATUS_FAILURE'),
+          ''
+        );
       }
     });
+  }
+
+  submitProfile(): void {
+    if (this.isEditing) {
+      this.updateProfiles();
+    } else {
+      this.addProfile();
+    }
   }
 
   confirmDeleteProfile(profile: Profile): void {
@@ -207,6 +271,20 @@ export class ProfilesComponent implements OnInit {
           this.blockUI.stop();
         }
       });
+  }
+
+  cancelEdit(): void {
+    this.isEditing = false;
+    this.profileForm.reset();
+    this.selectedRoles = [];
+  }
+
+  toggleRole(roleId: number, checked: boolean): void {
+    if (checked) {
+      this.selectedRoles.push(roleId);
+    } else {
+      this.selectedRoles = this.selectedRoles.filter(id => id !== roleId);
+    }
   }
 
   searchProfiles(event: Event): void {

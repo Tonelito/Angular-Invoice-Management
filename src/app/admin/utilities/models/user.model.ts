@@ -23,4 +23,7 @@ export interface Users extends User {
     note: string;
     object: User[];
     totalElements: number;
+    totalPages: number;
+    currentPage: number;
+    pageSize: number;
 }

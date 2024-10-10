@@ -21,22 +21,29 @@
                                 </div>
                             </div>
                             <div class="buttons">
-                                <button mat-icon-button color="accent" (click)="openEditDialog(user)">
+                                <button mat-icon-button color="accent" (click)="fetchUserDetails(user.userId)">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                             </div>
                         </div>
                     </div>
                     <!--Paginator-->
-                    <mat-paginator #paginator [length]="totalUsers" [pageSize]="pageSize" hidePageSize
-                        (page)="onPageChange($event)">
+                    <mat-paginator #paginator [length]="totalUsers" [pageSize]="pageSize" [pageIndex]="currentPage"
+                        hidePageSize (page)="onPageChange($event)">
                     </mat-paginator>
                 </div>
             </div>
             <!---->
             <div class="users-form-container">
                 <div class="form-container">
-                    <h1>{{'USERS.FORM_TITLE' | translate}}</h1>
+                    <div class="title">
+                        <h1>{{'USERS.FORM_TITLE' | translate}}</h1>
+                        <button mat-mini-fab color="primary"
+                            matTooltip="{{ userStatus ? ('USERS.TOOLTIP.DISABLE_USER' | translate) : ('USERS.TOOLTIP.ENABLE_USER' | translate) }}"
+                            title="Deshabilitar Usuario" (click)="changeStatus(selectedUserId)" *ngIf="isEditing">
+                            <mat-icon>{{ userStatus ? 'person_off' : 'person_check' }}</mat-icon>
+                        </button>
+                    </div>
                     <form [formGroup]="userForm" (submit)="submitUser()">
                         <div class="inputs-button">
                             <mat-form-field hideRequiredMarker>
@@ -66,8 +73,13 @@
                                     <mat-label>{{'USERS.ERRORS.REQUIRED_PROFILE' | translate}}</mat-label>
                                 </mat-error>
                             </mat-form-field>
-                            <button mat-flat-button color="accent" type="submit">
-                                {{'USERS.SAVE' | translate}}
+                            <button mat-flat-button color="accent" type="submit"
+                                [disabled]="isEditing && userForm.pristine || userForm.invalid">
+                                {{ isEditing ? 'Guardar' : 'Agregar' }}
+                            </button>
+                            <button mat-flat-button color="primary" type="button" (click)="cancelEdit()"
+                                *ngIf="isEditing">
+                                Cancelar
                             </button>
                         </div>
                     </form>

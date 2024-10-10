@@ -148,6 +148,7 @@
       "EDIT_DESCRIPTION": "Update the email, full name, and profile associated with this user. Ensure the correct profile is selected before saving your changes."
     },
     "TOOLTIP": {
+      "ENABLE_USER": "Enable User",
       "DISABLE_USER": "Disable User"
     },
     "ACTIONS": {

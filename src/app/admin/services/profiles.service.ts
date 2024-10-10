@@ -22,7 +22,7 @@ export class ProfilesService {
   profileDetails_url = API_URL_PROFILE_ROLE_DETAIL;
   role_url = API_URL_ROLES;
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient) { }
 
   private getHeaders(): HttpHeaders {
     const token = cookieUtil.getValue('token');
@@ -34,7 +34,7 @@ export class ProfilesService {
 
   getRoles(): Observable<Roles> {
     const headers = this.getHeaders();
-    return this.http.get<Roles>(`${this.role_url}s`, { headers });
+    return this.http.get<Roles>(`${this.role_url}/show-all`, { headers });
   }
 
   getProfiles(): Observable<Profiles> {
@@ -44,14 +44,14 @@ export class ProfilesService {
 
   getProfile(id: number): Observable<ProfileResponse> {
     const headers = this.getHeaders();
-    return this.http.get<ProfileResponse>(`${this.profile_url}/${id}`, {
+    return this.http.get<ProfileResponse>(`${this.profile_url}/show-by-id/${id}`, {
       headers
     });
   }
 
   postProfile(profileData: CreateProfile): Observable<ProfileResponse> {
     const headers = this.getHeaders();
-    return this.http.post<ProfileResponse>(`${this.profile_url}`, profileData, {
+    return this.http.post<ProfileResponse>(`${this.profile_url}/create`, profileData, {
       headers
     });
   }
@@ -62,7 +62,7 @@ export class ProfilesService {
   ): Observable<ProfileResponse> {
     const headers = this.getHeaders();
     return this.http.put<ProfileResponse>(
-      `${this.profile_url}/${id}`,
+      `${this.profile_url}/update/${id}`,
       profileData,
       { headers }
     );
@@ -70,7 +70,7 @@ export class ProfilesService {
 
   changeStatus(id: number): Observable<ProfileResponse> {
     const headers = this.getHeaders();
-    return this.http.patch<ProfileResponse>(`${this.profile_url}/${id}`, {
+    return this.http.patch<ProfileResponse>(`${this.profile_url}/status-change/${id}`, null, {
       headers
     });
   }

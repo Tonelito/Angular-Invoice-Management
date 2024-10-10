@@ -6,78 +6,58 @@
         <!-- Searchbar -->
         <mat-form-field>
           <mat-label>{{ 'PROFILES.SEARCH' | translate }}</mat-label>
-          <input
-            matInput
-            placeholder="{{ 'PROFILES.SEARCH_PLACEHOLDER' | translate }}"
-            (input)="searchProfiles($event)"
-          />
+          <input matInput placeholder="{{ 'PROFILES.SEARCH_PLACEHOLDER' | translate }}"
+            (input)="searchProfiles($event)" />
         </mat-form-field>
         <div class="profiles-list-container">
           <!-- Profiles List -->
           <div class="profiles-list">
             <!-- Item Profile -->
-            <div
-              class="profile-item"
-              *ngFor="let profile of filteredProfiles.filteredData"
-            >
+            <div class="profile-item" *ngFor="let profile of filteredProfiles.filteredData">
               <!-- Profile Info -->
               <div class="profile-info">
                 <!-- Status Circle -->
-                <div
-                  class="status-circle"
-                  [ngClass]="{
+                <div class="status-circle" [ngClass]="{
                     active: profile.status,
                     inactive: !profile.status
-                  }"
-                ></div>
+                  }"></div>
                 <!-- Profile Name -->
                 <p>{{ profile.name }}</p>
               </div>
               <!-- Action Buttons -->
               <div class="buttons">
-                <button
-                  mat-icon-button
-                  color="accent"
-                  (click)="openEditDialog(profile)"
-                >
+                <button mat-icon-button color="accent" (click)="fetchProfileDetails(profile.profileId)">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button
-                  mat-icon-button
-                  color="accent"
-                  (click)="confirmDeleteProfile(profile)"
-                >
+                <button mat-icon-button color="accent" (click)="confirmDeleteProfile(profile)">
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>
             </div>
           </div>
           <!-- Paginator-->
-          <mat-paginator
-            [pageSize]="10"
-            showFirstLastButtons
-            hidePageSize
-          ></mat-paginator>
+          <mat-paginator [pageSize]="10" showFirstLastButtons hidePageSize></mat-paginator>
         </div>
       </div>
       <div class="profiles-form-container">
         <!-- Add Profile -->
         <div class="form-container">
-          <h1>{{ 'PROFILES.FORM_TITLE' | translate }}</h1>
+          <div class="title">
+            <h1>{{ 'PROFILES.FORM_TITLE' | translate }}</h1>
+            <button mat-mini-fab color="primary"
+              matTooltip="{{ profileStatus ? ('USERS.TOOLTIP.DISABLE_USER' | translate) : ('USERS.TOOLTIP.ENABLE_USER' | translate) }}"
+              title="Deshabilitar Usuario" (click)="changeStatus(selectedProfileId)" *ngIf="isEditing">
+              <mat-icon>{{ profileStatus ? 'person_off' : 'person_check' }}</mat-icon>
+            </button>
+          </div>
           <form [formGroup]="profileForm" (submit)="submitProfile()">
             <div class="inputs-button">
               <!-- Name Input -->
               <mat-form-field hideRequiredMarker>
                 <mat-label>{{ 'PROFILES.NAME' | translate }}</mat-label>
-                <input
-                  matInput
-                  formControlName="name"
-                  [errorStateMatcher]="matcher"
-                />
+                <input matInput formControlName="name" [errorStateMatcher]="matcher" />
                 <!-- Required Name -->
-                <mat-error
-                  *ngIf="profileForm.get('name')?.hasError('required')"
-                >
+                <mat-error *ngIf="profileForm.get('name')?.hasError('required')">
                   {{ 'PROFILES.ERRORS.REQUIRED_NAME' | translate }}
                 </mat-error>
               </mat-form-field>
@@ -85,28 +65,24 @@
               <!-- Description Input -->
               <mat-form-field hideRequiredMarker>
                 <mat-label>{{ 'PROFILES.DESCRIPTION' | translate }}</mat-label>
-                <input
-                  matInput
-                  formControlName="description"
-                  [errorStateMatcher]="matcher"
-                />
+                <input matInput formControlName="description" [errorStateMatcher]="matcher" />
                 <!-- Required Description -->
-                <mat-error
-                  *ngIf="profileForm.get('description')?.hasError('required')"
-                >
+                <mat-error *ngIf="profileForm.get('description')?.hasError('required')">
                   {{ 'PROFILES.ERRORS.REQUIRED_DESCRIPTION' | translate }}
                 </mat-error>
               </mat-form-field>
-              <button mat-flat-button color="accent" type="submit">
-                {{ 'PROFILES.SAVE' | translate }}
+              <button mat-flat-button color="accent" type="submit"
+                [disabled]="isEditing && profileForm.pristine || profileForm.invalid">
+                {{ isEditing ? 'Guardar' : 'Agregar' }}
+              </button>
+              <button mat-flat-button color="primary" type="button" (click)="cancelEdit()" *ngIf="isEditing">
+                Cancelar
               </button>
             </div>
             <!-- Toggles -->
             <div class="toggle-container">
-              <mat-slide-toggle
-                *ngFor="let role of roles"
-                (change)="toggleRole(role.rolId, $event.checked)"
-              >
+              <mat-slide-toggle *ngFor="let role of roles" [checked]="selectedRoles.includes(role.rolId)"
+                (change)="toggleRole(role.rolId, $event.checked)">
                 {{ role.name }}
               </mat-slide-toggle>
             </div>
