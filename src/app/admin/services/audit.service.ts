@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_URL_AUDIT } from 'src/app/shared/utilities/constants.utility';
-import { cookieUtil } from 'src/app/shared/utilities/storage-utility';
+import { CookieUtil } from 'src/app/shared/utilities/storage-utility';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class AuditService {
   constructor(private readonly http: HttpClient) {}
 
   postAudit(auditData: any): Observable<any> {
-    const token = cookieUtil.getValue('token');
+    const token = CookieUtil.getValue('token');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`

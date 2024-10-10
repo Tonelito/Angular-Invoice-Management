@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
@@ -6,7 +6,7 @@ import {
   API_URL_PROFILES,
   API_URL_ROLES
 } from 'src/app/shared/utilities/constants.utility';
-import { cookieUtil } from 'src/app/shared/utilities/storage-utility';
+import { CookieUtil } from 'src/app/shared/utilities/storage-utility';
 import {
   CreateProfile,
   ProfileResponse,
@@ -25,7 +25,7 @@ export class ProfilesService {
   constructor(private readonly http: HttpClient) {}
 
   private getHeaders(): HttpHeaders {
-    const token = cookieUtil.getValue('token');
+    const token = CookieUtil.getValue('token');
     return new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`

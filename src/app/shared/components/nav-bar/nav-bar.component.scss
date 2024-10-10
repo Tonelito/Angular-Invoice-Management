@@ -1,0 +1,58 @@
+.nav-bar {
+  display: flex;
+  padding: 10px 25px;
+  justify-content: space-between;
+  align-items: center;
+  background: #3d4fb0;
+
+  .options {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+
+    .navigation {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+
+      .nav-button {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav-button mat-icon {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        color: white;
+      }
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+
+      h2 {
+        padding: 0;
+        margin: 0;
+        color: #ffffff;
+      }
+
+      .user-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        color: #fcef6f;
+      }
+    }
+  }
+}

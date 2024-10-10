@@ -1,0 +1,78 @@
+<div class="nav-bar">
+  <!-- logo -->
+  <img src="../../../../assets/vault-tec.svg" alt="vault-tec" height="44" />
+  <div class="options">
+    <!-- nav-buttons -->
+    <div class="navigation">
+      <button
+        mat-icon-button
+        matTooltip="{{ 'NAVBAR.USERS' | translate }}"
+        class="nav-button"
+        routerLink="/admin/users"
+      >
+        <mat-icon>person</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        matTooltip="{{ 'NAVBAR.PROFILES' | translate }}"
+        class="nav-button"
+        routerLink="/admin/profiles"
+      >
+        <mat-icon>manage_accounts</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        matTooltip="{{ 'NAVBAR.AUDIT' | translate }}"
+        class="nav-button"
+        routerLink="/admin/audit"
+      >
+        <mat-icon>fact_check</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        matTooltip="{{ 'NAVBAR.PRODUCTS' | translate }}"
+        class="nav-button"
+        routerLink="/admin/products"
+      >
+        <mat-icon>inventory</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        matTooltip="{{ 'NAVBAR.CUSTOMERS' | translate }}"
+        class="nav-button"
+        routerLink="/admin/customers"
+      >
+        <mat-icon>work</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        matTooltip="{{ 'NAVBAR.ORDERS' | translate }}"
+        class="nav-button"
+        routerLink="/admin/orders"
+      >
+        <mat-icon>note_add</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        matTooltip="{{ 'NAVBAR.REPORTS' | translate }}"
+        class="nav-button"
+        routerLink="/admin/reports"
+      >
+        <mat-icon>insert_chart</mat-icon>
+      </button>
+    </div>
+    <!-- dropdown-user-info -->
+    <button mat-button [matMenuTriggerFor]="beforeMenu" class="user-info">
+      <mat-icon inline="true" class="user-icon">account_circle</mat-icon>
+      <h2>galicia&#64;gmail.com</h2>
+    </button>
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+      <button mat-menu-item routerLink="/security/change-password">
+        <mat-icon>password</mat-icon> {{ 'NAVBAR.CHANGE_PASSWORD' | translate }}
+      </button>
+      <button mat-menu-item (click)="logOut()">
+        <mat-icon>logout</mat-icon> {{ 'NAVBAR.LOG_OUT' | translate }}
+      </button>
+    </mat-menu>
+  </div>
+</div>

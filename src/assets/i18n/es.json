@@ -1,4 +1,15 @@
 {
+  "NAVBAR": {
+    "USERS": "Usuarios",
+    "PROFILES": "Perfiles",
+    "AUDIT": "Auditoria",
+    "PRODUCTS": "Productos",
+    "CUSTOMERS": "Clientes",
+    "ORDERS": "Ordenes",
+    "REPORTS": "Reportes",
+    "CHANGE_PASSWORD": "Cambiar Contraseña",
+    "LOG_OUT": "Cerrar Sesión"
+  },
   "LOGIN": {
     "TITLE": "Iniciar sesión",
     "EMAIL": "Correo",
@@ -8,7 +19,7 @@
     "CHECKBOX": "Recuérdame",
     "FORGOT_PASSWORD": "¿Olvidaste tu contraseña?",
     "SUBMIT": "Iniciar sesión",
-    "REGISTER": "¿Aún no tienes cuenta? Regístrate aquí",
+    "REGISTER": "¿Aún no tienes cuenta?",
     "ERRORS": {
       "INVALID_EMAIL": "Por favor, ingresa una dirección de correo válida",
       "REQUIRED_EMAIL": "El correo es obligatorio",

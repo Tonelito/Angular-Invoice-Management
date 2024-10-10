@@ -20,9 +20,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditDialogComponent } from './components/profiles/edit-dialog/edit-dialog.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
 @NgModule({
-  declarations: [AuditComponent, ProfilesComponent, EditDialogComponent],
+  declarations: [AuditComponent, ProfilesComponent, EditDialogComponent, HomePageComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
