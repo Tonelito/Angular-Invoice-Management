@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { LoginService } from '../../services/login.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { NotificationsService } from 'angular2-notifications';
 import { TranslateService } from '@ngx-translate/core';
 import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,25 +13,21 @@ import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  //password hide
-  hide = true;
-  //error handler
-  matcher = new MyErrorStateMatcher();
-  //blockUI
-  @BlockUI() blockUI!: NgBlockUI;
-  //angular2-notifications options
+  hide = true; // Hide password
+  matcher = new MyErrorStateMatcher(); // Error matcher
+  @BlockUI() blockUI!: NgBlockUI; // Block UI
   public options = {
     timeOut: 3000,
     showProgressBar: false,
     pauseOnHover: true,
     clickToClose: true
-  };
+  }; // Notification options
 
   constructor(
     private readonly translate: TranslateService,
-    private readonly service: LoginService,
     private readonly fb: FormBuilder,
-    private readonly _notifications: NotificationsService
+    private readonly _notifications: NotificationsService,
+    private readonly authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -42,21 +38,18 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const loginData = {
-        email: this.loginForm.value.email,
-        password: this.loginForm.value.password
-      };
+      const loginData = this.loginForm.value;
+
       this.blockUI.start(
         this.translate.instant('LOGIN.NOTIFICATIONS.LOGGING_IN')
       );
 
-      this.service.login(loginData).subscribe({
-        next: (response: any) => {
+      this.authService.login(loginData).subscribe({
+        next: () => {
           this._notifications.success(
             this.translate.instant('LOGIN.NOTIFICATIONS.SUCCESS'),
             this.translate.instant('LOGIN.NOTIFICATIONS.SUCCESS_DESC')
           );
-          localStorage.setItem('token', response.token);
           this.blockUI.stop();
         },
         error: error => {
@@ -64,7 +57,7 @@ export class LoginComponent {
             this.translate.instant('LOGIN.NOTIFICATIONS.FAILURE'),
             this.translate.instant('LOGIN.NOTIFICATIONS.FAILURE_DESC')
           );
-          console.log(error);
+          console.error(error);
           this.blockUI.stop();
         }
       });

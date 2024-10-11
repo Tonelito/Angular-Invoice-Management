@@ -1,6 +1,6 @@
-export class cookieUtil {
+export class CookieUtil {
   public static storage(key: string, value: unknown) {
-    localStorage.setItem(key, value?.toString() || '');
+    localStorage.setItem(key, value?.toString() ?? '');
   }
 
   public static getValue(key: string) {

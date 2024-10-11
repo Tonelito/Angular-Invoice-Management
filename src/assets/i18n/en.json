@@ -1,4 +1,15 @@
 {
+  "NAVBAR": {
+    "USERS": "Users",
+    "PROFILES": "Profiles",
+    "AUDIT": "Audit",
+    "PRODUCTS": "Products",
+    "CUSTOMERS": "Customers",
+    "ORDERS": "Orders",
+    "REPORTS": "Reports",
+    "CHANGE_PASSWORD": "Change Password",
+    "LOG_OUT": "Log Out"
+  },
   "LOGIN": {
     "TITLE": "Login",
     "EMAIL": "Email",
@@ -8,6 +19,7 @@
     "CHECKBOX": "Remember me",
     "FORGOT_PASSWORD": "Forgot your password?",
     "SUBMIT": "Log In",
+    "REGISTER": "You don't have an account?",
     "ERRORS": {
       "INVALID_EMAIL": "Please enter a valid email address",
       "REQUIRED_EMAIL": "Email is required",
@@ -25,7 +37,8 @@
   },
   "AUDIT": {
     "TITLE": "Audit",
-    "DATE": "Date to audit",
+    "START_DATE": "Start date",
+    "END_DATE": "End date",
     "ENTITY": "Entity",
     "SEARCH": "Search",
     "ENTITIES": {
@@ -35,7 +48,8 @@
       "DATE": "Date"
     },
     "ERRORS": {
-      "REQUIRED_DATE": "date is required",
+      "REQUIRED_START_DATE": "Start date is required",
+      "REQUIRED_END_DATE": "End date is required",
       "REQUIRED_ENTITY": "entity is required"
     },
     "NOTIFICATIONS": {

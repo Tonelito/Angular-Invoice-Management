@@ -7,3 +7,5 @@ export const API_URL_ROLES = environment.apiRoles;
 export const API_URL_AUDIT = environment.apiAudit;
 export const API_URL_PROFILE_ROLE_DETAIL = environment.apiProfileRoleDetail;
 export const API_URL_USER = environment.apiUser;
+export const AUTHORITIES = 'authorities';
+export const EXP = 'exp';

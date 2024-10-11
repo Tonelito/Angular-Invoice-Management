@@ -1,4 +1,15 @@
 {
+  "NAVBAR": {
+    "USERS": "Usuarios",
+    "PROFILES": "Perfiles",
+    "AUDIT": "Auditoria",
+    "PRODUCTS": "Productos",
+    "CUSTOMERS": "Clientes",
+    "ORDERS": "Ordenes",
+    "REPORTS": "Reportes",
+    "CHANGE_PASSWORD": "Cambiar Contraseña",
+    "LOG_OUT": "Cerrar Sesión"
+  },
   "LOGIN": {
     "TITLE": "Iniciar sesión",
     "EMAIL": "Correo",
@@ -8,6 +19,7 @@
     "CHECKBOX": "Recuérdame",
     "FORGOT_PASSWORD": "¿Olvidaste tu contraseña?",
     "SUBMIT": "Iniciar sesión",
+    "REGISTER": "¿Aún no tienes cuenta?",
     "ERRORS": {
       "INVALID_EMAIL": "Por favor, ingresa una dirección de correo válida",
       "REQUIRED_EMAIL": "El correo es obligatorio",
@@ -25,11 +37,13 @@
   },
   "AUDIT": {
     "TITLE": "Auditoria",
-    "DATE": "Fecha a auditar",
+    "START_DATE": "Fecha de inicio",
+    "END_DATE": "Fecha final",
     "ENTITY": "Entidad",
     "SEARCH": "Buscar",
     "ERRORS": {
-      "REQUIRED_DATE": "La fecha de auditoria es obligatoria",
+      "REQUIRED_START_DATE": "La fecha inicial es obligatoria",
+      "REQUIRED_END_DATE": "La fecha final es obligatoria",
       "REQUIRED_ENTITY": "La entidad es obligatoria"
     },
     "TABLE_HEADERS": {

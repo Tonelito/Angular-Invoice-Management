@@ -53,7 +53,6 @@ export class ProfilesComponent implements OnInit {
       name: ['', [Validators.required]],
       description: ['', [Validators.required]]
     });
-    this.translate.use('es');
   }
 
   ngOnInit(): void {
@@ -130,14 +129,22 @@ export class ProfilesComponent implements OnInit {
         .putProfile(this.selectedProfileId, updatedProfile)
         .subscribe({
           next: () => {
-            this._notifications.success(this.translate.instant('PROFILES.NOTIFICATIONS.UPDATE_SUCCESS'), '');
+            this._notifications.success(
+              this.translate.instant('PROFILES.NOTIFICATIONS.UPDATE_SUCCESS'),
+              ''
+            );
             this.fetchProfiles();
             this.profileForm.reset();
           },
           error: error => {
             console.error(
-              this.translate.instant('PROFILES.ERRORS.UPDATE_PROFILE'), error);
-            this._notifications.error(this.translate.instant('PROFILES.NOTIFICATIONS.UPDATE_FAILURE'), '');
+              this.translate.instant('PROFILES.ERRORS.UPDATE_PROFILE'),
+              error
+            );
+            this._notifications.error(
+              this.translate.instant('PROFILES.NOTIFICATIONS.UPDATE_FAILURE'),
+              ''
+            );
           }
         });
     }
@@ -202,7 +209,7 @@ export class ProfilesComponent implements OnInit {
         this.fetchProfiles();
       },
       error: error => {
-        console.log(profileId)
+        console.log(profileId);
         console.error(
           this.translate.instant('PROFILES.ERRORS.STATUS_TOGGLE'),
           error

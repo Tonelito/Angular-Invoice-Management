@@ -3,7 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SecurityModule } from './security/security.module';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpClientModule
+} from '@angular/common/http';
 import { BlockUIModule } from 'ng-block-ui';
 import {
   NotificationsService,
@@ -12,6 +16,8 @@ import {
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AuthInterceptor } from './shared/utilities/interceptors/auth.interceptor';
+import { SharedModule } from './shared/shared.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
@@ -26,6 +32,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     BlockUIModule.forRoot(),
     BrowserAnimationsModule,
+    SharedModule,
     SimpleNotificationsModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
@@ -35,7 +42,14 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [NotificationsService],
+  providers: [
+    NotificationsService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

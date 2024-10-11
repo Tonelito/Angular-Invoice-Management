@@ -1,20 +1,23 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { API_URL_PROFILES, API_URL_USER } from 'src/app/shared/utilities/constants.utility';
+import {
+  API_URL_PROFILES,
+  API_URL_USER
+} from 'src/app/shared/utilities/constants.utility';
 import { Users } from '../utilities/models/user.model';
-import { cookieUtil } from 'src/app/shared/utilities/storage-utility';
+import { CookieUtil } from 'src/app/shared/utilities/storage-utility';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  url = API_URL_USER
-  url2 = API_URL_PROFILES
-  constructor(private http: HttpClient) { }
+  url = API_URL_USER;
+  url2 = API_URL_PROFILES;
+  constructor(private http: HttpClient) {}
 
   private getHeaders(): HttpHeaders {
-    const token = cookieUtil.getValue('token');
+    const token = CookieUtil.getValue('token');
     return new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
@@ -31,7 +34,10 @@ export class UserService {
   }
   getUsers(page: number, size: number): Observable<Users> {
     const headers = this.getHeaders();
-    return this.http.get<Users>(`${this.url}/show-all?page=${page}&size=${size}`, { headers });
+    return this.http.get<Users>(
+      `${this.url}/show-all?page=${page}&size=${size}`,
+      { headers }
+    );
   }
   changeStatus(id: number): Observable<any> {
     const headers = this.getHeaders();

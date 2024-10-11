@@ -22,9 +22,15 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatListModule } from '@angular/material/list';
 import { UsersComponent } from './components/users/users.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
 @NgModule({
-  declarations: [AuditComponent, ProfilesComponent, UsersComponent],
+  declarations: [
+    AuditComponent,
+    ProfilesComponent,
+    HomePageComponent,
+    UsersComponent
+  ],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -50,4 +56,4 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatAutocompleteModule
   ]
 })
-export class AdminModule { }
+export class AdminModule {}
