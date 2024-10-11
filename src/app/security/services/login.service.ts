@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL_SECURITY } from 'src/app/shared/utilities/constants.utility';
 import { Observable } from 'rxjs';
@@ -11,10 +11,6 @@ export class LoginService {
   constructor(private readonly http: HttpClient) {}
 
   login(loginData: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
-    return this.http.post(`${this.url}/login`, loginData, { headers });
+    return this.http.post(`${this.url}/login`, loginData);
   }
 }

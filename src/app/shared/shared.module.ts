@@ -12,6 +12,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { RouterModule } from '@angular/router';
     MatMenuModule,
     MatIconModule,
     MatTooltipModule,
-    RouterModule
+    RouterModule,
+    MatToolbarModule,
+    MatSidenavModule
   ],
   exports: [CirclesComponent, MatTableComponent, NavBarComponent]
 })

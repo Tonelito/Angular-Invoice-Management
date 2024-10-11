@@ -39,7 +39,6 @@ export class AuditComponent {
       endDate: ['', [Validators.required]],
       entity: ['', [Validators.required]]
     });
-    this.translate.use('es');
   }
 
   onSubmit() {

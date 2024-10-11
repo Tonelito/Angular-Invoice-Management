@@ -1,78 +1,216 @@
-<div class="nav-bar">
-  <!-- logo -->
-  <img src="../../../../assets/vault-tec.svg" alt="vault-tec" height="44" />
+<mat-toolbar>
+  <button mat-icon-button class="menu-button" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <img
+    src="../../../../assets/vault-tec.svg"
+    alt="vault-tec"
+    height="44"
+    class="logo"
+  />
+
   <div class="options">
     <!-- nav-buttons -->
     <div class="navigation">
-      <button
-        mat-icon-button
-        matTooltip="{{ 'NAVBAR.USERS' | translate }}"
-        class="nav-button"
-        routerLink="/admin/users"
-      >
-        <mat-icon>person</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        matTooltip="{{ 'NAVBAR.PROFILES' | translate }}"
-        class="nav-button"
-        routerLink="/admin/profiles"
-      >
-        <mat-icon>manage_accounts</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        matTooltip="{{ 'NAVBAR.AUDIT' | translate }}"
-        class="nav-button"
-        routerLink="/admin/audit"
-      >
-        <mat-icon>fact_check</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        matTooltip="{{ 'NAVBAR.PRODUCTS' | translate }}"
-        class="nav-button"
-        routerLink="/admin/products"
-      >
-        <mat-icon>inventory</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        matTooltip="{{ 'NAVBAR.CUSTOMERS' | translate }}"
-        class="nav-button"
-        routerLink="/admin/customers"
-      >
-        <mat-icon>work</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        matTooltip="{{ 'NAVBAR.ORDERS' | translate }}"
-        class="nav-button"
-        routerLink="/admin/orders"
-      >
-        <mat-icon>note_add</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        matTooltip="{{ 'NAVBAR.REPORTS' | translate }}"
-        class="nav-button"
-        routerLink="/admin/reports"
-      >
-        <mat-icon>insert_chart</mat-icon>
-      </button>
+      <div class="nav-buttons">
+        <button
+          *ngIf="hasRole('ROLE_USER')"
+          mat-icon-button
+          matTooltip="{{ 'NAVBAR.USERS' | translate }}"
+          class="nav-button"
+          routerLink="/admin/users"
+        >
+          <mat-icon>person</mat-icon>
+        </button>
+
+        <button
+          *ngIf="hasRole('ROLE_PROFILE')"
+          mat-icon-button
+          matTooltip="{{ 'NAVBAR.PROFILES' | translate }}"
+          class="nav-button"
+          routerLink="/admin/profiles"
+        >
+          <mat-icon>manage_accounts</mat-icon>
+        </button>
+
+        <button
+          *ngIf="hasRole('ROLE_AUDIT')"
+          mat-icon-button
+          matTooltip="{{ 'NAVBAR.AUDIT' | translate }}"
+          class="nav-button"
+          routerLink="/admin/audit"
+        >
+          <mat-icon>fact_check</mat-icon>
+        </button>
+
+        <button
+          *ngIf="hasRole('ROLE_PRODUCT')"
+          mat-icon-button
+          matTooltip="{{ 'NAVBAR.PRODUCTS' | translate }}"
+          class="nav-button"
+          routerLink="/admin/products"
+        >
+          <mat-icon>inventory</mat-icon>
+        </button>
+
+        <button
+          *ngIf="hasRole('ROLE_CUSTOMER')"
+          mat-icon-button
+          matTooltip="{{ 'NAVBAR.CUSTOMERS' | translate }}"
+          class="nav-button"
+          routerLink="/admin/customers"
+        >
+          <mat-icon>work</mat-icon>
+        </button>
+
+        <button
+          *ngIf="hasRole('ROLE_ORDER')"
+          mat-icon-button
+          matTooltip="{{ 'NAVBAR.ORDERS' | translate }}"
+          class="nav-button"
+          routerLink="/admin/orders"
+        >
+          <mat-icon>note_add</mat-icon>
+        </button>
+
+        <button
+          *ngIf="hasRole('ROLE_REPORT')"
+          mat-icon-button
+          matTooltip="{{ 'NAVBAR.REPORTS' | translate }}"
+          class="nav-button"
+          routerLink="/admin/reports"
+        >
+          <mat-icon>insert_chart</mat-icon>
+        </button>
+      </div>
+
+      <div class="user-options">
+        <!-- translate-dropdown -->
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="translateMenu"
+          class="translate"
+        >
+          <mat-icon inline="true" class="translate-icon">translate</mat-icon>
+        </button>
+        <mat-menu #translateMenu="matMenu" xPosition="after">
+          <button mat-menu-item (click)="spanish()">
+            <mat-icon>language_spanish</mat-icon>
+            ES
+          </button>
+          <button mat-menu-item (click)="english()">
+            <mat-icon>language_us</mat-icon>
+            EN
+          </button>
+        </mat-menu>
+        <!-- user-info-dropdown -->
+        <button mat-button [matMenuTriggerFor]="userInfo" class="user-info">
+          <mat-icon inline="true" class="user-icon">account_circle</mat-icon>
+          <h2>{{ this.sub }}</h2>
+        </button>
+        <mat-menu #userInfo="matMenu" xPosition="before">
+          <button mat-menu-item routerLink="/security/change-password">
+            <mat-icon>password</mat-icon>
+            {{ 'NAVBAR.CHANGE_PASSWORD' | translate }}
+          </button>
+          <button mat-menu-item (click)="logOut()">
+            <mat-icon>logout</mat-icon> {{ 'NAVBAR.LOG_OUT' | translate }}
+          </button>
+        </mat-menu>
+      </div>
     </div>
-    <!-- dropdown-user-info -->
-    <button mat-button [matMenuTriggerFor]="beforeMenu" class="user-info">
-      <mat-icon inline="true" class="user-icon">account_circle</mat-icon>
-      <h2>galicia&#64;gmail.com</h2>
-    </button>
-    <mat-menu #beforeMenu="matMenu" xPosition="before">
-      <button mat-menu-item routerLink="/security/change-password">
-        <mat-icon>password</mat-icon> {{ 'NAVBAR.CHANGE_PASSWORD' | translate }}
-      </button>
-      <button mat-menu-item (click)="logOut()">
-        <mat-icon>logout</mat-icon> {{ 'NAVBAR.LOG_OUT' | translate }}
-      </button>
-    </mat-menu>
   </div>
-</div>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav
+    #sidenav
+    [fixedInViewport]="true"
+    [fixedTopGap]="55"
+    mode="over"
+    opened
+  >
+    <div class="navigation">
+      <div class="nav-buttons">
+        <button
+          *ngIf="hasRole('ROLE_USER')"
+          mat-button
+          class="nav-button"
+          routerLink="/admin/users"
+          (click)="sidenav.close()"
+        >
+          <mat-icon>person</mat-icon>
+          Users
+        </button>
+
+        <button
+          *ngIf="hasRole('ROLE_PROFILE')"
+          mat-button
+          class="nav-button"
+          routerLink="/admin/profiles"
+          (click)="sidenav.close()"
+        >
+          <mat-icon>manage_accounts</mat-icon>
+          Profiles
+        </button>
+
+        <button
+          *ngIf="hasRole('ROLE_AUDIT')"
+          mat-button
+          class="nav-button"
+          routerLink="/admin/audit"
+          (click)="sidenav.close()"
+        >
+          <mat-icon>fact_check</mat-icon>
+          Audit
+        </button>
+
+        <button
+          *ngIf="hasRole('ROLE_PRODUCT')"
+          mat-button
+          class="nav-button"
+          routerLink="/admin/products"
+          (click)="sidenav.close()"
+        >
+          <mat-icon>inventory</mat-icon>
+          Products
+        </button>
+
+        <button
+          *ngIf="hasRole('ROLE_CUSTOMER')"
+          mat-button
+          class="nav-button"
+          routerLink="/admin/customers"
+          (click)="sidenav.close()"
+        >
+          <mat-icon>work</mat-icon>
+          Customers
+        </button>
+
+        <button
+          *ngIf="hasRole('ROLE_ORDER')"
+          mat-button
+          class="nav-button"
+          routerLink="/admin/orders"
+          (click)="sidenav.close()"
+        >
+          <mat-icon>note_add</mat-icon>
+          Orders
+        </button>
+
+        <button
+          *ngIf="hasRole('ROLE_REPORT')"
+          mat-button
+          class="nav-button"
+          routerLink="/admin/reports"
+          (click)="sidenav.close()"
+        >
+          <mat-icon>insert_chart</mat-icon>
+          Reports
+        </button>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content></mat-sidenav-content>
+</mat-sidenav-container>

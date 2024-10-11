@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { CookieUtil } from '../utilities/storage-utility';
 import { DecodeTokenService } from './decode-token.service';
+import * as CONSTS from '../utilities/constants.utility';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,22 @@ export class AuthService {
   getUserFromCookies(): any {
     const userJson = CookieUtil.getValue('sub');
     return userJson ? JSON.parse(userJson) : null;
+  }
+
+  public isTokenExpired(): boolean {
+    const exp = CookieUtil.getValue(CONSTS.EXP);
+    if (!exp) {
+      return true;
+    }
+
+    const currentTime = Math.floor(Date.now() / 1000);
+    return Number(exp) < currentTime;
+  }
+
+  public checkSessionExpiration(): void {
+    if (this.isTokenExpired()) {
+      this.logout();
+    }
   }
 
   logout(): void {

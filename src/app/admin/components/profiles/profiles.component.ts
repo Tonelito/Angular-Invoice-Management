@@ -54,7 +54,6 @@ export class ProfilesComponent implements OnInit {
       name: ['', [Validators.required]],
       description: ['', [Validators.required]]
     });
-    this.translate.use('es');
   }
 
   ngOnInit(): void {
