@@ -4,10 +4,14 @@
     <th mat-header-cell *matHeaderCellDef>{{ column | titlecase }}</th>
     <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
   </ng-container>
-
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
-
-<mat-paginator hidePageSize [pageSizeOptions]="[10]" showFirstLastButtons>
+<mat-paginator
+  [length]="totalElements"
+  [pageSize]="pageSize"
+  [pageIndex]="pageIndex"
+  (page)="onPageChange($event)"
+  hidePageSize
+>
 </mat-paginator>

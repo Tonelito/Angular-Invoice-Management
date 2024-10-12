@@ -52,6 +52,12 @@
           </mat-error>
         </mat-form-field>
 
+        <!-- User -->
+        <mat-form-field>
+          <mat-label>{{ 'AUDIT.USER' | translate }}</mat-label>
+          <input matInput formControlName="user" />
+        </mat-form-field>
+
         <!-- Submit Button -->
         <button mat-flat-button color="accent" type="submit">
           {{ 'AUDIT.SEARCH' | translate }}
@@ -63,9 +69,12 @@
     <app-mat-table
       [displayedColumns]="displayedColumns"
       [tableData]="tableData"
+      [totalElements]="totalElements"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      (page)="onPageChange($event)"
     >
     </app-mat-table>
   </div>
 </block-ui>
-
 <simple-notifications [options]="options"></simple-notifications>

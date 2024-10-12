@@ -1,12 +1,12 @@
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
   Input,
   SimpleChanges,
-  ViewChild
+  ViewChild,
+  Output,
+  EventEmitter
 } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -14,27 +14,28 @@ import { MatTableDataSource } from '@angular/material/table';
   templateUrl: './mat-table.component.html',
   styleUrls: ['./mat-table.component.scss']
 })
-export class MatTableComponent implements AfterViewInit {
+export class MatTableComponent {
   @Input() displayedColumns: string[] = [];
   @Input() tableData: any[] = [];
+  @Input() totalElements: number = 0;
+  @Input() pageSize: number = 10;
+  @Input() pageIndex: number = 0;
+  @Output() page = new EventEmitter<PageEvent>();
 
-  dataSource!: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<any>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator = <MatPaginator>{};
-
-  constructor(private cdr: ChangeDetectorRef) {}
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.dataSource = new MatTableDataSource(this.tableData);
-      this.dataSource.paginator = this.paginator;
-    });
+  constructor() {
+    this.dataSource = new MatTableDataSource<any>([]);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['tableData'] && this.dataSource) {
+    if (changes['tableData']) {
       this.dataSource.data = this.tableData;
-      this.cdr.detectChanges();
     }
+  }
+
+  onPageChange(event: PageEvent) {
+    this.page.emit(event);
   }
 }
