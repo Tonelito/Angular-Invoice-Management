@@ -60,7 +60,10 @@
       "FAILURE": "Auditoría fallida",
       "FAILURE_DESC": "No se pudieron listar los datos de la auditoría. Inténtalo de nuevo",
       "INVALID_FORM": "Formulario inválido",
-      "INVALID_FORM_DESC": "Por favor, completa el formulario correctamente"
+      "INVALID_FORM_DESC": "Por favor, completa el formulario correctamente",
+      "USER_NOT_FOUND": "Usuario no encontrado",
+      "USER_SEARCH_ERROR": "Error",
+      "USER_SEARCH_ERROR_DESC": "Formulario o usuario invalidos"
     }
   },
   "PROFILES": {

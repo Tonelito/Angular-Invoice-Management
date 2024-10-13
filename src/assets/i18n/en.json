@@ -60,7 +60,10 @@
       "FAILURE": "Audit Failed",
       "FAILURE_DESC": "Unable to retrieve audit data. Please try again",
       "INVALID_FORM": "Invalid Form",
-      "INVALID_FORM_DESC": "Please complete the form correctly"
+      "INVALID_FORM_DESC": "Please complete the form correctly",
+      "USER_NOT_FOUND": "User not found",
+      "USER_SEARCH_ERROR": "Error searching",
+      "USER_SEARCH_ERROR_DESC": "Invalid user or form"
     }
   },
   "PROFILES": {

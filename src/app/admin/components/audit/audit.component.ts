@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'angular2-notifications';
@@ -6,21 +6,14 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { AuditService } from '../../services/audit.service';
 import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
 import { PageEvent } from '@angular/material/paginator';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
-
-interface AuditData {
-  startDate: string;
-  endDate: string;
-  entity: string;
-  userId?: number;
-}
+import { AuditData } from '../../utilities/models/audit.model';
 
 @Component({
   selector: 'app-audit',
   templateUrl: './audit.component.html',
   styleUrls: ['./audit.component.scss']
 })
-export class AuditComponent implements OnInit {
+export class AuditComponent {
   auditForm: FormGroup;
   //error handler
   matcher = new MyErrorStateMatcher();
@@ -54,30 +47,48 @@ export class AuditComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.setupUserSearch();
+  setupUserSearch() {
+    const userValue = this.auditForm.get('user')?.value;
+
+    this.service.searchUser(userValue).subscribe({
+      error: error => {
+        console.error('Error searching user:', error);
+      }
+    });
   }
 
-  setupUserSearch() {
-    this.auditForm
-      .get('user')
-      ?.valueChanges.pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        switchMap(value => this.service.searchUser(value))
-      )
-      .subscribe({
-        next: response => {
-          console.log('User search response:', response);
-        },
-        error: error => {
-          console.error('Error searching user:', error);
-        }
-      });
+  performAuditSearch(auditData: AuditData) {
+    this.service.postAudit(auditData, this.pageIndex, this.pageSize).subscribe({
+      next: (response: any) => {
+        this.tableData = response.object.map((entry: any) => ({
+          entity: entry.entity,
+          user: entry.fullName,
+          operation: entry.operation,
+          date: new Date(entry.datetime).toLocaleString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          })
+        }));
+        this.totalElements = response.totalElements;
+        this.blockUI.stop();
+      },
+      error: error => {
+        this._notifications.error(
+          this.translate.instant('AUDIT.NOTIFICATIONS.FAILURE'),
+          this.translate.instant('AUDIT.NOTIFICATIONS.FAILURE_DESC')
+        );
+        console.error(error);
+        this.blockUI.stop();
+      }
+    });
   }
 
   onSubmit() {
     if (this.auditForm.valid) {
+      this.pageIndex = 0;
       this.blockUI.start(
         this.translate.instant('AUDIT.NOTIFICATIONS.SENDING_REQUEST')
       );
@@ -124,30 +135,6 @@ export class AuditComponent implements OnInit {
         this.translate.instant('AUDIT.NOTIFICATIONS.INVALID_FORM_DESC')
       );
     }
-  }
-
-  performAuditSearch(auditData: AuditData) {
-    this.service.postAudit(auditData, this.pageIndex, this.pageSize).subscribe({
-      next: (response: any) => {
-        this.tableData = response.object.map((entry: any) => ({
-          entity: entry.entity,
-          user: entry.fullName,
-          operation: entry.operation,
-          date: new Date(entry.datetime).toLocaleDateString('en-GB')
-        }));
-        this.totalElements = response.totalElements;
-
-        this.blockUI.stop();
-      },
-      error: error => {
-        this._notifications.error(
-          this.translate.instant('AUDIT.NOTIFICATIONS.FAILURE'),
-          this.translate.instant('AUDIT.NOTIFICATIONS.FAILURE_DESC')
-        );
-        console.error(error);
-        this.blockUI.stop();
-      }
-    });
   }
 
   onPageChange(event: PageEvent) {
