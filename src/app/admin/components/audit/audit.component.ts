@@ -45,6 +45,16 @@ export class AuditComponent {
     });
   }
 
+  setupUserSearch() {
+    const userValue = this.auditForm.get('user')?.value;
+
+    this.service.searchUser(userValue).subscribe({
+      error: error => {
+        console.error('Error searching user:', error);
+      }
+    });
+  }
+
   performAuditSearch(auditData: AuditData) {
     this.service.postAudit(auditData, this.pageIndex, this.pageSize).subscribe({
       next: (response: any) => {
@@ -88,7 +98,36 @@ export class AuditComponent {
         entity: this.auditForm.value.entity
       };
 
-      this.performAuditSearch(auditData);
+      if (this.auditForm.value.user) {
+        this.service.searchUser(this.auditForm.value.user).subscribe({
+          next: userResponse => {
+            if (userResponse.object && userResponse.object.length > 0) {
+              auditData['userId'] = userResponse.object[0].userId;
+              this.performAuditSearch(auditData);
+            } else {
+              this._notifications.error(
+                this.translate.instant('AUDIT.NOTIFICATIONS.USER_NOT_FOUND'),
+                this.translate.instant(
+                  'AUDIT.NOTIFICATIONS.USER_NOT_FOUND_DESC'
+                )
+              );
+              this.blockUI.stop();
+            }
+          },
+          error: error => {
+            console.error('Error searching user:', error);
+            this._notifications.error(
+              this.translate.instant('AUDIT.NOTIFICATIONS.USER_SEARCH_ERROR'),
+              this.translate.instant(
+                'AUDIT.NOTIFICATIONS.USER_SEARCH_ERROR_DESC'
+              )
+            );
+            this.blockUI.stop();
+          }
+        });
+      } else {
+        this.performAuditSearch(auditData);
+      }
     } else {
       this._notifications.error(
         this.translate.instant('AUDIT.NOTIFICATIONS.INVALID_FORM'),
