@@ -4,6 +4,11 @@ mat-toolbar {
   justify-content: space-between;
   align-items: center;
   background: #3d4fb0;
+
+  .logo:hover {
+    cursor: pointer;
+  }
+
   .menu-button {
     color: #ffffff;
     display: none;
