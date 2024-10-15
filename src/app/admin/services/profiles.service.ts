@@ -8,7 +8,6 @@ import {
 } from 'src/app/shared/utilities/constants.utility';
 import {
   CreateProfile,
-  profileName,
   ProfileResponse,
   Profiles,
   Roles
@@ -22,10 +21,12 @@ export class ProfilesService {
   profileDetails_url = API_URL_PROFILE_ROLE_DETAIL;
   role_url = API_URL_ROLES;
 
-  constructor(private readonly http: HttpClient) { }
+  constructor(private readonly http: HttpClient) {}
 
   getProfileNames(nameSearchDto: string): Observable<Profiles> {
-    return this.http.get<Profiles>(`${this.profile_url}/show-by-name/${nameSearchDto}`);
+    return this.http.get<Profiles>(
+      `${this.profile_url}/show-by-name/${nameSearchDto}`
+    );
   }
 
   getRoles(): Observable<Roles> {
@@ -63,7 +64,7 @@ export class ProfilesService {
 
   changeStatus(id: number): Observable<ProfileResponse> {
     return this.http.patch<ProfileResponse>(
-      `${this.profile_url} /status-change / ${id}`,
+      `${this.profile_url}/status-change/${id}`,
       {}
     );
   }

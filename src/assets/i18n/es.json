@@ -1,5 +1,7 @@
 {
-  "HOME_PAGE": "VAULT-TEC: EL PRIMER Y ÚLTIMO NOMBRE EN TECNOLOGÍA VAULT.",
+  "HOME_PAGE": {
+    "ESLOGAN": "VAULT-TEC: EL PRIMER Y ÚLTIMO NOMBRE EN TECNOLOGÍA VAULT."
+  },
   "NAVBAR": {
     "USERS": "Usuarios",
     "PROFILES": "Perfiles",
@@ -121,7 +123,7 @@
     "TITLE": "Clientes",
     "SEARCH": "Buscar...",
     "SEARCH_PLACEHOLDER": "Nombre del Cliente",
-    "FORM_TITLE": "Agregar Cliente",
+    "FORM_TITLE": "Clientes",
     "NAME": "Nombre del Cliente",
     "EMAIL": "Correo Electrónico",
     "PHONE": "Teléfono",
