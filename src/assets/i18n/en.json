@@ -173,5 +173,56 @@
       "CANCEL": "Cancel",
       "CONFIRM": "Confirm"
     }
+  },
+  "CUSTOMERS": {
+    "TITLE": "Customers",
+    "SEARCH": "Search...",
+    "SEARCH_PLACEHOLDER": "Customer Email or Name",
+    "FORM_TITLE": "Add Customer",
+    "EMAIL": "Email",
+    "FULL_NAME": "Full Name",
+    "SAVE": "Save",
+    "ERRORS": {
+      "REQUIRED_EMAIL": "Customer email is required",
+      "REQUIRED_FULL_NAME": "Full name is required",
+      "INVALID_EMAIL": "Please enter a valid email",
+      "FETCH_CUSTOMERS": "Error fetching customers.",
+      "UPDATE_CUSTOMER": "Error updating customer."
+    },
+    "NOTIFICATIONS": {
+      "CREATING_CUSTOMER": "Creating customer...",
+      "CUSTOMER_CREATED": "Customer created",
+      "CUSTOMER_CREATED_DESC": "The customer has been created successfully",
+      "CUSTOMER_CREATION_FAILURE": "Customer creation failed",
+      "CUSTOMER_CREATION_FAILURE_DESC": "Unable to create the customer. Please try again",
+      "INVALID_FORM": "Invalid form",
+      "INVALID_FORM_DESC": "Please complete the form correctly",
+      "DELETING_CUSTOMER": "Deleting customer...",
+      "CUSTOMER_DELETED": "Customer deleted",
+      "CUSTOMER_DELETED_DESC": "The customer has been successfully deleted.",
+      "CUSTOMER_DELETE_FAILED": "Customer deletion failed",
+      "CUSTOMER_DELETE_FAILED_DESC": "There was an error deleting the customer.",
+      "UPDATE_SUCCESS": "Customer updated successfully.",
+      "UPDATE_FAILURE": "Failed to update customer."
+    },
+    "DIALOG": {
+      "TITLE": "Delete Customer",
+      "MESSAGE": "Are you sure you want to delete the customer \"{{ customerName }}\"?"
+    },
+    "FORM": {
+      "EDIT_CUSTOMER": "Edit Customer",
+      "EDIT_DESCRIPTION": "Update the email and full name associated with this customer before saving your changes."
+    },
+    "TOOLTIP": {
+      "DISABLE_CUSTOMER": "Disable Customer"
+    },
+    "ACTIONS": {
+      "CANCEL": "Cancel",
+      "SAVE_CHANGES": "Save Changes"
+    },
+    "COMMON": {
+      "CANCEL": "Cancel",
+      "CONFIRM": "Confirm"
+    }
   }
 }

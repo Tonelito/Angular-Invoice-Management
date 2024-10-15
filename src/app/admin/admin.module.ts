@@ -23,13 +23,15 @@ import { MatListModule } from '@angular/material/list';
 import { UsersComponent } from './components/users/users.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { ClientsComponent } from './components/clients/clients.component';
 
 @NgModule({
   declarations: [
     AuditComponent,
     ProfilesComponent,
     HomePageComponent,
-    UsersComponent
+    UsersComponent,
+    ClientsComponent
   ],
   imports: [
     CommonModule,

@@ -11,6 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ProfilesService } from '../../services/profiles.service';
 import { Profile } from '../../utilities/models/profile.model';
+import { REGEX_NAME } from 'src/app/shared/utilities/constants.utility';
 
 
 @Component({
@@ -41,6 +42,7 @@ export class UsersComponent implements OnInit {
   isEditing: boolean = false;
   selectedUserId!: number;
   userStatus!: boolean;
+  searchForm: FormGroup;
 
   constructor(
     private readonly _notifications: NotificationsService,
@@ -52,11 +54,13 @@ export class UsersComponent implements OnInit {
   ) {
     this.userForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      fullName: ['', [Validators.required]],
+      fullName: ['', [Validators.required, Validators.pattern(REGEX_NAME)]],
       profile: ['', [Validators.required]],
       profiles: ['', []],
     });
-    this.translate.use('es');
+    this.searchForm = this.fb.group({
+      search: ['', []],
+    });
   }
 
   ngOnInit(): void {
@@ -108,6 +112,30 @@ export class UsersComponent implements OnInit {
         this.blockUI.stop();
       }
     })
+  }
+
+  fetchUserByName(): void {
+    const search = {
+      fullName: this.searchForm.value.search,
+    };
+    this.blockUI.start();
+    this.userService.getUserByName(search).subscribe({
+      next: users => {
+        if (users.object) {
+          console.log('Users loaded:', users);
+          this.users = users.object;
+          this.filteredUsers = new MatTableDataSource(this.users);
+          this.currentPage = users.currentPage;
+          this.totalUsers = users.totalElements;
+        }
+        this.blockUI.stop();
+      },
+      error: error => {
+        console.error('Error fetching users:', error);
+        this._notifications.warn('User not found', 'An error occurred while fetching users');
+        this.blockUI.stop();
+      }
+    });
   }
 
   fetchProfiles(): void {
@@ -203,6 +231,7 @@ export class UsersComponent implements OnInit {
           this.translate.instant('USERS.NOTIFICATIONS.UPDATE_SUCCESS'), ''
         );
         this.fetchUsers();
+        this.userForm.reset();
       },
       error: error => {
         console.error(
@@ -219,15 +248,6 @@ export class UsersComponent implements OnInit {
       this.updateUser();
     } else {
       this.addUser();
-    }
-  }
-
-  searchUser(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.searchQuery = filterValue.trim().toLowerCase();
-    this.filteredUsers.filter = this.searchQuery;
-    if (this.filteredUsers.paginator) {
-      this.filteredUsers.paginator.firstPage();
     }
   }
 

@@ -7,6 +7,8 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'angular2-notifications';
+import { REGEX_PASSWORD } from 'src/app/shared/utilities/constants.utility';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-password-change',
@@ -36,14 +38,16 @@ export class PasswordChangeComponent implements OnInit {
     private serviceAuth: AuthService,
     private readonly translate: TranslateService,
     private readonly _notifications: NotificationsService,
-  ) { }
-
-  ngOnInit() {
+    private router: Router
+  ) {
     this.passwordChangeForm = this._formBuilder.group({
       currentPassword: ['', [Validators.required]],
-      newPassword: new FormControl<string>('', [Validators.required]),
-      newConfirmPassword: new FormControl<string>('', [Validators.required])
+      newPassword: new FormControl<string>('', [Validators.required, Validators.pattern(REGEX_PASSWORD)]),
+      newConfirmPassword: new FormControl<string>('', [Validators.required, Validators.pattern(REGEX_PASSWORD)])
     }, { validators: confirmPasswordValidator });
+  }
+
+  ngOnInit() {
 
     this.getEmail();
     this.translate.use('es')
@@ -73,19 +77,21 @@ export class PasswordChangeComponent implements OnInit {
     if (this.passwordChangeForm.invalid) {
       return;
     }
-  
-    const passwordChangeData = {
+
+    const changePasswordData = {
       email: this.sub,
       newPassword: this.passwordChangeForm.get('newPassword')?.value,
       password: this.passwordChangeForm.get('currentPassword')?.value
     }
 
-    console.log('Password change data:', passwordChangeData);
+    console.log('Password change data:', changePasswordData);
 
-    this.serviceAuth.changePassword(passwordChangeData).subscribe({
+    this.serviceAuth.changePassword(changePasswordData).subscribe({
       next: (response) => {
         console.log('Password changed', response);
         this._notifications.success('Password changed successfully');
+
+        this.router.navigate(['/admin/home']);
       },
       error: (err) => {
         console.error('Error changing password', err);

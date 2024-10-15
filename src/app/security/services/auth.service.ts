@@ -10,32 +10,22 @@ export class AuthService {
   url = API_URL_SECURITY;
   constructor(private http: HttpClient) { }
 
-  private getHeaders(): HttpHeaders {
-    return new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-  }
-
   verifyCode(verifyData: any): Observable<any> {
-    const headers = this.getHeaders();
-    return this.http.post(`${this.url}/verific-code`, verifyData, { headers });
+    return this.http.post(`${this.url}/verific-code`, verifyData);
   }
 
   singUp(signUpData: any): Observable<any> {
-    const headers = this.getHeaders();
 
-    return this.http.post(`${this.url}/signup`, signUpData, { headers });
+    return this.http.post(`${this.url}/signup`, signUpData);
   }
   passwordRecovery(email: string): Observable<any> {
-    const headers = this.getHeaders();
 
     const body = { email };
 
-    return this.http.post(`${this.url}/recover-password`, body, { headers });
+    return this.http.post(`${this.url}/recover-password`, body);
   }
   changePassword(changePasswordData: any): Observable<any> {
-    const headers = this.getHeaders();
 
-    return this.http.post(`${this.url}/change-password`, changePasswordData, { headers });
+    return this.http.post(`${this.url}/change-password`, changePasswordData);
   }
 }

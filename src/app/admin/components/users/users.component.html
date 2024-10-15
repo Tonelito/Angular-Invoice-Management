@@ -1,14 +1,21 @@
 <block-ui>
     <div class="user-container">
-        <h1>{{'USERS.TITLE' | translate}}</h1>
         <div class="user-dashboard">
             <div class="user-column">
                 <!--Searchbar-->
-                <mat-form-field>
-                    <mat-label>{{'USERS.SEARCH' | translate}}</mat-label>
-                    <input matInput placeholder="{{'USERS.SEARCH_PLACEHOLDER' | translate}}"
-                        (input)="searchUser($event)" />
-                </mat-form-field>
+                <div class="search">
+                    <form [formGroup]="searchForm">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'USERS.SEARCH' | translate}}</mat-label>
+                            <input matInput placeholder="{{'USERS.SEARCH_PLACEHOLDER' | translate}}"
+                                formControlName="search" />
+
+                            <button mat-icon-button matSuffix (click)="fetchUserByName()">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </form>
+                </div>
                 <div class="users-list-container">
                     <div class="users-list" *ngIf="filteredUsers.data.length > 0">
                         <div class="user-item" *ngFor="let user of filteredUsers.filteredData">
@@ -73,14 +80,16 @@
                                     <mat-label>{{'USERS.ERRORS.REQUIRED_PROFILE' | translate}}</mat-label>
                                 </mat-error>
                             </mat-form-field>
-                            <button mat-flat-button color="accent" type="submit"
-                                [disabled]="isEditing && userForm.pristine || userForm.invalid">
-                                {{ isEditing ? 'Guardar' : 'Agregar' }}
-                            </button>
-                            <button mat-flat-button color="primary" type="button" (click)="cancelEdit()"
-                                *ngIf="isEditing">
-                                Cancelar
-                            </button>
+                            <div class="buttons">
+                                <button mat-flat-button color="accent" type="submit"
+                                    [disabled]="isEditing && userForm.pristine || userForm.invalid">
+                                    {{ isEditing ? 'Guardar' : 'Agregar' }}
+                                </button>
+                                <button mat-flat-button color="primary" type="button" (click)="cancelEdit()"
+                                    *ngIf="isEditing">
+                                    Cancelar
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>

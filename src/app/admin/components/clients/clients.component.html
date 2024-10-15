@@ -1,0 +1,76 @@
+<div class="client-container">
+    <div class="client-dashboard">
+        <div class="client-column">
+            <!--Searchbar-->
+            <div class="search">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'CUSTOMERS.SEARCH' | translate }}</mat-label>
+                    <input matInput placeholder="{{ 'CUSTOMERS.SEARCH_PLACEHOLDER' | translate }}">
+
+                    <button mat-icon-button matSuffix>
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+            <div class="client-list-container">
+                <div class="client-list" *ngIf="filteredClients.data.length">
+                    <div class="client-item" *ngFor="let client of filteredClients.filteredData">
+                        <div class="client-info">
+                            <div class="status-circle">
+
+                            </div>
+                            <div class="client-text">
+
+                            </div>
+                        </div>
+                        <div class="buttons">
+
+                        </div>
+                    </div>
+                </div>
+                <!--Paginator-->
+                <mat-paginator #paginator [length]="totalClients" [pageSize]="pageSize" [pageIndex]="currentPage"
+                    hidePageSize (page)="onPageChange($event)">
+                </mat-paginator>
+            </div>
+        </div>
+        <!---->
+        <div class="client-form-container">
+            <div class="form-container">
+                <div class="title">
+                    <h1>Client</h1>
+                </div>
+                <form [formGroup]="clientForm" (submit)="submitClient()">
+                    <div class="inputs-button">
+                        <mat-form-field hideRequiredMarker>
+                            <mat-label>Client Name</mat-label>
+                            <input matInput formControlName="name">
+                        </mat-form-field>
+                        <mat-form-field hideRequiredMarker>
+                            <mat-label>Address</mat-label>
+                            <input matInput formControlName="address">
+                        </mat-form-field>
+                        <div class="identifications">
+                            <mat-form-field hideRequiredMarker>
+                                <mat-label>DPI</mat-label>
+                                <input matInput formControlName="dpi">
+                            </mat-form-field>
+                            <mat-form-field hideRequiredMarker>
+                                <mat-label>Nit</mat-label>
+                                <input matInput formControlName="nit">
+                            </mat-form-field>
+                            <mat-form-field hideRequiredMarker>
+                                <mat-label>Passport Number</mat-label>
+                                <input matInput formControlName="passport">
+                            </mat-form-field>
+                        </div>
+                        <div class="buttons">
+                            <button mat-flat-button color="accent">Save</button>
+                            <button mat-flat-button color="primary">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

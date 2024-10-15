@@ -2,10 +2,10 @@
   "NAVBAR": {
     "USERS": "Usuarios",
     "PROFILES": "Perfiles",
-    "AUDIT": "Auditoria",
+    "AUDIT": "Auditoría",
     "PRODUCTS": "Productos",
     "CUSTOMERS": "Clientes",
-    "ORDERS": "Ordenes",
+    "ORDERS": "Órdenes",
     "REPORTS": "Reportes",
     "CHANGE_PASSWORD": "Cambiar Contraseña",
     "LOG_OUT": "Cerrar Sesión"
@@ -36,7 +36,7 @@
     }
   },
   "AUDIT": {
-    "TITLE": "Auditoria",
+    "TITLE": "Auditoría",
     "START_DATE": "Fecha de inicio",
     "END_DATE": "Fecha final",
     "ENTITY": "Entidad",
@@ -112,6 +112,60 @@
       "SAVE_CHANGES": "Guardar Cambios"
     }
   },
+  "CUSTOMERS": {
+    "TITLE": "Clientes",
+    "SEARCH": "Buscar...",
+    "SEARCH_PLACEHOLDER": "Nombre del Cliente",
+    "FORM_TITLE": "Agregar Cliente",
+    "NAME": "Nombre del Cliente",
+    "EMAIL": "Correo Electrónico",
+    "PHONE": "Teléfono",
+    "ADDRESS": "Dirección",
+    "SAVE": "Guardar",
+    "ERRORS": {
+      "REQUIRED_NAME": "El nombre del cliente es obligatorio",
+      "REQUIRED_EMAIL": "El correo del cliente es obligatorio",
+      "REQUIRED_PHONE": "El teléfono del cliente es obligatorio",
+      "INVALID_EMAIL": "Por favor, ingresa un correo electrónico válido",
+      "FETCH_CUSTOMERS": "Error al cargar los clientes.",
+      "STATUS_TOGGLE": "Error al cambiar el estado del cliente.",
+      "UPDATE_CUSTOMER": "Error al actualizar el cliente."
+    },
+    "NOTIFICATIONS": {
+      "CREATING_CUSTOMER": "Creando cliente...",
+      "CUSTOMER_CREATED": "Cliente creado",
+      "CUSTOMER_CREATED_DESC": "El cliente ha sido creado exitosamente",
+      "CUSTOMER_CREATION_FAILURE": "Error al crear el cliente",
+      "CUSTOMER_CREATION_FAILURE_DESC": "No se pudo crear el cliente. Por favor, inténtalo nuevamente",
+      "INVALID_FORM": "Formulario inválido",
+      "INVALID_FORM_DESC": "Por favor, completa correctamente el formulario",
+      "DELETING_CUSTOMER": "Eliminando cliente...",
+      "CUSTOMER_DELETED": "Cliente eliminado",
+      "CUSTOMER_DELETED_DESC": "El cliente ha sido eliminado exitosamente.",
+      "CUSTOMER_DELETE_FAILED": "Error al eliminar el cliente",
+      "CUSTOMER_DELETE_FAILED_DESC": "Hubo un error al eliminar el cliente.",
+      "STATUS_SUCCESS": "Estado del cliente cambiado exitosamente.",
+      "STATUS_FAILURE": "No se pudo cambiar el estado del cliente.",
+      "UPDATE_SUCCESS": "Cliente actualizado exitosamente.",
+      "UPDATE_FAILURE": "Error al actualizar el cliente."
+    },
+    "DIALOG": {
+      "TITLE": "Eliminar Cliente",
+      "MESSAGE": "¿Estás seguro de que deseas eliminar al cliente \"{{ customerName }}\"?"
+    },
+    "FORM": {
+      "EDIT_CUSTOMER": "Editar Cliente",
+      "EDIT_DESCRIPTION": "Actualiza el nombre completo, correo y teléfono de este cliente. Asegúrate de que toda la información sea correcta antes de guardar los cambios."
+    },
+    "TOOLTIP": {
+      "ENABLE_CUSTOMER": "Habilitar Cliente",
+      "DISABLE_CUSTOMER": "Deshabilitar Cliente"
+    },
+    "ACTIONS": {
+      "CANCEL": "Cancelar",
+      "SAVE_CHANGES": "Guardar Cambios"
+    }
+  },
   "COMMON": {
     "CANCEL": "Cancelar",
     "CONFIRM": "Confirmar"
@@ -156,11 +210,11 @@
     },
     "DIALOG": {
       "TITLE": "Eliminar Usuario",
-      "MESSAGE": "¿Estás seguro de que quieres eliminar al usuario \"{{ userName }}\"?"
+      "MESSAGE": "¿Estás seguro de que deseas eliminar al usuario \"{{ userName }}\"?"
     },
     "FORM": {
       "EDIT_USER": "Editar Usuario",
-      "EDIT_DESCRIPTION": "Actualiza el nombre completo y perfil asociado con este usuario. Asegúrate de seleccionar el perfil correcto antes de guardar los cambios."
+      "EDIT_DESCRIPTION": "Actualiza el nombre completo, correo y perfil de este usuario. Asegúrate de que toda la información sea correcta antes de guardar los cambios."
     },
     "TOOLTIP": {
       "ENABLE_USER": "Habilitar Usuario",
@@ -169,10 +223,6 @@
     "ACTIONS": {
       "CANCEL": "Cancelar",
       "SAVE_CHANGES": "Guardar Cambios"
-    },
-    "COMMON": {
-      "CANCEL": "Cancelar",
-      "CONFIRM": "Confirmar"
     }
   }
 }

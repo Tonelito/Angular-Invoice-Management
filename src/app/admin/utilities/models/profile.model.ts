@@ -46,3 +46,7 @@ export interface CreateProfile {
   description: string;
   rolsId: number[];
 }
+
+export interface profileName {
+  name: string;
+}

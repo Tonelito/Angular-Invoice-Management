@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { ProfilesService } from '../../services/profiles.service';
@@ -11,10 +11,12 @@ import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
 import {
   CreateProfile,
   Profile,
+  profileName,
   Role
 } from '../../utilities/models/profile.model';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { switchMap } from 'rxjs';
+import { REGEX_DESCRIPTION, REGEX_NAME } from 'src/app/shared/utilities/constants.utility';
 
 @Component({
   selector: 'app-profiles',
@@ -41,23 +43,32 @@ export class ProfilesComponent implements OnInit {
   selectedProfileId!: number;
   isEditing: boolean = false;
   profileStatus!: boolean;
+  pageSize = 10;
+  currentPage = 0;
+  totalProfiles = 0;
 
   constructor(
     private readonly _notifications: NotificationsService,
     private readonly translate: TranslateService,
     private readonly profilesService: ProfilesService,
     private readonly fb: FormBuilder,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
   ) {
     this.profileForm = this.fb.group({
-      name: ['', [Validators.required]],
-      description: ['', [Validators.required]]
+      name: ['', [Validators.required, Validators.pattern(REGEX_NAME)]],
+      description: ['', [Validators.required, Validators.pattern(REGEX_DESCRIPTION)]]
     });
   }
 
   ngOnInit(): void {
     this.fetchProfiles();
     this.fetchRoles();
+  }
+
+  onPageChange(event: any): void {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.fetchProfiles();
   }
 
   fetchProfileDetails(profileId: number): void {
@@ -85,12 +96,13 @@ export class ProfilesComponent implements OnInit {
 
   fetchProfiles(): void {
     this.blockUI.start();
-    this.profilesService.getProfiles().subscribe({
+    this.profilesService.getProfiles(this.currentPage, this.pageSize).subscribe({
       next: profiles => {
         if (profiles.object) {
           this.profiles = profiles.object.object;
           this.filteredProfiles = new MatTableDataSource(this.profiles);
-          this.filteredProfiles.paginator = this.paginator;
+          this.currentPage = profiles.object.currentPage;
+          this.totalProfiles = profiles.object.totalElements;
         }
         this.blockUI.stop();
       },
@@ -119,9 +131,10 @@ export class ProfilesComponent implements OnInit {
 
   updateProfiles(): void {
     if (this.profileForm.valid) {
+      const cleanDescription = this.cleanDescription(this.profileForm.value.description);
       const updatedProfile = {
         name: this.profileForm.value.name,
-        description: this.profileForm.value.description,
+        description: cleanDescription,
         rolsId: this.selectedRoles
       };
 
@@ -135,6 +148,7 @@ export class ProfilesComponent implements OnInit {
             );
             this.fetchProfiles();
             this.profileForm.reset();
+            this.selectedRoles = [];
           },
           error: error => {
             console.error(
@@ -152,9 +166,10 @@ export class ProfilesComponent implements OnInit {
 
   addProfile(): void {
     if (this.profileForm.valid) {
+      const cleanDescription = this.cleanDescription(this.profileForm.value.description);
       const profileData: CreateProfile = {
         name: this.profileForm.value.name,
-        description: this.profileForm.value.description,
+        description: cleanDescription,
         rolsId: this.selectedRoles
       };
       this.blockUI.start(
@@ -199,13 +214,13 @@ export class ProfilesComponent implements OnInit {
   changeStatus(profileId: number): void {
     this.profilesService.changeStatus(profileId).subscribe({
       next: response => {
-        this.fetchProfileDetails(profileId);
-
         console.log('Profile update: ', response);
         this._notifications.success(
           this.translate.instant('PROFILES.NOTIFICATIONS.STATUS_SUCCESS', ''),
           ''
         );
+        this.profileForm.reset();
+        this.selectedRoles = [];
         this.fetchProfiles();
       },
       error: error => {
@@ -292,6 +307,8 @@ export class ProfilesComponent implements OnInit {
     } else {
       this.selectedRoles = this.selectedRoles.filter(id => id !== roleId);
     }
+
+    this.profileForm.markAsDirty();
   }
 
   searchProfiles(event: Event): void {
@@ -302,5 +319,9 @@ export class ProfilesComponent implements OnInit {
     if (this.filteredProfiles.paginator) {
       this.filteredProfiles.paginator.firstPage();
     }
+  }
+
+  cleanDescription(description: string): string {
+    return description.replace(/\s+/g, ' ').trim();
   }
 }
