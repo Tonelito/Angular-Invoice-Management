@@ -15,14 +15,14 @@ export class AuditService {
 
   constructor(private readonly http: HttpClient) {}
 
-  postAudit(auditData: any, page: number, size: number): Observable<any> {
+  searchAudits(auditData: any, page: number, size: number): Observable<any> {
     return this.http.post(
       `${this.url}/search?page=${page}&size=${size}`,
       auditData
     );
   }
 
-  searchUser(fullName: string): Observable<any> {
-    return this.http.post(`${this.user_search_url}/search`, { fullName });
+  getAllAudits(page: number, size: number): Observable<any> {
+    return this.http.get(`${this.url}/show-all?page=${page}&size=${size}`);
   }
 }

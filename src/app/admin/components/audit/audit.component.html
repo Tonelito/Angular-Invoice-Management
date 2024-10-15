@@ -19,7 +19,6 @@
             {{ 'AUDIT.ERRORS.REQUIRED_START_DATE' | translate }}
           </mat-error>
         </mat-form-field>
-
         <!-- End Date -->
         <mat-form-field>
           <mat-label>{{ 'AUDIT.END_DATE' | translate }}</mat-label>
@@ -37,7 +36,6 @@
             {{ 'AUDIT.ERRORS.REQUIRED_END_DATE' | translate }}
           </mat-error>
         </mat-form-field>
-
         <!-- Entity -->
         <mat-form-field>
           <mat-label>{{ 'AUDIT.ENTITY' | translate }}</mat-label>
@@ -51,20 +49,17 @@
             {{ 'AUDIT.ERRORS.REQUIRED_ENTITY' | translate }}
           </mat-error>
         </mat-form-field>
-
         <!-- User -->
         <mat-form-field>
           <mat-label>{{ 'AUDIT.USER' | translate }}</mat-label>
-          <input matInput formControlName="user" />
+          <input matInput formControlName="fullName" />
         </mat-form-field>
-
         <!-- Submit Button -->
         <button mat-flat-button color="accent" type="submit">
           {{ 'AUDIT.SEARCH' | translate }}
         </button>
       </form>
     </div>
-
     <!-- Table -->
     <app-mat-table
       [displayedColumns]="displayedColumns"
@@ -83,5 +78,4 @@
     </app-mat-table>
   </div>
 </block-ui>
-
 <simple-notifications [options]="options"></simple-notifications>

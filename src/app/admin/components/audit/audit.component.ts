@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'angular2-notifications';
@@ -7,13 +7,14 @@ import { AuditService } from '../../services/audit.service';
 import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
 import { PageEvent } from '@angular/material/paginator';
 import { AuditData } from '../../utilities/models/audit.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-audit',
   templateUrl: './audit.component.html',
   styleUrls: ['./audit.component.scss']
 })
-export class AuditComponent {
+export class AuditComponent implements OnInit {
   auditForm: FormGroup;
   matcher = new MyErrorStateMatcher();
   displayedColumns: string[] = ['entity', 'user', 'operation', 'date'];
@@ -41,49 +42,39 @@ export class AuditComponent {
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
       entity: ['', [Validators.required]],
-      user: ['']
+      fullName: ['']
     });
   }
 
-  setupUserSearch() {
-    const userValue = this.auditForm.get('user')?.value;
+  ngOnInit() {
+    this.loadAllAudits();
+  }
 
-    this.service.searchUser(userValue).subscribe({
+  loadAllAudits() {
+    this.blockUI.start();
+    this.service.getAllAudits(this.pageIndex, this.pageSize).subscribe({
+      next: (response: any) => {
+        this.updateTableData(response);
+        this.blockUI.stop();
+      },
       error: error => {
-        console.error('Error searching user:', error);
+        this.handleError(error);
       }
     });
   }
 
   performAuditSearch(auditData: AuditData) {
-    this.service.postAudit(auditData, this.pageIndex, this.pageSize).subscribe({
-      next: (response: any) => {
-        this.tableData = response.object.map((entry: any) => ({
-          ...entry,
-          entity: entry.entity,
-          user: entry.fullName,
-          operation: entry.operation,
-          date: new Date(entry.datetime).toLocaleString('en-GB', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-          }),
-          formattedRequest: this.formatRequestData(entry.request)
-        }));
-        this.totalElements = response.totalElements;
-        this.blockUI.stop();
-      },
-      error: error => {
-        this._notifications.error(
-          this.translate.instant('AUDIT.NOTIFICATIONS.FAILURE'),
-          this.translate.instant('AUDIT.NOTIFICATIONS.FAILURE_DESC')
-        );
-        console.error(error);
-        this.blockUI.stop();
-      }
-    });
+    this.service
+      .searchAudits(auditData, this.pageIndex, this.pageSize)
+      .subscribe({
+        next: (response: any) => {
+          this.updateTableData(response);
+          this.blockUI.stop();
+        },
+        error: error => {
+          this.handleError(error);
+        }
+      });
   }
 
   onSubmit() {
@@ -95,39 +86,11 @@ export class AuditComponent {
       const auditData: AuditData = {
         startDate: this.auditForm.value.startDate,
         endDate: this.auditForm.value.endDate,
-        entity: this.auditForm.value.entity
+        entity: this.auditForm.value.entity,
+        fullName: this.auditForm.value.fullName
       };
 
-      if (this.auditForm.value.user) {
-        this.service.searchUser(this.auditForm.value.user).subscribe({
-          next: userResponse => {
-            if (userResponse.object && userResponse.object.length > 0) {
-              auditData['userId'] = userResponse.object[0].userId;
-              this.performAuditSearch(auditData);
-            } else {
-              this._notifications.error(
-                this.translate.instant('AUDIT.NOTIFICATIONS.USER_NOT_FOUND'),
-                this.translate.instant(
-                  'AUDIT.NOTIFICATIONS.USER_NOT_FOUND_DESC'
-                )
-              );
-              this.blockUI.stop();
-            }
-          },
-          error: error => {
-            console.error('Error searching user:', error);
-            this._notifications.error(
-              this.translate.instant('AUDIT.NOTIFICATIONS.USER_SEARCH_ERROR'),
-              this.translate.instant(
-                'AUDIT.NOTIFICATIONS.USER_SEARCH_ERROR_DESC'
-              )
-            );
-            this.blockUI.stop();
-          }
-        });
-      } else {
-        this.performAuditSearch(auditData);
-      }
+      this.performAuditSearch(auditData);
     } else {
       this._notifications.error(
         this.translate.instant('AUDIT.NOTIFICATIONS.INVALID_FORM'),
@@ -139,7 +102,44 @@ export class AuditComponent {
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.onSubmit();
+    if (this.auditForm.dirty) {
+      this.onSubmit();
+    } else {
+      this.loadAllAudits();
+    }
+  }
+
+  updateTableData(response: any) {
+    this.tableData = response.object.map((entry: any) => ({
+      ...entry,
+      entity: entry.entity,
+      user: entry.fullName,
+      operation: entry.operation,
+      date: new Date(entry.datetime).toLocaleString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      }),
+      formattedRequest: this.formatRequestData(entry.request)
+    }));
+    this.totalElements = response.totalElements;
+  }
+
+  handleError(error: HttpErrorResponse) {
+    let errorMessage = 'An unexpected error occurred';
+
+    if (error.error && error.error.mensaje) {
+      errorMessage = error.error.mensaje;
+    }
+
+    this._notifications.error('Error', errorMessage);
+
+    console.error('Error:', error);
+    this.blockUI.stop();
+    this.tableData = [];
+    this.totalElements = 0;
   }
 
   formatRequestData(requestBody: string): string {
