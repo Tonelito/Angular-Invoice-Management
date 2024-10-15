@@ -1,0 +1,60 @@
+:host {
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 200px;
+  padding-right: 200px;
+  gap: 20px;
+  .eslogan {
+    h1 {
+      width: 705px;
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      font-size: 64px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      color: #000000;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1300px) {
+    flex-direction: column;
+    .eslogan {
+      h1 {
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+        font-size: 48px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        color: #000000;
+      }
+    }
+
+    .logo {
+      height: 55%;
+    }
+  }
+
+  @media (min-width: 390px) and (max-width: 767px) {
+    flex-direction: column;
+    .eslogan {
+      h1 {
+        width: 200px;
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+        font-size: 28px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        color: #000000;
+      }
+    }
+
+    .logo {
+      height: 35%;
+    }
+  }
+}

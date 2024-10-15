@@ -4,17 +4,22 @@
   padding: 25px;
   overflow: hidden;
 
-  form {
+  .input-container {
     display: flex;
-    align-items: flex-start;
-    gap: 10px;
+    justify-content: center;
+    width: 100%;
+    form {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
 
-    button {
-      height: 58px;
-    }
+      button {
+        height: 58px;
+      }
 
-    mat-form-field {
-      width: 250px;
+      mat-form-field {
+        width: 250px;
+      }
     }
   }
 

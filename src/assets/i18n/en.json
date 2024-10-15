@@ -1,4 +1,5 @@
 {
+  "HOME_PAGE": "VAULT-TEC: THE FIRST AND LAST NAME IN VAULT TECHNOLOGY.",
   "NAVBAR": {
     "USERS": "Users",
     "PROFILES": "Profiles",
@@ -40,6 +41,7 @@
     "START_DATE": "Start date",
     "END_DATE": "End date",
     "ENTITY": "Entity",
+    "USER": "User",
     "SEARCH": "Search",
     "ENTITIES": {
       "ENTITY": "Entity",
@@ -59,14 +61,17 @@
       "FAILURE": "Audit Failed",
       "FAILURE_DESC": "Unable to retrieve audit data. Please try again",
       "INVALID_FORM": "Invalid Form",
-      "INVALID_FORM_DESC": "Please complete the form correctly"
+      "INVALID_FORM_DESC": "Please complete the form correctly",
+      "USER_NOT_FOUND": "User not found",
+      "USER_SEARCH_ERROR": "Error searching",
+      "USER_SEARCH_ERROR_DESC": "Invalid user or form"
     }
   },
   "PROFILES": {
     "TITLE": "Profiles",
     "SEARCH": "Search...",
     "SEARCH_PLACEHOLDER": "Profile Name",
-    "FORM_TITLE": "Add Profile",
+    "FORM_TITLE": "Profiles",
     "NAME": "Profile Name",
     "DESCRIPTION": "Description",
     "SAVE": "Save",
@@ -120,7 +125,7 @@
     "TITLE": "Users",
     "SEARCH": "Search...",
     "SEARCH_PLACEHOLDER": "User Email or Name",
-    "FORM_TITLE": "Add User",
+    "FORM_TITLE": "Users",
     "EMAIL": "Email",
     "FULL_NAME": "Full Name",
     "PROFILE": "Profile",

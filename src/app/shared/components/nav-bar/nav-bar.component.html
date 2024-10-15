@@ -8,6 +8,7 @@
     alt="vault-tec"
     height="44"
     class="logo"
+    routerLink="/admin/home"
   />
 
   <div class="options">
@@ -133,6 +134,16 @@
   >
     <div class="navigation">
       <div class="nav-buttons">
+        <button
+          mat-button
+          class="nav-button"
+          routerLink="/admin/home"
+          (click)="sidenav.close()"
+        >
+          <mat-icon>home</mat-icon>
+          Home
+        </button>
+
         <button
           *ngIf="hasRole('ROLE_USER')"
           mat-button

@@ -19,8 +19,7 @@
             {{ 'AUDIT.ERRORS.REQUIRED_START_DATE' | translate }}
           </mat-error>
         </mat-form-field>
-
-        <!-- End Date-->
+        <!-- End Date -->
         <mat-form-field>
           <mat-label>{{ 'AUDIT.END_DATE' | translate }}</mat-label>
           <input
@@ -37,11 +36,10 @@
             {{ 'AUDIT.ERRORS.REQUIRED_END_DATE' | translate }}
           </mat-error>
         </mat-form-field>
-
         <!-- Entity -->
         <mat-form-field>
           <mat-label>{{ 'AUDIT.ENTITY' | translate }}</mat-label>
-          <mat-select formControlName="entity" [errorStateMatcher]="matcher">
+          <mat-select formControlName="entity">
             <mat-option value="Users">Users</mat-option>
             <mat-option value="Profile">Profiles</mat-option>
             <mat-option value="Product">Products</mat-option>
@@ -51,21 +49,33 @@
             {{ 'AUDIT.ERRORS.REQUIRED_ENTITY' | translate }}
           </mat-error>
         </mat-form-field>
-
+        <!-- User -->
+        <mat-form-field>
+          <mat-label>{{ 'AUDIT.USER' | translate }}</mat-label>
+          <input matInput formControlName="fullName" />
+        </mat-form-field>
         <!-- Submit Button -->
         <button mat-flat-button color="accent" type="submit">
           {{ 'AUDIT.SEARCH' | translate }}
         </button>
       </form>
     </div>
-
     <!-- Table -->
     <app-mat-table
       [displayedColumns]="displayedColumns"
       [tableData]="tableData"
+      [totalElements]="totalElements"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      (page)="onPageChange($event)"
     >
+      <ng-template let-element>
+        <div class="expanded-content">
+          <p><strong>Request Body:</strong></p>
+          <pre>{{ element.formattedRequest }}</pre>
+        </div>
+      </ng-template>
     </app-mat-table>
   </div>
 </block-ui>
-
 <simple-notifications [options]="options"></simple-notifications>

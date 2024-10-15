@@ -1,4 +1,5 @@
 {
+  "HOME_PAGE": "VAULT-TEC: EL PRIMER Y ÚLTIMO NOMBRE EN TECNOLOGÍA VAULT.",
   "NAVBAR": {
     "USERS": "Usuarios",
     "PROFILES": "Perfiles",
@@ -40,6 +41,7 @@
     "START_DATE": "Fecha de inicio",
     "END_DATE": "Fecha final",
     "ENTITY": "Entidad",
+    "USER": "Usuario",
     "SEARCH": "Buscar",
     "ERRORS": {
       "REQUIRED_START_DATE": "La fecha inicial es obligatoria",
@@ -59,14 +61,17 @@
       "FAILURE": "Auditoría fallida",
       "FAILURE_DESC": "No se pudieron listar los datos de la auditoría. Inténtalo de nuevo",
       "INVALID_FORM": "Formulario inválido",
-      "INVALID_FORM_DESC": "Por favor, completa el formulario correctamente"
+      "INVALID_FORM_DESC": "Por favor, completa el formulario correctamente",
+      "USER_NOT_FOUND": "Usuario no encontrado",
+      "USER_SEARCH_ERROR": "Error",
+      "USER_SEARCH_ERROR_DESC": "Formulario o usuario invalidos"
     }
   },
   "PROFILES": {
     "TITLE": "Perfiles",
     "SEARCH": "Buscar...",
     "SEARCH_PLACEHOLDER": "Nombre del perfil",
-    "FORM_TITLE": "Agregar perfil",
+    "FORM_TITLE": "Perfiles",
     "NAME": "Nombre del perfil",
     "DESCRIPTION": "Descripción",
     "SAVE": "Guardar",
@@ -174,7 +179,7 @@
     "TITLE": "Usuarios",
     "SEARCH": "Buscar...",
     "SEARCH_PLACEHOLDER": "Nombre de Usuario",
-    "FORM_TITLE": "Agregar Usuario",
+    "FORM_TITLE": "Usuarios",
     "EMAIL": "Correo Electrónico",
     "FULL_NAME": "Nombre Completo",
     "USER": "Usuario",
