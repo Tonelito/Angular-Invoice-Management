@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { NotificationsService } from 'angular2-notifications';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,16 +18,17 @@ export class SignUpComponent {
     showProgressBar: false,
     pauseOnHover: true,
     clickToClose: true
-  }
+  };
 
   constructor(
     private fb: FormBuilder,
     private serviceAuth: AuthService,
     private readonly _notifications: NotificationsService,
+    private readonly router: Router
   ) {
     this.signUpForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      fullName: ['', [Validators.required]],
+      fullName: ['', [Validators.required]]
     });
   }
 
@@ -39,19 +41,23 @@ export class SignUpComponent {
       email: this.signUpForm.get('email')?.value,
       fullName: this.signUpForm.get('fullName')?.value,
       profileId: 2,
-      dateOfBirth: new Date(Date.now()),
-    }
+      dateOfBirth: new Date(Date.now())
+    };
     console.log('Data : ', signUpData);
 
     this.serviceAuth.singUp(signUpData).subscribe({
-      next: (response) => {
+      next: response => {
         console.log('Response:', response);
-        this._notifications.success('User created', 'User created successfully');
+        this._notifications.success(
+          'User created',
+          'User created successfully'
+        );
+        this.router.navigate(['/security/login']);
       },
-      error: (error) => {
+      error: error => {
         console.log('Error:', error);
         this._notifications.error('Error', 'Error creating user');
       }
-    })
+    });
   }
 }

@@ -4,7 +4,7 @@
     <app-circles></app-circles>
 
     <div class="logo">
-      <img src="../../../../assets/vault-tec.svg" alt="Vault-Tec" height="64" />
+      <img src="../../../../assets/vault-tec.png" alt="Vault-Tec" height="64" />
       <h1>VAULT-TEC</h1>
     </div>
 
@@ -15,8 +15,13 @@
       <!-- Email Input -->
       <mat-form-field class="email" hideRequiredMarker>
         <mat-label>{{ 'LOGIN.EMAIL' | translate }}</mat-label>
-        <input type="email" matInput formControlName="email" [errorStateMatcher]="matcher"
-          placeholder="{{ 'LOGIN.EMAIL_PLACEHOLDER' | translate }}" />
+        <input
+          type="email"
+          matInput
+          formControlName="email"
+          [errorStateMatcher]="matcher"
+          placeholder="{{ 'LOGIN.EMAIL_PLACEHOLDER' | translate }}"
+        />
         <!-- Invalid email -->
         <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
           {{ 'LOGIN.ERRORS.INVALID_EMAIL' | translate }}
@@ -30,10 +35,21 @@
       <!-- Password Input -->
       <mat-form-field class="password" hideRequiredMarker>
         <mat-label>{{ 'LOGIN.PASSWORD' | translate }}</mat-label>
-        <input [type]="hide ? 'password' : 'text'" matInput formControlName="password" [errorStateMatcher]="matcher"
-          placeholder="{{ 'LOGIN.PASSWORD_PLACEHOLDER' | translate }}" />
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide" type="button">
+        <input
+          [type]="hide ? 'password' : 'text'"
+          matInput
+          formControlName="password"
+          [errorStateMatcher]="matcher"
+          placeholder="{{ 'LOGIN.PASSWORD_PLACEHOLDER' | translate }}"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+          type="button"
+        >
           <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
         <!-- Password required -->
@@ -47,7 +63,7 @@
         <a routerLink="/security/sign-up">{{ 'LOGIN.REGISTER' | translate }}</a>
         <a routerLink="/security/password-recovery">{{
           'LOGIN.FORGOT_PASSWORD' | translate
-          }}</a>
+        }}</a>
       </div>
 
       <!-- Submit Button -->

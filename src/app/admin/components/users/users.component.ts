@@ -6,13 +6,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
-import { User, Users } from '../../utilities/models/user.model';
+import { User } from '../../utilities/models/user.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ProfilesService } from '../../services/profiles.service';
 import { Profile } from '../../utilities/models/profile.model';
 import { REGEX_NAME } from 'src/app/shared/utilities/constants.utility';
-
 
 @Component({
   selector: 'app-users',
@@ -28,7 +27,7 @@ export class UsersComponent implements OnInit {
     showProgressBar: false,
     pauseOnHover: true,
     clickToClose: true
-  }
+  };
 
   users: User[] = [];
   profiles: Profile[] = [];
@@ -36,7 +35,7 @@ export class UsersComponent implements OnInit {
   filteredProfiles: any[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   searchQuery = '';
-  pageSize = 10;
+  pageSize = 9;
   currentPage = 0;
   totalUsers = 0;
   isEditing: boolean = false;
@@ -56,10 +55,10 @@ export class UsersComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       fullName: ['', [Validators.required, Validators.pattern(REGEX_NAME)]],
       profile: ['', [Validators.required]],
-      profiles: ['', []],
+      profiles: ['', []]
     });
     this.searchForm = this.fb.group({
-      search: ['', []],
+      search: ['', []]
     });
   }
 
@@ -71,13 +70,12 @@ export class UsersComponent implements OnInit {
   fetchUserDetails(userId: number): void {
     this.userService.getUserId(userId).subscribe({
       next: response => {
-        console.log('Usuario obtenido:', response);
         this.selectedUserId = response.userId;
         this.userForm.patchValue({
           email: response.email,
           fullName: response.fullName,
           profile: response.profileId,
-          status: response.status,
+          status: response.status
         });
         this.userForm.get('email')?.disable();
         this.userStatus = response.status;
@@ -86,10 +84,7 @@ export class UsersComponent implements OnInit {
         this.userForm.markAsPristine();
       },
       error: error => {
-        console.error(
-          this.translate.instant('USERS.ERRORS.FETCH_USER'),
-          error
-        );
+        console.error(this.translate.instant('USERS.ERRORS.FETCH_USER'), error);
       }
     });
   }
@@ -99,7 +94,6 @@ export class UsersComponent implements OnInit {
     this.userService.getUsers(this.currentPage, this.pageSize).subscribe({
       next: users => {
         if (users.object) {
-          console.log('Users loaded:', users);
           this.users = users.object;
           this.filteredUsers = new MatTableDataSource(this.users);
           this.currentPage = users.currentPage;
@@ -111,18 +105,17 @@ export class UsersComponent implements OnInit {
         console.error('Error fetching users:', error);
         this.blockUI.stop();
       }
-    })
+    });
   }
 
   fetchUserByName(): void {
     const search = {
-      fullName: this.searchForm.value.search,
+      fullName: this.searchForm.value.search
     };
     this.blockUI.start();
     this.userService.getUserByName(search).subscribe({
       next: users => {
         if (users.object) {
-          console.log('Users loaded:', users);
           this.users = users.object;
           this.filteredUsers = new MatTableDataSource(this.users);
           this.currentPage = users.currentPage;
@@ -132,7 +125,10 @@ export class UsersComponent implements OnInit {
       },
       error: error => {
         console.error('Error fetching users:', error);
-        this._notifications.warn('User not found', 'An error occurred while fetching users');
+        this._notifications.warn(
+          'User not found',
+          'An error occurred while fetching users'
+        );
         this.blockUI.stop();
       }
     });
@@ -160,16 +156,18 @@ export class UsersComponent implements OnInit {
       const updatedUser = {
         fullName: this.userForm.value.fullName,
         profileId: this.userForm.value.profile,
-        dateOfBirth: new Date(),
-      }
+        dateOfBirth: new Date()
+      };
       this.userService.putUser(this.selectedUserId, updatedUser).subscribe({
         next: () => {
-          this._notifications.success(this.translate.instant('USERS.NOTIFICATIONS.UPDATE_SUCCESS'), '');
+          this._notifications.success(
+            this.translate.instant('USERS.NOTIFICATIONS.UPDATE_SUCCESS'),
+            ''
+          );
           this.fetchUsers();
           this.userForm.reset();
         }
       });
-
     }
   }
 
@@ -185,15 +183,14 @@ export class UsersComponent implements OnInit {
         email: this.userForm.value.email,
         fullName: this.userForm.value.fullName,
         profileId: this.userForm.value.profile,
-        dateOfBirth: new Date(),
+        dateOfBirth: new Date()
       };
       this.blockUI.start(
-        this.translate.instant('USERS.NOTIFICFATIONS.CREATING_USER'),
+        this.translate.instant('USERS.NOTIFICFATIONS.CREATING_USER')
       );
 
       this.userService.addUser(userData).subscribe({
         next: response => {
-          console.log('User created:', response);
           this._notifications.success(
             this.translate.instant('USERS.NOTIFICATIONS.USER_CREATED'),
             this.translate.instant('USERS.NOTIFICATIONS.USER_CREATED_DESC')
@@ -209,7 +206,9 @@ export class UsersComponent implements OnInit {
           console.error('Error creating user:', userData);
           this._notifications.error(
             this.translate.instant('USERS.NOTIFICATIONS.USER_CREATION_FAILURE'),
-            this.translate.instant('USERS.NOTIFICATIONS.USER_CREATION_FAILURE_DESC')
+            this.translate.instant(
+              'USERS.NOTIFICATIONS.USER_CREATION_FAILURE_DESC'
+            )
           );
           this.blockUI.stop();
         }
@@ -218,7 +217,7 @@ export class UsersComponent implements OnInit {
       this._notifications.error(
         this.translate.instant('USERS.NOTIFICATIONS.INVALID_FORM'),
         this.translate.instant('USERS.NOTIFICATIONS.INVALID_FORM_DESC')
-      )
+      );
     }
   }
 
@@ -226,9 +225,9 @@ export class UsersComponent implements OnInit {
     this.userService.changeStatus(userId).subscribe({
       next: response => {
         this.fetchUserDetails(userId);
-        console.log('Usuario actualizado:', response);
         this._notifications.success(
-          this.translate.instant('USERS.NOTIFICATIONS.UPDATE_SUCCESS'), ''
+          this.translate.instant('USERS.NOTIFICATIONS.UPDATE_SUCCESS'),
+          ''
         );
         this.fetchUsers();
         this.userForm.reset();
@@ -238,7 +237,10 @@ export class UsersComponent implements OnInit {
           this.translate.instant('USERS.ERRORS.STATUS_TOGGLE'),
           error
         );
-        this._notifications.error(this.translate.instant('USERS.NOTIFICATIONS.STATUS_FAILURE'), '');
+        this._notifications.error(
+          this.translate.instant('USERS.NOTIFICATIONS.STATUS_FAILURE'),
+          ''
+        );
       }
     });
   }
