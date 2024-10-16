@@ -24,6 +24,7 @@ export class AuditComponent implements OnInit {
   pageSize = 10;
   pageIndex = 0;
   @BlockUI() blockUI!: NgBlockUI;
+  maxDate: Date;
 
   public options = {
     timeOut: 3000,
@@ -44,6 +45,7 @@ export class AuditComponent implements OnInit {
       entity: ['', [Validators.required]],
       fullName: ['']
     });
+    this.maxDate = new Date();
   }
 
   ngOnInit() {
@@ -79,6 +81,7 @@ export class AuditComponent implements OnInit {
 
   onSubmit() {
     if (this.auditForm.valid) {
+      this.pageIndex = 0;
       this.blockUI.start(
         this.translate.instant('AUDIT.NOTIFICATIONS.SENDING_REQUEST')
       );
@@ -103,7 +106,13 @@ export class AuditComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     if (this.auditForm.dirty) {
-      this.onSubmit();
+      const auditData: AuditData = {
+        startDate: this.auditForm.value.startDate,
+        endDate: this.auditForm.value.endDate,
+        entity: this.auditForm.value.entity,
+        fullName: this.auditForm.value.fullName
+      };
+      this.performAuditSearch(auditData);
     } else {
       this.loadAllAudits();
     }

@@ -44,7 +44,7 @@
     "END_DATE": "Fecha final",
     "ENTITY": "Entidad",
     "USER": "Usuario",
-    "SEARCH": "Buscar",
+    "SEARCH": "BUSCAR",
     "ERRORS": {
       "REQUIRED_START_DATE": "La fecha inicial es obligatoria",
       "REQUIRED_END_DATE": "La fecha final es obligatoria",
@@ -231,5 +231,18 @@
       "CANCEL": "Cancelar",
       "SAVE_CHANGES": "Guardar Cambios"
     }
+  },
+  "ORDERS": {
+    "TITLE": "Orden",
+    "CLIENT": "Cliente",
+    "QUANTITY": "Cantidad",
+    "PRODUCT": "Producto",
+    "PRICE": "Precio/Valor Unitario",
+    "TOTAL": "Total",
+    "TAXES": "Impuestos",
+    "ADD_ITEM": "Agregar item",
+    "SUBMIT": "Emitir",
+    "ORDER_SUBMITTED": "Orden Emitida",
+    "FORM_INVALID": "Formulario Invalido"
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { ProfilesService } from '../../services/profiles.service';
@@ -11,12 +11,14 @@ import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
 import {
   CreateProfile,
   Profile,
-  profileName,
   Role
 } from '../../utilities/models/profile.model';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { switchMap } from 'rxjs';
-import { REGEX_DESCRIPTION, REGEX_NAME } from 'src/app/shared/utilities/constants.utility';
+import {
+  REGEX_DESCRIPTION,
+  REGEX_NAME
+} from 'src/app/shared/utilities/constants.utility';
 
 @Component({
   selector: 'app-profiles',
@@ -52,11 +54,14 @@ export class ProfilesComponent implements OnInit {
     private readonly translate: TranslateService,
     private readonly profilesService: ProfilesService,
     private readonly fb: FormBuilder,
-    private readonly dialog: MatDialog,
+    private readonly dialog: MatDialog
   ) {
     this.profileForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern(REGEX_NAME)]],
-      description: ['', [Validators.required, Validators.pattern(REGEX_DESCRIPTION)]]
+      description: [
+        '',
+        [Validators.required, Validators.pattern(REGEX_DESCRIPTION)]
+      ]
     });
   }
 
@@ -96,21 +101,23 @@ export class ProfilesComponent implements OnInit {
 
   fetchProfiles(): void {
     this.blockUI.start();
-    this.profilesService.getProfiles(this.currentPage, this.pageSize).subscribe({
-      next: profiles => {
-        if (profiles.object) {
-          this.profiles = profiles.object.object;
-          this.filteredProfiles = new MatTableDataSource(this.profiles);
-          this.currentPage = profiles.object.currentPage;
-          this.totalProfiles = profiles.object.totalElements;
+    this.profilesService
+      .getProfiles(this.currentPage, this.pageSize)
+      .subscribe({
+        next: profiles => {
+          if (profiles.object) {
+            this.profiles = profiles.object.object;
+            this.filteredProfiles = new MatTableDataSource(this.profiles);
+            this.currentPage = profiles.object.currentPage;
+            this.totalProfiles = profiles.object.totalElements;
+          }
+          this.blockUI.stop();
+        },
+        error: error => {
+          console.error('Error fetching profiles:', error);
+          this.blockUI.stop();
         }
-        this.blockUI.stop();
-      },
-      error: error => {
-        console.error('Error fetching profiles:', error);
-        this.blockUI.stop();
-      }
-    });
+      });
   }
 
   fetchRoles(): void {
@@ -131,7 +138,9 @@ export class ProfilesComponent implements OnInit {
 
   updateProfiles(): void {
     if (this.profileForm.valid) {
-      const cleanDescription = this.cleanDescription(this.profileForm.value.description);
+      const cleanDescription = this.cleanDescription(
+        this.profileForm.value.description
+      );
       const updatedProfile = {
         name: this.profileForm.value.name,
         description: cleanDescription,
@@ -166,7 +175,9 @@ export class ProfilesComponent implements OnInit {
 
   addProfile(): void {
     if (this.profileForm.valid) {
-      const cleanDescription = this.cleanDescription(this.profileForm.value.description);
+      const cleanDescription = this.cleanDescription(
+        this.profileForm.value.description
+      );
       const profileData: CreateProfile = {
         name: this.profileForm.value.name,
         description: cleanDescription,

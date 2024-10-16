@@ -1,0 +1,80 @@
+:host {
+  display: flex;
+  padding: 25px 25px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex: 1 0 0;
+  align-self: stretch;
+
+  .order-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    .order-container {
+      background-color: #c8c8c8;
+      display: flex;
+      padding: 16px 29px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 30px;
+      align-self: stretch;
+      border-radius: 20px;
+      .client {
+        width: 100%;
+
+        mat-form-field {
+          width: 45% !important;
+
+          @media (min-width: 800px) and (max-width: 1200px) {
+            width: 45% !important;
+          }
+
+          @media (max-width: 800px) {
+            width: 100% !important;
+          }
+        }
+      }
+
+      .items-container {
+        width: 100%;
+
+        .item {
+          display: flex;
+          justify-content: center;
+          align-items: top;
+          gap: 10px;
+          mat-form-field {
+            width: 45% !important;
+
+            @media (min-width: 800px) and (max-width: 1200px) {
+              width: 45% !important;
+            }
+
+            @media (max-width: 800px) {
+              width: 100% !important;
+            }
+          }
+
+          button {
+            margin-top: 4px;
+          }
+        }
+      }
+    }
+  }
+  .submit-button {
+    display: flex;
+    width: 40%;
+    height: 36px;
+    padding: 0px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    border-radius: 5px;
+  }
+}

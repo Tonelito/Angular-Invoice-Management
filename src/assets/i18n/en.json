@@ -44,7 +44,7 @@
     "END_DATE": "End date",
     "ENTITY": "Entity",
     "USER": "User",
-    "SEARCH": "Search",
+    "SEARCH": "SEARCH",
     "ENTITIES": {
       "ENTITY": "Entity",
       "USER": "User",
@@ -231,5 +231,18 @@
       "CANCEL": "Cancel",
       "CONFIRM": "Confirm"
     }
+  },
+  "ORDERS": {
+    "TITLE": "Order",
+    "CLIENT": "Customer",
+    "QUANTITY": "Quantity",
+    "PRODUCT": "Product",
+    "PRICE": "Price/Unitary Value",
+    "TOTAL": "Total",
+    "TAXES": "Taxes",
+    "ADD_ITEM": "Add item",
+    "SUBMIT": "Submit",
+    "ORDER_SUBMITTED": "Order Sumbitted",
+    "FORM_INVALID": "Invalid Form"
   }
 }

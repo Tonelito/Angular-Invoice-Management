@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { confirmPasswordValidator } from 'src/app/shared/utilities/confirm-password.validator';
 import { jwtDecode } from 'jwt-decode';
 import { AuthService } from '../../services/auth.service';
@@ -16,7 +21,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./password-change.component.scss']
 })
 export class PasswordChangeComponent implements OnInit {
-
   hideCurrentPassword = true;
   hideNewPassword = true;
   confirmNewPassword = true;
@@ -30,8 +34,7 @@ export class PasswordChangeComponent implements OnInit {
     showProgressBar: false,
     pauseOnHover: true,
     clickToClose: true
-  }
-
+  };
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -40,18 +43,25 @@ export class PasswordChangeComponent implements OnInit {
     private readonly _notifications: NotificationsService,
     private router: Router
   ) {
-    this.passwordChangeForm = this._formBuilder.group({
-      currentPassword: ['', [Validators.required]],
-      newPassword: new FormControl<string>('', [Validators.required, Validators.pattern(REGEX_PASSWORD)]),
-      newConfirmPassword: new FormControl<string>('', [Validators.required, Validators.pattern(REGEX_PASSWORD)])
-    }, { validators: confirmPasswordValidator });
+    this.passwordChangeForm = this._formBuilder.group(
+      {
+        currentPassword: ['', [Validators.required]],
+        newPassword: new FormControl<string>('', [
+          Validators.required,
+          Validators.pattern(REGEX_PASSWORD)
+        ]),
+        newConfirmPassword: new FormControl<string>('', [
+          Validators.required,
+          Validators.pattern(REGEX_PASSWORD)
+        ])
+      },
+      { validators: confirmPasswordValidator }
+    );
   }
 
   ngOnInit() {
-
     this.getEmail();
-    this.translate.use('es')
-  };
+  }
 
   toggleCurrentPasswordVisibility() {
     this.hideCurrentPassword = !this.hideCurrentPassword;
@@ -82,18 +92,18 @@ export class PasswordChangeComponent implements OnInit {
       email: this.sub,
       newPassword: this.passwordChangeForm.get('newPassword')?.value,
       password: this.passwordChangeForm.get('currentPassword')?.value
-    }
+    };
 
     console.log('Password change data:', changePasswordData);
 
     this.serviceAuth.changePassword(changePasswordData).subscribe({
-      next: (response) => {
+      next: response => {
         console.log('Password changed', response);
         this._notifications.success('Password changed successfully');
 
         this.router.navigate(['/admin/home']);
       },
-      error: (err) => {
+      error: err => {
         console.error('Error changing password', err);
         this._notifications.error('Error changing password');
       }

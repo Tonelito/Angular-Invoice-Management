@@ -16,7 +16,6 @@ export class NavBarComponent implements OnInit {
     private readonly translate: TranslateService,
     private readonly securityService: AuthService
   ) {
-    this.translate.use('es');
   }
 
   ngOnInit() {
@@ -29,10 +28,12 @@ export class NavBarComponent implements OnInit {
 
   spanish() {
     this.translate.use('es');
+    CookieUtil.storage('language', 'es');
   }
 
   english() {
     this.translate.use('en');
+    CookieUtil.storage('language', 'en');
   }
 
   logOut() {

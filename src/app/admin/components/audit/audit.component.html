@@ -7,6 +7,7 @@
           <mat-label>{{ 'AUDIT.START_DATE' | translate }}</mat-label>
           <input
             matInput
+            [max]="maxDate"
             [matDatepicker]="pickerStart"
             formControlName="startDate"
           />
@@ -25,6 +26,7 @@
           <input
             matInput
             [matDatepicker]="pickerEnd"
+            [max]="maxDate"
             formControlName="endDate"
           />
           <mat-datepicker-toggle
