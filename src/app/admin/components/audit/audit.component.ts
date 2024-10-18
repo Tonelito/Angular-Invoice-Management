@@ -4,10 +4,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'angular2-notifications';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { AuditService } from '../../services/audit.service';
-import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
+import { MyErrorStateMatcher } from 'src/app/shared/utilities/error-state-matcher.utility';
 import { PageEvent } from '@angular/material/paginator';
 import { AuditData } from '../../utilities/models/audit.model';
-import { HttpErrorResponse } from '@angular/common/http';
+import { handleError } from 'src/app/shared/utilities/error-handler.utility';
+import { formatRequestData } from 'src/app/shared/utilities/format.utility';
 
 @Component({
   selector: 'app-audit',
@@ -15,17 +16,21 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./audit.component.scss']
 })
 export class AuditComponent implements OnInit {
+  //form
   auditForm: FormGroup;
   matcher = new MyErrorStateMatcher();
+  maxDate: Date;
+
+  //table
   displayedColumns: string[] = ['entity', 'user', 'operation', 'date'];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   tableData: any[] = [];
   totalElements = 0;
   pageSize = 10;
   pageIndex = 0;
-  @BlockUI() blockUI!: NgBlockUI;
-  maxDate: Date;
 
+  //notifications and block-ui
+  @BlockUI() blockUI!: NgBlockUI;
   public options = {
     timeOut: 3000,
     showProgressBar: false,
@@ -60,7 +65,10 @@ export class AuditComponent implements OnInit {
         this.blockUI.stop();
       },
       error: error => {
-        this.handleError(error);
+        handleError(error, this._notifications);
+        this.blockUI.stop();
+        this.tableData = [];
+        this.totalElements = 0;
       }
     });
   }
@@ -74,11 +82,32 @@ export class AuditComponent implements OnInit {
           this.blockUI.stop();
         },
         error: error => {
-          this.handleError(error);
+          handleError(error, this._notifications);
+          this.blockUI.stop();
+          this.tableData = [];
+          this.totalElements = 0;
         }
       });
   }
 
+  updateTableData(response: any) {
+    this.tableData = response.object.map((entry: any) => ({
+      ...entry,
+      entity: entry.entity,
+      user: entry.fullName,
+      operation: entry.operation,
+      date: new Date(entry.datetime).toLocaleString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      }),
+      formattedRequest: formatRequestData(entry.request)
+    }));
+    this.totalElements = response.totalElements;
+  }
+  
   onSubmit() {
     if (this.auditForm.valid) {
       this.pageIndex = 0;
@@ -115,59 +144,6 @@ export class AuditComponent implements OnInit {
       this.performAuditSearch(auditData);
     } else {
       this.loadAllAudits();
-    }
-  }
-
-  updateTableData(response: any) {
-    this.tableData = response.object.map((entry: any) => ({
-      ...entry,
-      entity: entry.entity,
-      user: entry.fullName,
-      operation: entry.operation,
-      date: new Date(entry.datetime).toLocaleString('en-GB', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      }),
-      formattedRequest: this.formatRequestData(entry.request)
-    }));
-    this.totalElements = response.totalElements;
-  }
-
-  handleError(error: HttpErrorResponse) {
-    let errorMessage = 'An unexpected error occurred';
-
-    if (error.error && error.error.mensaje) {
-      errorMessage = error.error.mensaje;
-    }
-
-    this._notifications.error('Error', errorMessage);
-
-    console.error('Error:', error);
-    this.blockUI.stop();
-    this.tableData = [];
-    this.totalElements = 0;
-  }
-
-  formatRequestData(requestBody: string): string {
-    try {
-      const parsedData = JSON.parse(requestBody);
-      return Object.entries(parsedData)
-        .map(([key, value]) => {
-          if (value === null) {
-            value = 'Not provided';
-          }
-          if (key === 'dateOfBirth' && typeof value === 'number') {
-            value = new Date(value).toLocaleDateString('en-GB');
-          }
-          return `${key}: ${value}`;
-        })
-        .join('\n');
-    } catch (error) {
-      console.error('Error parsing request body', error);
-      return 'Invalid request format';
     }
   }
 }

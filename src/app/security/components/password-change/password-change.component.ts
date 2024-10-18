@@ -9,7 +9,7 @@ import { confirmPasswordValidator } from 'src/app/shared/utilities/confirm-passw
 import { jwtDecode } from 'jwt-decode';
 import { AuthService } from '../../services/auth.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
+import { MyErrorStateMatcher } from 'src/app/shared/utilities/error-state-matcher.utility';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'angular2-notifications';
 import { REGEX_PASSWORD } from 'src/app/shared/utilities/constants.utility';

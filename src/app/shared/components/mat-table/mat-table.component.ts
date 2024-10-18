@@ -41,7 +41,6 @@ export class MatTableComponent implements OnInit {
   @Input() pageSize: number = 10;
   @Input() pageIndex: number = 0;
   @Output() page = new EventEmitter<PageEvent>();
-
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -49,7 +48,7 @@ export class MatTableComponent implements OnInit {
   @Input() expandable_row: boolean = false;
   @ContentChild(TemplateRef) expandedTemplate!: TemplateRef<any>;
   columnsToDisplayWithExpand: string[] = [];
-  expandedElement: any | null = null;
+  expandedElement: any = null;
 
   ngOnInit() {
     this.columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
@@ -71,5 +70,12 @@ export class MatTableComponent implements OnInit {
 
   toggleRow(element: any) {
     this.expandedElement = this.expandedElement === element ? null : element;
+  }
+
+  handleKeydown(event: KeyboardEvent, element: any): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.toggleRow(element);
+      event.preventDefault();
+    }
   }
 }

@@ -18,6 +18,7 @@
             </mat-form-field>
           </form>
         </div>
+        <!-- No Profiles Message -->
         <div
           *ngIf="filteredProfiles && filteredProfiles.filteredData.length === 0"
         ></div>
@@ -73,7 +74,7 @@
         </div>
       </div>
       <div class="profiles-form-container">
-        <!-- Add Profile -->
+        <!-- Add/Edit Profile Form -->
         <div class="form-container">
           <div class="title">
             <h1>{{ 'PROFILES.FORM_TITLE' | translate }}</h1>
@@ -94,6 +95,7 @@
               }}</mat-icon>
             </button>
           </div>
+          <!-- Profile Form -->
           <form [formGroup]="profileForm" (submit)="submitProfile()">
             <div class="inputs-button">
               <!-- Name Input -->
@@ -104,7 +106,6 @@
                   formControlName="name"
                   [errorStateMatcher]="matcher"
                 />
-                <!-- Required Name -->
                 <mat-error
                   *ngIf="profileForm.get('name')?.hasError('required')"
                 >
@@ -120,13 +121,14 @@
                   formControlName="description"
                   [errorStateMatcher]="matcher"
                 />
-                <!-- Required Description -->
                 <mat-error
                   *ngIf="profileForm.get('description')?.hasError('required')"
                 >
                   {{ 'PROFILES.ERRORS.REQUIRED_DESCRIPTION' | translate }}
                 </mat-error>
               </mat-form-field>
+
+              <!-- Form Buttons -->
               <div class="buttons">
                 <button
                   mat-flat-button
@@ -149,7 +151,8 @@
                 </button>
               </div>
             </div>
-            <!-- Toggles -->
+
+            <!-- Role Toggles -->
             <div class="toggle-container">
               <mat-slide-toggle
                 *ngFor="let role of roles"

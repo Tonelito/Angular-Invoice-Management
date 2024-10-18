@@ -5,12 +5,15 @@ import { NotificationsService } from 'angular2-notifications';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientsService } from '../../services/clients.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
+import { MyErrorStateMatcher } from 'src/app/shared/utilities/error-state-matcher.utility';
 import { Client, Clients } from '../../utilities/models/client.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { REGEX_NUMBER, REGEX_NUMBER_DPI, REGEX_NUMBER_NIT } from 'src/app/shared/utilities/constants.utility';
-
+import {
+  REGEX_NUMBER,
+  REGEX_NUMBER_DPI,
+  REGEX_NUMBER_NIT
+} from 'src/app/shared/utilities/constants.utility';
 
 @Component({
   selector: 'app-clients',
@@ -26,7 +29,7 @@ export class ClientsComponent implements OnInit {
     showProgressBar: false,
     pauseOnHover: true,
     clickToClose: true
-  }
+  };
 
   clients: Client[] = [];
   filteredClients: MatTableDataSource<Client> = new MatTableDataSource();
@@ -51,10 +54,8 @@ export class ClientsComponent implements OnInit {
       dpi: ['', [Validators.required, Validators.pattern(REGEX_NUMBER_DPI)]],
       passport: ['', [Validators.required, Validators.pattern(REGEX_NUMBER)]],
       nit: ['', [Validators.required, Validators.pattern(REGEX_NUMBER_NIT)]],
-      address: ['', [Validators.required]],
+      address: ['', [Validators.required]]
     });
-
-    ;
   }
 
   ngOnInit(): void {
@@ -63,21 +64,24 @@ export class ClientsComponent implements OnInit {
 
   fetchClients(): void {
     this.blockUI.start();
-    this.clientsService.getCustomers(this.currentPage, this.pageSize).subscribe({
-      next: clients => {
-        if (clients.object) {
-          console.log('Clients loaded: ', clients)
-          this.clients = clients.object.object;
-          this.filteredClients = new MatTableDataSource(this.clients);
-          this.currentPage = clients.object.currentPage;
-          this.totalClients = clients.object.totalElements;
+    this.clientsService
+      .getCustomers(this.currentPage, this.pageSize)
+      .subscribe({
+        next: clients => {
+          if (clients.object) {
+            console.log('Clients loaded: ', clients);
+            this.clients = clients.object.object;
+            this.filteredClients = new MatTableDataSource(this.clients);
+            this.currentPage = clients.object.currentPage;
+            this.totalClients = clients.object.totalElements;
+          }
+          this.blockUI.stop();
+        },
+        error: error => {
+          console.error('Error loading clients: ', error);
+          this.blockUI.stop();
         }
-        this.blockUI.stop();
-      }, error: error => {
-        console.error('Error loading clients: ', error);
-        this.blockUI.stop();
-      }
-    })
+      });
   }
 
   onPageChange(event: any): void {
@@ -95,7 +99,7 @@ export class ClientsComponent implements OnInit {
         nit: this.clientForm.get('nit')?.value,
         address: this.clientForm.get('address')?.value,
         status: true
-      }
+      };
       this.blockUI.start();
 
       this.clientsService.addClient(clientData).subscribe({
@@ -103,17 +107,23 @@ export class ClientsComponent implements OnInit {
           console.log('Client added: ', response);
           this._notifications.success(
             this.translate.instant('CLIENTS.NOTIFICATIONS.CUSTOMER_CREATED'),
-            this.translate.instant('CLIENTS.NOTIFICATIONS.CUSTOMER_CREATED_DESC')
-          )
+            this.translate.instant(
+              'CLIENTS.NOTIFICATIONS.CUSTOMER_CREATED_DESC'
+            )
+          );
           this.clientForm.reset();
           this.fetchClients();
         },
         error: error => {
           console.error('Error adding client: ', error);
           this._notifications.error(
-            this.translate.instant('CLIENTS.NOTIFICATIONS.CUSTOMER_CREATION_FAILURE'),
-            this.translate.instant('CLIENTS.NOTIFICATIONS.CUSTOMER_CREATION_FAILURE_DESC')
-          )
+            this.translate.instant(
+              'CLIENTS.NOTIFICATIONS.CUSTOMER_CREATION_FAILURE'
+            ),
+            this.translate.instant(
+              'CLIENTS.NOTIFICATIONS.CUSTOMER_CREATION_FAILURE_DESC'
+            )
+          );
           this.blockUI.stop();
         }
       });
@@ -121,7 +131,7 @@ export class ClientsComponent implements OnInit {
       this._notifications.error(
         this.translate.instant('CLIENTS.NOTIFICATIONS.INVALID_FORM'),
         this.translate.instant('CLIENTS.NOTIFICATIONS.INVALID_FORM_DESC')
-      )
+      );
     }
   }
 
@@ -131,5 +141,4 @@ export class ClientsComponent implements OnInit {
       this.addClient();
     }
   }
-
 }
