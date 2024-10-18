@@ -9,16 +9,18 @@
     justify-content: center;
     width: 100%;
     form {
+      width: 100%;
       display: flex;
       align-items: flex-start;
       gap: 10px;
 
       button {
         height: 58px;
+        width: 25%;
       }
 
       mat-form-field {
-        width: 250px;
+        width: 100%;
       }
     }
   }
@@ -33,7 +35,7 @@
       }
 
       button {
-        width: 100%;
+        width: 100% !important;
       }
     }
   }

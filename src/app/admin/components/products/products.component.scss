@@ -1,232 +1,231 @@
-$altura-formulario: 830px;
+$altura-formulario: 83vh;
 
 .product-container {
+  display: flex;
+  padding: 25px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+
+  .product-dashboard {
     display: flex;
-    padding: 25px;
-    flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+    flex: 1 0 0;
+    align-self: stretch;
 
-    .product-dashboard {
+    .product-column {
+      display: flex;
+      padding: 10px;
+      flex-direction: column;
+      align-items: flex-start;
+      align-self: stretch;
+      width: 350px;
+      height: $altura-formulario;
+
+      .search {
+        width: 100%;
+
+        form {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          gap: 10px;
+        }
+      }
+
+      @media (max-width: 900px) {
+        width: 100%;
+      }
+
+      mat-form-field {
+        width: 100%;
+      }
+
+      .product-list-container {
         display: flex;
-        align-items: flex-start;
-        gap: 10px;
+        padding: 10px;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
         flex: 1 0 0;
         align-self: stretch;
+        border-radius: 15px;
+        background: #fff;
+        box-shadow:
+          0px 1px 1px 0px rgba(0, 0, 0, 0.25),
+          0px 2px 2px 0px rgba(0, 0, 0, 0.25),
+          0px 1px 5px 0px rgba(0, 0, 0, 0.25);
 
-        .product-column {
+        .product-list {
+          display: flex;
+          flex-direction: column;
+
+          align-items: flex-start;
+          flex: 1 0 0;
+          align-self: stretch;
+
+          .product-item {
+            width: 100%;
             display: flex;
-            padding: 10px;
-            flex-direction: column;
-            align-items: flex-start;
-            align-self: stretch;
-            width: 350px;
-            height: $altura-formulario;
+            padding: 7px 11px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
 
-            .search {
-                width: 100%;
+            .product-info {
+              display: flex;
+              align-items: center;
+              gap: 10px;
 
-                form {
-                    display: flex;
-                    justify-content: space-between;
-                    width: 100%;
-                    gap: 10px;
+              p {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 200px;
+              }
+
+              .status-circle {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                margin-right: 10px;
+                display: inline-block;
+                background-color: #48e13a;
+
+                &.active {
+                  background-color: #48e13a;
                 }
+
+                &.inactive {
+                  background-color: red;
+                }
+              }
+
+              .client-text {
+                display: flex;
+                flex-direction: column;
+              }
+
+              p {
+                font-weight: 500;
+                margin: 0;
+              }
+            }
+
+            .buttons {
+              display: flex;
+              gap: 5px;
+
+              button {
+                width: 36px;
+                height: 36px;
+                padding: 0;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                mat-icon {
+                  font-size: 23px;
+                }
+              }
             }
 
             @media (max-width: 900px) {
-                width: 100%;
+              justify-content: center;
             }
+          }
+        }
+      }
+    }
+
+    .product-form-container {
+      display: flex;
+      padding: 10px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      flex: 1 0 0;
+      align-self: stretch;
+
+      .form-container {
+        display: flex;
+        padding: 16px 29px;
+        flex-direction: column;
+        gap: 10px;
+        align-self: stretch;
+        border-radius: 20px;
+        background: #c8c8c8;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        height: $altura-formulario - 1.85vh;
+
+        .title {
+          display: flex;
+          justify-content: space-between;
+        }
+
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+
+          .inputs-button {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
 
             mat-form-field {
+              width: 100%;
+
+              @media (max-width: 900px) {
                 width: 100%;
+              }
             }
 
-            .product-list-container {
-                display: flex;
-                padding: 10px;
-                flex-direction: column;
-                justify-content: space-between;
-                align-items: center;
-                flex: 1 0 0;
-                align-self: stretch;
-                border-radius: 15px;
-                background: #fff;
-                box-shadow:
-                    0px 1px 1px 0px rgba(0, 0, 0, 0.25),
-                    0px 2px 2px 0px rgba(0, 0, 0, 0.25),
-                    0px 1px 5px 0px rgba(0, 0, 0, 0.25);
-
-                .product-list {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
-                    align-items: flex-start;
-                    flex: 1 0 0;
-                    align-self: stretch;
-
-                    .product-item {
-                        width: 100%;
-                        display: flex;
-                        padding: 7px 11px;
-                        align-items: center;
-                        justify-content: space-between;
-                        gap: 10px;
-
-                        .product-info {
-                            display: flex;
-                            align-items: center;
-                            gap: 10px;
-
-                            p {
-                                white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis;
-                                max-width: 200px;
-                            }
-
-                            .status-circle {
-                                width: 10px;
-                                height: 10px;
-                                border-radius: 50%;
-                                margin-right: 10px;
-                                display: inline-block;
-                                background-color: #48e13a;
-
-                                &.active {
-                                    background-color: #48e13a;
-                                }
-
-                                &.inactive {
-                                    background-color: red;
-                                }
-                            }
-
-                            .client-text {
-                                display: flex;
-                                flex-direction: column;
-
-                            }
-
-                            p {
-                                font-weight: 500;
-                                margin: 0;
-                            }
-                        }
-
-                        .buttons {
-                            display: flex;
-                            gap: 5px;
-
-                            button {
-                                width: 36px;
-                                height: 36px;
-                                padding: 0;
-                                border-radius: 50%;
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-
-                                mat-icon {
-                                    font-size: 23px;
-                                }
-                            }
-                        }
-
-                        @media (max-width: 900px) {
-                            justify-content: center;
-                        }
-                    }
-                }
+            .row-1 {
+              display: flex;
+              gap: 10px;
             }
-        }
 
-        .product-form-container {
-            display: flex;
-            padding: 10px;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-            flex: 1 0 0;
-            align-self: stretch;
-
-            .form-container {
-                display: flex;
-                padding: 16px 29px;
-                flex-direction: column;
-                gap: 10px;
-                align-self: stretch;
-                border-radius: 20px;
-                background: #c8c8c8;
-                box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-                height: $altura-formulario - 20px;
-
-                .title {
-                    display: flex;
-                    justify-content: space-between;
-                }
-
-                form {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 15px;
-
-                    .inputs-button {
-                        display: flex;
-                        flex-direction: column;
-                        gap: 10px;
-
-                        mat-form-field {
-                            width: 100%;
-
-                            @media (max-width: 900px) {
-                                width: 100%;
-                            }
-                        }
-
-                        .row-1 {
-                            display: flex;
-                            gap: 10px;
-                        }
-
-                        .row-2 {
-                            display: flex;
-                            gap: 10px;
-                        }
-
-                        .row-3 {
-                            display: flex;
-                            gap: 10px;
-                        }
-
-                        .row-4 {
-                            display: flex;
-                            gap: 10px;
-                        }
-
-                        .buttons {
-                            display: flex;
-                            gap: 10px;
-                            justify-content: right;
-
-                            button {
-                                width: 25% !important;
-                                padding: 25px 0;
-                            }
-                        }
-
-                        @media (max-width: 900px) {
-                            display: flex;
-                            flex-direction: column;
-                        }
-                    }
-                }
+            .row-2 {
+              display: flex;
+              gap: 10px;
             }
-        }
 
-        @media (max-width: 900px) {
-            display: flex;
-            flex-direction: column;
+            .row-3 {
+              display: flex;
+              gap: 10px;
+            }
+
+            .row-4 {
+              display: flex;
+              gap: 10px;
+            }
+
+            .buttons {
+              display: flex;
+              gap: 10px;
+              justify-content: right;
+
+              button {
+                width: 25% !important;
+                padding: 25px 0;
+              }
+            }
+
+            @media (max-width: 900px) {
+              display: flex;
+              flex-direction: column;
+            }
+          }
         }
+      }
     }
+
+    @media (max-width: 900px) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 }

@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/security/login',
+    redirectTo: '/admin/home',
     pathMatch: 'full'
   }
 ];

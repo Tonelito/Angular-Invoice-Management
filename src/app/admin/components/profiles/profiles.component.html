@@ -7,14 +7,10 @@
           <form>
             <mat-form-field appearance="outline">
               <mat-label>{{ 'PROFILES.SEARCH' | translate }}</mat-label>
-<<<<<<< HEAD
               <input
                 matInput
                 placeholder="{{ 'PROFILES.SEARCH_PLACEHOLDER' | translate }}"
               />
-=======
-              <input matInput placeholder="{{ 'PROFILES.SEARCH_PLACEHOLDER' | translate }}" />
->>>>>>> feature/users
 
               <button mat-icon-button matSuffix>
                 <mat-icon>search</mat-icon>
@@ -22,6 +18,7 @@
             </mat-form-field>
           </form>
         </div>
+        <!-- No Profiles Message -->
         <div
           *ngIf="filteredProfiles && filteredProfiles.filteredData.length === 0"
         ></div>
@@ -77,7 +74,7 @@
         </div>
       </div>
       <div class="profiles-form-container">
-        <!-- Add Profile -->
+        <!-- Add/Edit Profile Form -->
         <div class="form-container">
           <div class="title">
             <h1>{{ 'PROFILES.FORM_TITLE' | translate }}</h1>
@@ -98,6 +95,7 @@
               }}</mat-icon>
             </button>
           </div>
+          <!-- Profile Form -->
           <form [formGroup]="profileForm" (submit)="submitProfile()">
             <div class="inputs-button">
               <!-- Name Input -->
@@ -108,7 +106,6 @@
                   formControlName="name"
                   [errorStateMatcher]="matcher"
                 />
-                <!-- Required Name -->
                 <mat-error
                   *ngIf="profileForm.get('name')?.hasError('required')"
                 >
@@ -124,7 +121,6 @@
                   formControlName="description"
                   [errorStateMatcher]="matcher"
                 />
-                <!-- Required Description -->
                 <mat-error
                   *ngIf="profileForm.get('description')?.hasError('required')"
                 >
@@ -133,8 +129,11 @@
               </mat-form-field>
               <!-- Toggles -->
               <div class="toggle-container">
-                <mat-slide-toggle *ngFor="let role of roles" [checked]="selectedRoles.includes(role.rolId)"
-                  (change)="toggleRole(role.rolId, $event.checked)">
+                <mat-slide-toggle
+                  *ngFor="let role of roles"
+                  [checked]="selectedRoles.includes(role.rolId)"
+                  (change)="toggleRole(role.rolId, $event.checked)"
+                >
                   {{ role.name }}
                 </mat-slide-toggle>
               </div>
@@ -160,19 +159,6 @@
                 </button>
               </div>
             </div>
-<<<<<<< HEAD
-            <!-- Toggles -->
-            <div class="toggle-container">
-              <mat-slide-toggle
-                *ngFor="let role of roles"
-                [checked]="selectedRoles.includes(role.rolId)"
-                (change)="toggleRole(role.rolId, $event.checked)"
-              >
-                {{ role.name }}
-              </mat-slide-toggle>
-            </div>
-=======
->>>>>>> feature/users
           </form>
         </div>
       </div>

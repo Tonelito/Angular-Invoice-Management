@@ -108,7 +108,7 @@
         <!-- user-info-dropdown -->
         <button mat-button [matMenuTriggerFor]="userInfo" class="user-info">
           <mat-icon inline="true" class="user-icon">account_circle</mat-icon>
-          <h2>{{ this.sub }}</h2>
+          <h2 class="user-email">{{ this.sub }}</h2>
         </button>
         <mat-menu #userInfo="matMenu" xPosition="before">
           <button mat-menu-item routerLink="/security/password-change">

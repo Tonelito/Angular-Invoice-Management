@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
+import { MyErrorStateMatcher } from 'src/app/shared/utilities/error-state-matcher.utility';
 import { Product } from '../../utilities/models/product.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -23,7 +23,7 @@ export class ProductsComponent {
     showProgressBar: false,
     pauseOnHover: true,
     clickToClose: true
-  }
+  };
 
   products: Product[] = [];
   filteredProducts: MatTableDataSource<Product> = new MatTableDataSource();
@@ -43,7 +43,7 @@ export class ProductsComponent {
     private readonly productsService: ProductsService,
     private readonly dialog: MatDialog,
     private readonly fb: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.fetchProducts();
@@ -51,20 +51,22 @@ export class ProductsComponent {
 
   fetchProducts(): void {
     this.blockUI.start();
-    this.productsService.getProducts(this.currentPage, this.pageSize).subscribe({
-      next: products => {
-        if (products.object) {
-          this.products = products.object;
-          this.filteredProducts = new MatTableDataSource(this.products);
-          this.currentPage = products.currentPage;
-          this.totalClients = products.totalElements;
+    this.productsService
+      .getProducts(this.currentPage, this.pageSize)
+      .subscribe({
+        next: products => {
+          if (products.object) {
+            this.products = products.object;
+            this.filteredProducts = new MatTableDataSource(this.products);
+            this.currentPage = products.currentPage;
+            this.totalClients = products.totalElements;
+          }
+          this.blockUI.stop();
+        },
+        error: error => {
+          this.blockUI.stop();
+          this._notifications.error('Error', error.error.message, this.options);
         }
-        this.blockUI.stop();
-      }, error: error => {
-        this.blockUI.stop();
-        this._notifications.error('Error', error.error.message, this.options);
-      }
-    });
+      });
   }
-
 }

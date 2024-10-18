@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { NotificationsService } from 'angular2-notifications';
 import { TranslateService } from '@ngx-translate/core';
-import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
+import { MyErrorStateMatcher } from 'src/app/shared/utilities/error-state-matcher.utility';
 import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
@@ -33,7 +33,6 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
-    this.translate.use('es');
   }
 
   onSubmit() {

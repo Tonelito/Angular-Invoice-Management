@@ -25,6 +25,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ClientsComponent } from './components/clients/clients.component';
 import { ProductsComponent } from './components/products/products.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ProductsComponent } from './components/products/products.component';
     HomePageComponent,
     UsersComponent,
     ClientsComponent,
-    ProductsComponent
+    ProductsComponent,
+    OrdersComponent
   ],
   imports: [
     CommonModule,

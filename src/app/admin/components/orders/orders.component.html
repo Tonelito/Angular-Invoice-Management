@@ -1,0 +1,54 @@
+<form class="order-form" [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+  <div class="order-container">
+    <h1>{{ 'ORDERS.TITLE' | translate }}</h1>
+    <div class="client">
+      <mat-form-field>
+        <mat-label>{{ 'ORDERS.CLIENT' | translate }}</mat-label>
+        <input matInput formControlName="client" />
+      </mat-form-field>
+    </div>
+    <div class="items-container" formArrayName="items">
+      <div
+        class="item"
+        *ngFor="let item of items.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <mat-form-field>
+          <mat-label>{{ 'ORDERS.QUANTITY' | translate }}</mat-label>
+          <input matInput type="number" formControlName="quantity" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ 'ORDERS.PRODUCT' | translate }}</mat-label>
+          <input matInput formControlName="product" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ 'ORDERS.PRICE' | translate }}</mat-label>
+          <input matInput type="number" formControlName="price" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ 'ORDERS.TOTAL' | translate }}</mat-label>
+          <input matInput formControlName="total" readonly />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ 'ORDERS.TAXES' | translate }}</mat-label>
+          <input matInput formControlName="taxes" readonly />
+        </mat-form-field>
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="deleteItem(i)"
+          [disabled]="i === 0 && items.length === 1"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+    <button mat-flat-button color="accent" type="button" (click)="addItem()">
+      {{ 'ORDERS.ADD_ITEM' | translate }}
+    </button>
+  </div>
+  <button mat-raised-button color="primary" class="submit-button" type="submit">
+    {{ 'ORDERS.SUBMIT' | translate }}
+  </button>
+</form>
+<simple-notifications [options]="options"></simple-notifications>

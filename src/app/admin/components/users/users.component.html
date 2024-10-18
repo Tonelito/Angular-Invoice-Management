@@ -1,99 +1,160 @@
 <block-ui>
-    <div class="user-container">
-        <div class="user-dashboard">
-            <div class="user-column">
-                <!--Searchbar-->
-                <div class="search">
-                    <form [formGroup]="searchForm">
-                        <mat-form-field appearance="outline">
-                            <mat-label>{{'USERS.SEARCH' | translate}}</mat-label>
-                            <input matInput placeholder="{{'USERS.SEARCH_PLACEHOLDER' | translate}}"
-                                formControlName="search" />
-                            <button mat-icon-button matSuffix (click)="searchUsers()">
-                                <mat-icon>search</mat-icon>
-                            </button>
-                        </mat-form-field>
-                    </form>
-                </div>
-                <div class="users-list-container">
-                    <div class="users-list" *ngIf="filteredUsers.data.length > 0">
-                        <div class="user-item" *ngFor="let user of filteredUsers.filteredData">
-                            <div class="user-info">
-                                <div class="status-circle" [ngClass]="{ active: user.status, inactive: !user.status }">
-                                </div>
-                                <div class="user-text">
-                                    <p>{{ user.email }}</p>
-                                    <p>{{ user.fullName }}</p>
-                                </div>
-                            </div>
-                            <div class="buttons">
-                                <button mat-icon-button color="accent" (click)="fetchUserDetails(user.userId)">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Paginator-->
-                    <mat-paginator #paginator [length]="totalUsers" [pageSize]="pageSize" [pageIndex]="currentPage"
-                        hidePageSize (page)="onPageChange($event)">
-                    </mat-paginator>
-                </div>
-            </div>
-            <!---->
-            <div class="users-form-container">
-                <div class="form-container">
-                    <div class="title">
-                        <h1>{{'USERS.FORM_TITLE' | translate}}</h1>
-                        <button mat-mini-fab color="primary"
-                            matTooltip="{{ userStatus ? ('USERS.TOOLTIP.DISABLE_USER' | translate) : ('USERS.TOOLTIP.ENABLE_USER' | translate) }}"
-                            title="Deshabilitar Usuario" (click)="changeStatus(selectedUserId)" *ngIf="isEditing">
-                            <mat-icon>{{ userStatus ? 'person_off' : 'person_check' }}</mat-icon>
-                        </button>
-                    </div>
-                    <form [formGroup]="userForm" (submit)="submitUser()">
-                        <div class="inputs-button">
-                            <mat-form-field hideRequiredMarker>
-                                <mat-label>{{'USERS.EMAIL' | translate}}</mat-label>
-                                <input matInput formControlName="email" placeholder="{{'USERS.EMAIL' | translate}}">
-                                <mat-error *ngIf="userForm.get('email')?.hasError('required')">
-                                    <mat-label>{{'USERS.ERRORS.REQUIRED_EMAIL' | translate}}</mat-label>
-                                </mat-error>
-                            </mat-form-field>
-                            <!-- input-User -->
-                            <mat-form-field hideRequiredMarker>
-                                <mat-label>{{'USERS.USER' | translate}}</mat-label>
-                                <input matInput formControlName="fullName" placeholder="{{'USERS.USER' | translate}}">
-                                <mat-error *ngIf="userForm.get('fullName')?.hasError('required')">
-                                    <mat-label>{{'USERS.ERRORS.REQUIRED_FULL_NAME' | translate}}</mat-label>
-                                </mat-error>
-                            </mat-form-field>
-                            <!-- input-Profile -->
-                            <mat-form-field hideRequiredMarker>
-                                <mat-label>{{'USERS.PROFILE' | translate}}</mat-label>
-                                <mat-select formControlName="profile">
-                                    <mat-option *ngFor="let profile of profiles" [value]="profile.profileId">
-                                        {{ profile.name }}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="userForm.get('profile')?.hasError('required')">
-                                    <mat-label>{{'USERS.ERRORS.REQUIRED_PROFILE' | translate}}</mat-label>
-                                </mat-error>
-                            </mat-form-field>
-                            <div class="buttons">
-                                <button mat-flat-button color="accent" type="submit"
-                                    [disabled]="isEditing && userForm.pristine || userForm.invalid">
-                                    {{ isEditing ? 'Guardar' : 'Agregar' }}
-                                </button>
-                                <button mat-flat-button color="primary" type="button" (click)="cancelEdit()"
-                                    *ngIf="isEditing">
-                                    Cancelar
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+  <div class="user-container">
+    <div class="user-dashboard">
+      <div class="user-column">
+        <!--Searchbar-->
+        <div class="search">
+          <form [formGroup]="searchForm">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'USERS.SEARCH' | translate }}</mat-label>
+              <input
+                matInput
+                placeholder="{{ 'USERS.SEARCH_PLACEHOLDER' | translate }}"
+                formControlName="search"
+              />
+              <button mat-icon-button matSuffix (click)="searchUsers()">
+                <mat-icon>search</mat-icon>
+              </button>
+            </mat-form-field>
+          </form>
         </div>
+        <div class="users-list-container">
+          <div class="users-list" *ngIf="filteredUsers.data.length > 0">
+            <div
+              class="user-item"
+              *ngFor="let user of filteredUsers.filteredData"
+            >
+              <div class="user-info">
+                <div
+                  class="status-circle"
+                  [ngClass]="{ active: user.status, inactive: !user.status }"
+                ></div>
+                <div class="user-text">
+                  <p>{{ user.email }}</p>
+                  <p>{{ user.fullName }}</p>
+                </div>
+              </div>
+              <div class="buttons">
+                <button
+                  mat-icon-button
+                  color="accent"
+                  (click)="fetchUserDetails(user.userId)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!--Paginator-->
+          <mat-paginator
+            #paginator
+            [length]="totalUsers"
+            [pageSize]="pageSize"
+            [pageIndex]="currentPage"
+            hidePageSize
+            (page)="onPageChange($event)"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+      <!---->
+      <div class="users-form-container">
+        <div class="form-container">
+          <div class="title">
+            <h1>{{ 'USERS.FORM_TITLE' | translate }}</h1>
+            <button
+              mat-mini-fab
+              color="primary"
+              matTooltip="{{
+                userStatus
+                  ? ('USERS.TOOLTIP.DISABLE_USER' | translate)
+                  : ('USERS.TOOLTIP.ENABLE_USER' | translate)
+              }}"
+              title="Deshabilitar Usuario"
+              (click)="changeStatus(selectedUserId)"
+              *ngIf="isEditing"
+            >
+              <mat-icon>{{
+                userStatus ? 'person_off' : 'person_check'
+              }}</mat-icon>
+            </button>
+          </div>
+          <form [formGroup]="userForm" (submit)="submitUser()">
+            <div class="inputs-button">
+              <mat-form-field hideRequiredMarker>
+                <mat-label>{{ 'USERS.EMAIL' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="email"
+                  placeholder="{{ 'USERS.EMAIL' | translate }}"
+                />
+                <mat-error *ngIf="userForm.get('email')?.hasError('required')">
+                  <mat-label>{{
+                    'USERS.ERRORS.REQUIRED_EMAIL' | translate
+                  }}</mat-label>
+                </mat-error>
+              </mat-form-field>
+              <!-- input-User -->
+              <mat-form-field hideRequiredMarker>
+                <mat-label>{{ 'USERS.USER' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="fullName"
+                  placeholder="{{ 'USERS.USER' | translate }}"
+                />
+                <mat-error
+                  *ngIf="userForm.get('fullName')?.hasError('required')"
+                >
+                  <mat-label>{{
+                    'USERS.ERRORS.REQUIRED_FULL_NAME' | translate
+                  }}</mat-label>
+                </mat-error>
+              </mat-form-field>
+              <!-- input-Profile -->
+              <mat-form-field hideRequiredMarker>
+                <mat-label>{{ 'USERS.PROFILE' | translate }}</mat-label>
+                <mat-select formControlName="profile">
+                  <mat-option
+                    *ngFor="let profile of profiles"
+                    [value]="profile.profileId"
+                  >
+                    {{ profile.name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="userForm.get('profile')?.hasError('required')"
+                >
+                  <mat-label>{{
+                    'USERS.ERRORS.REQUIRED_PROFILE' | translate
+                  }}</mat-label>
+                </mat-error>
+              </mat-form-field>
+              <div class="buttons">
+                <button
+                  mat-flat-button
+                  color="accent"
+                  type="submit"
+                  [disabled]="
+                    (isEditing && userForm.pristine) || userForm.invalid
+                  "
+                >
+                  {{ isEditing ? 'Guardar' : 'Agregar' }}
+                </button>
+                <button
+                  mat-flat-button
+                  color="primary"
+                  type="button"
+                  (click)="cancelEdit()"
+                  *ngIf="isEditing"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
 </block-ui>
 <simple-notifications [options]="options"></simple-notifications>
