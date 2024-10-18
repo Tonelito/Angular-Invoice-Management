@@ -24,7 +24,6 @@ export class ProductsComponent {
     pauseOnHover: true,
     clickToClose: true
   }
-
   products: Product[] = [];
   filteredProducts: MatTableDataSource<Product> = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator!: MatPaginator;

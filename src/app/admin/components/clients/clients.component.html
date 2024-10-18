@@ -16,14 +16,15 @@
                 <div class="client-list" *ngIf="filteredClients.data.length">
                     <div class="client-item" *ngFor="let client of filteredClients.filteredData">
                         <div class="client-info">
-                            <div class="status-circle" [ngClass]="{active: client.status, inactive: !client.status}"></div>
+                            <div class="status-circle" [ngClass]="{active: client.status, inactive: !client.status}">
+                            </div>
                             <p>{{ client.name }}</p>
                         </div>
                         <div class="buttons">
-                            <button mat-icon-button color="accent" (click)="fetchClientsDetails(client.clientId)">
+                            <button mat-icon-button color="accent" (click)="fetchClientsDetails(client.customerId)">
                                 <mat-icon>edit</mat-icon>
                             </button>
-                            <button mat-icon-button color="accent">
+                            <button mat-icon-button color="accent" (click)="confirmDeleteClient(client)">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
@@ -86,8 +87,9 @@
                             </mat-form-field>
                         </div>
                         <div class="buttons">
-                            <button mat-flat-button color="accent">Save</button>
-                            <button mat-flat-button color="primary">Cancel</button>
+                            <button mat-flat-button color="accent" type="submit"
+                                [disabled]="isEditing && clientForm.pristine || clientForm.invalid">{{isEditing? 'Guardar' : 'Agregar'}}</button>
+                            <button mat-flat-button color="primary" (click)="cancelEdit()">Cancel</button>
                         </div>
                     </div>
                 </form>

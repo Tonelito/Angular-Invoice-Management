@@ -21,7 +21,6 @@ export interface Product extends common {
 
 export interface Products extends Product {
     note: string;
-
     object: Product[];
     totalElements: number;
     totalPages: number;
