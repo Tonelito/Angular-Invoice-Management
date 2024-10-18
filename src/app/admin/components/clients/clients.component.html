@@ -16,15 +16,16 @@
                 <div class="client-list" *ngIf="filteredClients.data.length">
                     <div class="client-item" *ngFor="let client of filteredClients.filteredData">
                         <div class="client-info">
-                            <div class="status-circle">
-
-                            </div>
-                            <div class="client-text">
-
-                            </div>
+                            <div class="status-circle" [ngClass]="{active: client.status, inactive: !client.status}"></div>
+                            <p>{{ client.name }}</p>
                         </div>
                         <div class="buttons">
-
+                            <button mat-icon-button color="accent" (click)="fetchClientsDetails(client.clientId)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="accent">
+                                <mat-icon>delete</mat-icon>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -45,23 +46,43 @@
                         <mat-form-field hideRequiredMarker>
                             <mat-label>Client Name</mat-label>
                             <input matInput formControlName="name">
+                            <mat-error
+                                *ngIf="clientForm.get('name')?.hasError('required') && clientForm.get('name')?.touched">
+                                Client Name is required.
+                            </mat-error>
                         </mat-form-field>
                         <mat-form-field hideRequiredMarker>
                             <mat-label>Address</mat-label>
                             <input matInput formControlName="address">
+                            <mat-error
+                                *ngIf="clientForm.get('address')?.hasError('required') && clientForm.get('address')?.touched">
+                                Address is required.
+                            </mat-error>
                         </mat-form-field>
                         <div class="identifications">
                             <mat-form-field hideRequiredMarker>
                                 <mat-label>DPI</mat-label>
                                 <input matInput formControlName="dpi">
+                                <mat-error
+                                    *ngIf="clientForm.get('dpi')?.hasError('pattern') && clientForm.get('dpi')?.touched">
+                                    Invalid DPI format.
+                                </mat-error>
                             </mat-form-field>
                             <mat-form-field hideRequiredMarker>
                                 <mat-label>Nit</mat-label>
                                 <input matInput formControlName="nit">
+                                <mat-error
+                                    *ngIf="clientForm.get('nit')?.hasError('pattern') && clientForm.get('nit')?.touched">
+                                    Invalid Nit format.
+                                </mat-error>
                             </mat-form-field>
                             <mat-form-field hideRequiredMarker>
                                 <mat-label>Passport Number</mat-label>
                                 <input matInput formControlName="passport">
+                                <mat-error
+                                    *ngIf="clientForm.get('passport')?.hasError('pattern') && clientForm.get('passport')?.touched">
+                                    Invalid Passport format.
+                                </mat-error>
                             </mat-form-field>
                         </div>
                         <div class="buttons">

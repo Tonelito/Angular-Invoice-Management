@@ -67,6 +67,15 @@ export class UsersComponent implements OnInit {
     this.fetchProfiles();
   }
 
+  searchUsers(): void {
+    const search = this.searchForm.value.search?.trim();
+    if (search) {
+      this.fetchUserByName();
+    } else {
+      this.fetchUsers();
+    }
+  }
+
   fetchUserDetails(userId: number): void {
     this.userService.getUserId(userId).subscribe({
       next: response => {

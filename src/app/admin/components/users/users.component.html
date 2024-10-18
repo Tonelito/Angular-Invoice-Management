@@ -9,8 +9,7 @@
                             <mat-label>{{'USERS.SEARCH' | translate}}</mat-label>
                             <input matInput placeholder="{{'USERS.SEARCH_PLACEHOLDER' | translate}}"
                                 formControlName="search" />
-
-                            <button mat-icon-button matSuffix (click)="fetchUserByName()">
+                            <button mat-icon-button matSuffix (click)="searchUsers()">
                                 <mat-icon>search</mat-icon>
                             </button>
                         </mat-form-field>

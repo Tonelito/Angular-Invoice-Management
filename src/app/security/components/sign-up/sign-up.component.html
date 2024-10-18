@@ -1,43 +1,33 @@
 <div class="container-SU">
   <app-circles></app-circles>
 
-  <div class="logo">
-    <img src="../../../../assets/vault-tec.png" alt="Vault-Tec" height="64" />
-    <h1>VAULT-TEC</h1>
-  </div>
-
-  <h2>Sign Up</h2>
-
-  <form class="login-form" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-    <mat-form-field class="email" hideRequiredMarker>
-      <mat-label>Email</mat-label>
-      <input
-        type="email"
-        matInput
-        placeholder="Enter your email"
-        formControlName="email"
-        required
-      />
-      <mat-error>Email is required</mat-error>
-      <mat-error>Please enter a valid email address</mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="fullname" hideRequiredMarker>
-      <mat-label>Name</mat-label>
-      <input
-        type="text"
-        matInput
-        placeholder="Enter you Name"
-        formControlName="fullName"
-        required
-      />
-      <mat-error>Name is required</mat-error>
-    </mat-form-field>
-
-    <div class="options">
-      <a routerLink="/security/login">Already have an account?</a>
+    <div class="logo">
+        <img src="../../../../assets/vault-tec.svg" alt="Vault-Tec" height="64" />
+        <h1>VAULT-TEC</h1>
     </div>
-    <button mat-raised-button color="accent" type="submit">Sign Up</button>
-  </form>
+
+    <h2>Sign Up</h2>
+
+    <form class="login-form" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="email" hideRequiredMarker>
+            <mat-label>Email</mat-label>
+            <input type="email" matInput placeholder="Enter your email" formControlName="email" required>
+            <mat-error>Email is required</mat-error>
+            <mat-error>Please enter a valid email address</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="fullname" hideRequiredMarker>
+            <mat-label>Name</mat-label>
+            <input type="text" matInput placeholder="Enter you Name" formControlName="fullName" required>
+            <mat-error>Name is required</mat-error>
+        </mat-form-field>
+
+        <div class="options">
+            <a routerLink="/security/login">Already have an account?</a>
+        </div>
+        <button mat-raised-button color="accent" type="submit">
+            Sign Up
+        </button>
+    </form>
 </div>
 <simple-notifications [options]="options"></simple-notifications>
