@@ -1,20 +1,20 @@
 $altura-formulario: 830px;
 
-.client-container {
+.product-container {
     display: flex;
     padding: 25px;
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
 
-    .client-dashboard {
+    .product-dashboard {
         display: flex;
         align-items: flex-start;
         gap: 10px;
         flex: 1 0 0;
         align-self: stretch;
 
-        .client-column {
+        .product-column {
             display: flex;
             padding: 10px;
             flex-direction: column;
@@ -42,7 +42,7 @@ $altura-formulario: 830px;
                 width: 100%;
             }
 
-            .client-list-container {
+            .product-list-container {
                 display: flex;
                 padding: 10px;
                 flex-direction: column;
@@ -57,7 +57,7 @@ $altura-formulario: 830px;
                     0px 2px 2px 0px rgba(0, 0, 0, 0.25),
                     0px 1px 5px 0px rgba(0, 0, 0, 0.25);
 
-                .client-list {
+                .product-list {
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
@@ -65,7 +65,7 @@ $altura-formulario: 830px;
                     flex: 1 0 0;
                     align-self: stretch;
 
-                    .client-item {
+                    .product-item {
                         width: 100%;
                         display: flex;
                         padding: 7px 11px;
@@ -73,7 +73,7 @@ $altura-formulario: 830px;
                         justify-content: space-between;
                         gap: 10px;
 
-                        .client-info {
+                        .product-info {
                             display: flex;
                             align-items: center;
                             gap: 10px;
@@ -141,7 +141,7 @@ $altura-formulario: 830px;
             }
         }
 
-        .client-form-container {
+        .product-form-container {
             display: flex;
             padding: 10px;
             flex-direction: column;
@@ -184,10 +184,24 @@ $altura-formulario: 830px;
                             }
                         }
 
-                        .identifications {
+                        .row-1 {
                             display: flex;
                             gap: 10px;
+                        }
 
+                        .row-2 {
+                            display: flex;
+                            gap: 10px;
+                        }
+
+                        .row-3 {
+                            display: flex;
+                            gap: 10px;
+                        }
+
+                        .row-4 {
+                            display: flex;
+                            gap: 10px;
                         }
 
                         .buttons {

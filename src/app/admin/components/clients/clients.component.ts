@@ -6,10 +6,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { ClientsService } from '../../services/clients.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
-import { Client, Clients } from '../../utilities/models/client.model';
+import { Client } from '../../utilities/models/client.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { REGEX_NUMBER, REGEX_NUMBER_DPI, REGEX_NUMBER_NIT } from 'src/app/shared/utilities/constants.utility';
+import { requeridPassportDPiNit } from 'src/app/shared/utilities/requeridForm.validator';
 
 
 @Component({
@@ -48,17 +49,39 @@ export class ClientsComponent implements OnInit {
   ) {
     this.clientForm = this.fb.group({
       name: ['', [Validators.required]],
-      dpi: ['', [Validators.required, Validators.pattern(REGEX_NUMBER_DPI)]],
-      passport: ['', [Validators.required, Validators.pattern(REGEX_NUMBER)]],
-      nit: ['', [Validators.required, Validators.pattern(REGEX_NUMBER_NIT)]],
+      dpi: ['', [Validators.pattern(REGEX_NUMBER_DPI)]],
+      passport: ['', [Validators.pattern(REGEX_NUMBER)]],
+      nit: ['', [Validators.pattern(REGEX_NUMBER_NIT)]],
       address: ['', [Validators.required]],
-    });
+    }, { validators: requeridPassportDPiNit() });
 
-    ;
   }
 
   ngOnInit(): void {
     this.fetchClients();
+  }
+
+  fetchClientsDetails(clientId: number): void {
+    this.clientsService.getCustomerById(clientId).subscribe({
+      next: response => {
+        console.log('Response:', response);
+        this.selectedClientId = clientId;
+        this.clientForm.patchValue({
+          name: response.object.name,
+          dpi: response.object.dpi,
+          passport: response.object.passport,
+          nit: response.object.nit,
+          address: response.object.address,
+        });
+      },
+
+      error: error => {
+        console.error('id: ', clientId);
+        console.error('Error loading client details: ', error);
+
+      }
+    })
+
   }
 
   fetchClients(): void {
@@ -94,7 +117,6 @@ export class ClientsComponent implements OnInit {
         passport: this.clientForm.get('passport')?.value,
         nit: this.clientForm.get('nit')?.value,
         address: this.clientForm.get('address')?.value,
-        status: true
       }
       this.blockUI.start();
 
@@ -110,6 +132,7 @@ export class ClientsComponent implements OnInit {
         },
         error: error => {
           console.error('Error adding client: ', error);
+          console.log('Client data: ', clientData);
           this._notifications.error(
             this.translate.instant('CLIENTS.NOTIFICATIONS.CUSTOMER_CREATION_FAILURE'),
             this.translate.instant('CLIENTS.NOTIFICATIONS.CUSTOMER_CREATION_FAILURE_DESC')
@@ -124,7 +147,6 @@ export class ClientsComponent implements OnInit {
       )
     }
   }
-
   submitClient(): void {
     if (this.isEditing) {
     } else {

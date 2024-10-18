@@ -1,0 +1,134 @@
+<div class="product-container">
+    <div class="product-dashboard">
+        <div class="product-column">
+            <div class="search">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'PRODUCTS.SEARCH' | translate }}</mat-label>
+                    <input matInput placeholder="{{ 'PRODUCTS.SEARCH_PLACEHOLDER' | translate }}">
+
+                    <button mat-icon-button matSuffix>
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+            <div class="product-list-container">
+                <div class="product-list" *ngIf="filteredProducts.data.length">
+                    <div class="product-item" *ngFor="let products of filteredProducts.filteredData">
+                        <div class="product-info">
+                            <div class="status-circle" [ngClass]="{active:products.status, inactive: !products.status}"></div>
+                            <p>{{ products.name }}</p>
+                            <p>{{products.stock}}</p>
+                        </div>
+                        <div class="buttons">
+                            <button mat-icon-button color="accent">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="accent">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <mat-paginator>
+                </mat-paginator>
+            </div>
+        </div>
+        <div class="product-form-container">
+            <div class="form-container">
+                <div class="title">
+                    <h1>Product</h1>
+                </div>
+                <form action="">
+                    <div class="inputs-button">
+                        <div class="row-1">
+                            <mat-form-field hideRequiredMarker>
+                                <mat-label>Code</mat-label>
+                                <input matInput>
+                                <mat-error>
+                                    Code is required.
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field hideRequiredMarker>
+                                <mat-label>Product Name</mat-label>
+                                <input matInput>
+                                <mat-error>
+                                    Product Name is required.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="row-2">
+                            <mat-form-field hideRequiredMarker>
+                                <mat-label>Description</mat-label>
+                                <input matInput>
+                                <mat-error>
+                                    Description is required.
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field hideRequiredMarker>
+                                <mat-label>Company Name</mat-label>
+                                <input matInput>
+                                <mat-error>
+                                    Company is required.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="row-3">
+                            <mat-form-field hideRequiredMarker>
+                                <mat-label>Price</mat-label>
+                                <input matInput>
+                                <mat-error>
+                                    Price is required.
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field hideRequiredMarker>
+                                <mat-label>Stock</mat-label>
+                                <input matInput>
+                                <mat-error>
+                                    Stock is required.
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field hideRequiredMarker>
+                                <mat-label>Delivery Time</mat-label>
+                                <input matInput>
+                                <mat-error>
+                                    Delivery Time is required.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="row-4">
+                            <mat-form-field hideRequiredMarker>
+                                <mat-label>Status</mat-label>
+                                <input matInput>
+                                <mat-error>
+                                    Status is required.
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field hideRequiredMarker>
+                                <mat-label>Entry Date</mat-label>
+                                <input matInput [matDatepicker]="pickerStart">
+                                <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerStart></mat-datepicker>
+                                <mat-error>
+                                    Entry Date is required.
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field hideRequiredMarker>
+                                <mat-label>Expirate Date</mat-label>
+                                <input matInput [matDatepicker]="pickerEnd">
+                                <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerEnd></mat-datepicker>
+                                <mat-error>
+                                    Expirate Date is required.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="buttons">
+                            <button mat-flat-button color="accent">Save</button>
+                            <button mat-flat-button color="primary">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

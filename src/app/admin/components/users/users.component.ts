@@ -36,7 +36,7 @@ export class UsersComponent implements OnInit {
   filteredProfiles: any[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   searchQuery = '';
-  pageSize = 10;
+  pageSize = 9;
   currentPage = 0;
   totalUsers = 0;
   isEditing: boolean = false;
@@ -66,6 +66,15 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.fetchUsers();
     this.fetchProfiles();
+  }
+
+  searchUsers(): void {
+    const search = this.searchForm.value.search?.trim();
+    if (search) {
+      this.fetchUserByName();
+    } else {
+      this.fetchUsers();
+    }
   }
 
   fetchUserDetails(userId: number): void {
@@ -226,7 +235,6 @@ export class UsersComponent implements OnInit {
     this.userService.changeStatus(userId).subscribe({
       next: response => {
         this.fetchUserDetails(userId);
-        console.log('Usuario actualizado:', response);
         this._notifications.success(
           this.translate.instant('USERS.NOTIFICATIONS.UPDATE_SUCCESS'), ''
         );

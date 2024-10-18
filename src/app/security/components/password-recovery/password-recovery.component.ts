@@ -4,6 +4,7 @@ import { confirmPasswordValidator } from 'src/app/shared/utilities/confirm-passw
 import { AuthService } from '../../services/auth.service';
 import { NotificationsService } from 'angular2-notifications';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { REGEX_PASSWORD } from 'src/app/shared/utilities/constants.utility';
 
 @Component({
   selector: 'app-password-recovery',
@@ -37,8 +38,8 @@ export class PasswordRecoveryComponent implements OnInit {
     this.secondFormGroup = this._formBuilder.group({
       email: [{ value: '', disabled: true }],
       code: ['', [Validators.required]],
-      newPassword: new FormControl<string>('', [Validators.required]),
-      newConfirmPassword: new FormControl<string>('', [Validators.required]),
+      newPassword: new FormControl<string>('', [Validators.required, Validators.pattern(REGEX_PASSWORD)]),
+      newConfirmPassword: new FormControl<string>('', [Validators.required, Validators.pattern(REGEX_PASSWORD)]),
     }, { validators: confirmPasswordValidator });
 
     this.firstFormGroup.get('email')?.valueChanges.subscribe((email: string) => {

@@ -8,6 +8,7 @@ import {
 } from 'src/app/shared/utilities/constants.utility';
 import {
   CreateProfile,
+  Profile,
   profileName,
   ProfileResponse,
   Profiles,
@@ -61,9 +62,9 @@ export class ProfilesService {
     );
   }
 
-  changeStatus(id: number): Observable<ProfileResponse> {
-    return this.http.patch<ProfileResponse>(
-      `${this.profile_url} /status-change / ${id}`,
+  changeStatus(id: number): Observable<Profile> {
+    return this.http.patch<Profile>(
+      `${this.profile_url}/status-change/${id}`,
       {}
     );
   }

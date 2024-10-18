@@ -8,10 +8,11 @@
             <mat-form-field appearance="outline">
               <mat-label>{{ 'PROFILES.SEARCH' | translate }}</mat-label>
               <input matInput placeholder="{{ 'PROFILES.SEARCH_PLACEHOLDER' | translate }}" />
+
+              <button mat-icon-button matSuffix>
+                <mat-icon>search</mat-icon>
+              </button>
             </mat-form-field>
-            <button mat-icon-button>
-              <mat-icon>search</mat-icon>
-            </button>
           </form>
         </div>
         <div *ngIf="filteredProfiles && filteredProfiles.filteredData.length === 0"></div>
@@ -78,6 +79,13 @@
                   {{ 'PROFILES.ERRORS.REQUIRED_DESCRIPTION' | translate }}
                 </mat-error>
               </mat-form-field>
+              <!-- Toggles -->
+              <div class="toggle-container">
+                <mat-slide-toggle *ngFor="let role of roles" [checked]="selectedRoles.includes(role.rolId)"
+                  (change)="toggleRole(role.rolId, $event.checked)">
+                  {{ role.name }}
+                </mat-slide-toggle>
+              </div>
               <div class="buttons">
                 <button mat-flat-button color="accent" type="submit"
                   [disabled]="isEditing && profileForm.pristine || profileForm.invalid">
@@ -87,13 +95,6 @@
                   Cancelar
                 </button>
               </div>
-            </div>
-            <!-- Toggles -->
-            <div class="toggle-container">
-              <mat-slide-toggle *ngFor="let role of roles" [checked]="selectedRoles.includes(role.rolId)"
-                (change)="toggleRole(role.rolId, $event.checked)">
-                {{ role.name }}
-              </mat-slide-toggle>
             </div>
           </form>
         </div>

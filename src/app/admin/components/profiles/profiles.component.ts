@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { ProfilesService } from '../../services/profiles.service';
@@ -11,7 +11,6 @@ import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
 import {
   CreateProfile,
   Profile,
-  profileName,
   Role
 } from '../../utilities/models/profile.model';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
@@ -83,6 +82,9 @@ export class ProfilesComponent implements OnInit {
         this.selectedRoles = response.object.rolsId.map(role => role.rolId);
         this.isEditing = true;
         this.profileStatus = response.object.status;
+        this.profileForm.markAsPristine();
+        this.fetchProfiles();
+        console.log('status:', this.profileStatus);
         console.log('Profile details:', response);
       },
       error: error => {
@@ -214,7 +216,7 @@ export class ProfilesComponent implements OnInit {
   changeStatus(profileId: number): void {
     this.profilesService.changeStatus(profileId).subscribe({
       next: response => {
-        console.log('Profile update: ', response);
+        this.fetchProfileDetails(profileId);
         this._notifications.success(
           this.translate.instant('PROFILES.NOTIFICATIONS.STATUS_SUCCESS', ''),
           ''
