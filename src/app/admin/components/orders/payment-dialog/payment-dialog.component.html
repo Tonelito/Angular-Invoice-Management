@@ -1,0 +1,20 @@
+<h1>Select client payment method</h1>
+<mat-label>{{ 'ORDERS.PAYMENT' | translate }}</mat-label>
+<mat-form-field>
+  <mat-select [value]="1">
+    <mat-option [value]="1">
+      {{ 'ORDERS.CASH' | translate }}
+    </mat-option>
+    <mat-option [value]="2">
+      {{ 'ORDERS.CREDIT_CARD' | translate }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">
+    {{ 'PROFILES.ACTIONS.CANCEL' | translate }}
+  </button>
+  <button mat-flat-button (click)="onConfirm()" color="accent">
+    {{ 'PROFILES.ACTIONS.CONFIRM' | translate }}
+  </button>
+</div>

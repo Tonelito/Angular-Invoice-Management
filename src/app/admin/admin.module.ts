@@ -26,6 +26,8 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { ClientsComponent } from './components/clients/clients.component';
 import { ProductsComponent } from './components/products/products.component';
 import { OrdersComponent } from './components/orders/orders.component';
+import { PaymentDialogComponent } from './components/orders/payment-dialog/payment-dialog.component';
+import { ReportsComponent } from './components/reports/reports.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { OrdersComponent } from './components/orders/orders.component';
     UsersComponent,
     ClientsComponent,
     ProductsComponent,
-    OrdersComponent
+    OrdersComponent,
+    PaymentDialogComponent,
+    ReportsComponent
   ],
   imports: [
     CommonModule,

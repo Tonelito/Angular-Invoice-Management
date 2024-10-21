@@ -116,7 +116,7 @@
     },
     "ACTIONS": {
       "CANCEL": "Cancelar",
-      "SAVE_CHANGES": "Guardar Cambios"
+      "CONFIRM": "Guardar Cambios"
     }
   },
   "CUSTOMERS": {
@@ -243,6 +243,10 @@
     "ADD_ITEM": "Agregar item",
     "SUBMIT": "Emitir",
     "ORDER_SUBMITTED": "Orden Emitida",
-    "FORM_INVALID": "Formulario Invalido"
+    "FORM_INVALID": "Formulario Invalido",
+    "DELETE_ITEM": "ELIMINAR ITEM",
+    "PAYMENT": "Metodo de pago",
+    "CASH": "Efectivo",
+    "CREDIT_CARD": "Tarjeta"
   }
 }

@@ -14,14 +14,14 @@ import { AuthService } from '../../../shared/services/auth.service';
 export class LoginComponent {
   loginForm: FormGroup;
   hide = true; // Hide password
-  matcher = new MyErrorStateMatcher(); // Error matcher
-  @BlockUI() blockUI!: NgBlockUI; // Block UI
+  matcher = new MyErrorStateMatcher(); 
+  @BlockUI() blockUI!: NgBlockUI; 
   public options = {
     timeOut: 3000,
     showProgressBar: false,
     pauseOnHover: true,
     clickToClose: true
-  }; // Notification options
+  }; 
 
   constructor(
     private readonly translate: TranslateService,

@@ -4,7 +4,21 @@
     <div class="client">
       <mat-form-field>
         <mat-label>{{ 'ORDERS.CLIENT' | translate }}</mat-label>
-        <input matInput formControlName="client" />
+        <input
+          type="text"
+          matInput
+          formControlName="client"
+          [matAutocomplete]="clientAuto"
+          [value]="selectedClient?.name"
+        />
+        <mat-autocomplete autoActiveFirstOption #clientAuto="matAutocomplete">
+          <mat-option
+            *ngFor="let option of filteredClients | async"
+            [value]="option.name"
+          >
+            {{ option.name }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
     </div>
     <div class="items-container" formArrayName="items">
@@ -13,17 +27,35 @@
         *ngFor="let item of items.controls; let i = index"
         [formGroupName]="i"
       >
+        <h2 *ngIf="isSmallScreen">ITEM: {{ i + 1 }}</h2>
         <mat-form-field>
           <mat-label>{{ 'ORDERS.QUANTITY' | translate }}</mat-label>
           <input matInput type="number" formControlName="quantity" />
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{ 'ORDERS.PRODUCT' | translate }}</mat-label>
-          <input matInput formControlName="product" />
+          <input
+            type="text"
+            matInput
+            formControlName="product"
+            [matAutocomplete]="productAuto"
+            [value]="selectedProduct?.name"
+          />
+          <mat-autocomplete
+            #productAuto="matAutocomplete"
+            autoActiveFirstOption
+          >
+            <mat-option
+              *ngFor="let option of filteredProducts | async"
+              [value]="option.name"
+            >
+              {{ option.name }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{ 'ORDERS.PRICE' | translate }}</mat-label>
-          <input matInput type="number" formControlName="price" />
+          <input matInput formControlName="price" readonly />
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{ 'ORDERS.TOTAL' | translate }}</mat-label>
@@ -33,7 +65,9 @@
           <mat-label>{{ 'ORDERS.TAXES' | translate }}</mat-label>
           <input matInput formControlName="taxes" readonly />
         </mat-form-field>
+        <!-- Icon button on big screens -->
         <button
+          *ngIf="!isSmallScreen"
           mat-icon-button
           color="primary"
           (click)="deleteItem(i)"
@@ -41,11 +75,28 @@
         >
           <mat-icon>delete</mat-icon>
         </button>
+
+        <!-- For flat button on smaller screens -->
+        <button
+          *ngIf="isSmallScreen"
+          mat-flat-button
+          color="primary"
+          (click)="deleteItem(i)"
+          [disabled]="i === 0 && items.length === 1"
+        >
+          {{ 'ORDERS.DELETE_ITEM' | translate }}
+        </button>
       </div>
     </div>
-    <button mat-flat-button color="accent" type="button" (click)="addItem()">
-      {{ 'ORDERS.ADD_ITEM' | translate }}
-    </button>
+    <div class="add-item-total">
+      <button mat-flat-button color="accent" type="button" (click)="addItem()">
+        {{ 'ORDERS.ADD_ITEM' | translate }}
+      </button>
+      <div class="currency">
+        <h3>Subtotal: {{ getOrderSubtotal() | currency }}</h3>
+        <h2>Total: {{ getOrderTotal() | currency }}</h2>
+      </div>
+    </div>
   </div>
   <button mat-raised-button color="primary" class="submit-button" type="submit">
     {{ 'ORDERS.SUBMIT' | translate }}

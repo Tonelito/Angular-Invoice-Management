@@ -116,11 +116,7 @@
     },
     "ACTIONS": {
       "CANCEL": "Cancel",
-      "SAVE_CHANGES": "Save Changes"
-    },
-    "COMMON": {
-      "CANCEL": "Cancel",
-      "CONFIRM": "Confirm"
+      "CONFIRM": "Save Changes"
     }
   },
   "USERS": {
@@ -243,6 +239,10 @@
     "ADD_ITEM": "Add item",
     "SUBMIT": "Submit",
     "ORDER_SUBMITTED": "Order Sumbitted",
-    "FORM_INVALID": "Invalid Form"
+    "FORM_INVALID": "Invalid Form",
+    "DELETE_ITEM": "DELETE ITEM",
+    "PAYMENT": "Payment method",
+    "CASH": "Cash",
+    "CREDIT_CARD": "Card"
   }
 }
