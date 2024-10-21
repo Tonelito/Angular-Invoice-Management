@@ -35,6 +35,38 @@
       "LOGGING_IN": "Logging in"
     }
   },
+  "PASSWORD_RECOVERY": {
+    "EMAIL": "Email",
+    "EMAIL_PLACEHOLDER": "Enter your email",
+    "SUBMIT": "Submit",
+    "NEXT": "Next",
+    "BACK": "Back",
+    "NOTIFICATIONS": {
+      "SUCCESS": "Email sent",
+      "SUCCESS_DESC": "Check your email for the recovery code",
+      "FAILURE": "Error sending email",
+      "FAILURE_DESC": "Please try again"
+    },
+    "ERRORS": {
+      "REQUIRED_EMAIL": "Email is required",
+      "INVALID_EMAIL": "Please enter a valid email address"
+    },
+    "STEP1": {
+      "EMAIL_LABEL": "Email"
+    },
+    "STEP2": {
+      "CHANGE_PASSWORD_LABEL": "Change Password",
+      "VERIFICATION_CODE_LABEL": "Verification Code",
+      "VERIFICATION_CODE_PLACEHOLDER": "Enter the verification code",
+      "NEW_PASSWORD_LABEL": "New Password",
+      "NEW_PASSWORD_PLACEHOLDER": "Enter your new password",
+      "NEW_PASSWORD_REQUIRED": "New password is required",
+      "CONFIRM_PASSWORD_LABEL": "Confirm Password",
+      "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm your new password",
+      "CONFIRM_PASSWORD_REQUIRED": "Please confirm your new password",
+      "PASSWORDS_DO_NOT_MATCH": "Passwords do not match"
+    }
+  },
   "AUDIT": {
     "TITLE": "Audit",
     "START_DATE": "Start date",
@@ -183,10 +215,13 @@
     "FULL_NAME": "Full Name",
     "SAVE": "Save",
     "ERRORS": {
-      "REQUIRED_EMAIL": "Customer email is required",
-      "REQUIRED_FULL_NAME": "Full name is required",
-      "INVALID_EMAIL": "Please enter a valid email",
+      "REQUIRED_NAME": "Customer name is required",
+      "REQUIRED_ADDRESS": "Customer address is required",
+      "REQUIRED_DPI": "Customer DPI is required",
+      "REQUIRED_NIT": "Customer NIT is required",
+      "REQUIRED_PASSPORT": "Customer passport is required",
       "FETCH_CUSTOMERS": "Error fetching customers.",
+      "STATUS_TOGGLE": "Error changing customer status.",
       "UPDATE_CUSTOMER": "Error updating customer."
     },
     "NOTIFICATIONS": {
@@ -207,11 +242,16 @@
     },
     "DIALOG": {
       "TITLE": "Delete Customer",
-      "MESSAGE": "Are you sure you want to delete the customer \"{{ customerName }}\"?"
+      "MESSAGE": "Are you sure you want to delete the customer?"
     },
     "FORM": {
       "EDIT_CUSTOMER": "Edit Customer",
-      "EDIT_DESCRIPTION": "Update the email and full name associated with this customer before saving your changes."
+      "EDIT_DESCRIPTION": "Update the email and full name associated with this customer before saving your changes.",
+      "NAME": "Name Customer",
+      "ADDRESS": "Address",
+      "DPI": "DPI",
+      "NIT": "NIT",
+      "PASSPORT": "Passport"
     },
     "TOOLTIP": {
       "DISABLE_CUSTOMER": "Disable Customer"
@@ -223,6 +263,72 @@
     "COMMON": {
       "CANCEL": "Cancel",
       "CONFIRM": "Confirm"
+    }
+  },
+  "PRODUCTS": {
+    "TITLE": "Products",
+    "SEARCH": "Search...",
+    "SEARCH_PLACEHOLDER": "Product Name",
+    "FORM_TITLE": "Add Product",
+    "NAME": "Product Name",
+    "DESCRIPTION": "Description",
+    "PRICE": "Price",
+    "STOCK": "Stock",
+    "CODE": "Code",
+    "DELIVERY_TIME": "Delivery Time",
+    "COMPANY_NAME": "Company Name",
+    "ENTRY_DATE": "Entry Date",
+    "EXPIRATE_DATE": "Expirate Date",
+    "STATUS_TRUE": "Active",
+    "STATUS_FALSE": "Inactive",
+    "SAVE": "Save",
+    "ERRORS": {
+      "REQUIRED_NAME": "Product name is required",
+      "REQUIRED_DESCRIPTION": "Product description is required",
+      "REQUIRED_CODE": "Product code is required",
+      "REQUIRED_PRICE": "Product price is required",
+      "REQUIRED_QUANTITY": "Product quantity is required",
+      "REQUIRED_COMPANY": "Company name is required.",
+      "REQUIRED_DELIVERY_TIME": "Delivery time is required.",
+      "REQUIRED_ENTRY_DATE": "Entry date is required.",
+      "REQUIRED_EXPIRATE_DATE": "Expirate date is required.",
+      "FETCH_PRODUCTS": "Error loading products.",
+      "STATUS_TOGGLE": "Error changing product status.",
+      "UPDATE_PRODUCT": "Error updating product."
+    },
+    "NOTIFICATIONS": {
+      "CREATING_PRODUCT": "Creating product...",
+      "PRODUCT_CREATED": "Product created",
+      "PRODUCT_CREATED_DESC": "The product has been successfully created",
+      "PRODUCT_CREATION_FAILURE": "Product creation failed",
+      "PRODUCT_CREATION_FAILURE_DESC": "Failed to create the product. Please try again",
+      "INVALID_FORM": "Invalid form",
+      "INVALID_FORM_DESC": "Please complete the form correctly",
+      "DELETING_PRODUCT": "Deleting product...",
+      "PRODUCT_DELETED": "Product deleted",
+      "PRODUCT_DELETED_DESC": "The product has been successfully deleted.",
+      "PRODUCT_DELETE_FAILED": "Product deletion failed",
+      "PRODUCT_DELETE_FAILED_DESC": "There was an error deleting the product.",
+      "STATUS_SUCCESS": "Product status changed successfully.",
+      "STATUS_FAILURE": "Could not change product status.",
+      "UPDATE_SUCCESS": "Product updated successfully.",
+      "UPDATE_FAILURE": "Error updating product."
+    },
+    "DIALOG": {
+      "TITLE": "Delete Product",
+      "MESSAGE": "Are you sure you want to delete the product \"{{ productName }}\"?"
+    },
+    "FORM": {
+      "EDIT_PRODUCT": "Edit Product",
+      "EDIT_DESCRIPTION": "Update the product's name, description, and price. Make sure all the information is correct before saving the changes."
+    },
+    "TOOLTIP": {
+      "ENABLE_PRODUCT": "Enable Product",
+      "DISABLE_PRODUCT": "Disable Product"
+    },
+    "ACTIONS": {
+      "CANCEL": "Cancel",
+      "SAVE_CHANGES": "Save Changes"
     }
   }
 }

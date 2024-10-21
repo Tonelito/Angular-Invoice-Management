@@ -81,7 +81,7 @@ export class ClientsComponent implements OnInit {
 
       error: error => {
         console.error('id: ', customerId);
-        console.error('Error loading client details: ', error);
+        console.error('Error loading customer details: ', error);
 
       }
     })
@@ -93,7 +93,7 @@ export class ClientsComponent implements OnInit {
     this.clientsService.getCustomers(this.currentPage, this.pageSize).subscribe({
       next: clients => {
         if (clients.object) {
-          console.log('Clients loaded: ', clients)
+          console.log('Customers loaded: ', clients)
           this.clients = clients.object.object;
           this.filteredClients = new MatTableDataSource(this.clients);
           this.currentPage = clients.object.currentPage;
@@ -101,7 +101,7 @@ export class ClientsComponent implements OnInit {
         }
         this.blockUI.stop();
       }, error: error => {
-        console.error('Error loading clients: ', error);
+        console.error('Error loading customers: ', error);
         this.blockUI.stop();
       }
     })
@@ -126,28 +126,28 @@ export class ClientsComponent implements OnInit {
 
       this.clientsService.addClient(clientData).subscribe({
         next: response => {
-          console.log('Client added: ', response);
+          console.log('Customer added: ', response);
           this._notifications.success(
-            this.translate.instant('CLIENTS.NOTIFICATIONS.CUSTOMER_CREATED'),
-            this.translate.instant('CLIENTS.NOTIFICATIONS.CUSTOMER_CREATED_DESC')
+            this.translate.instant('CUSTOMERS.NOTIFICATIONS.CUSTOMER_CREATED'),
+            this.translate.instant('CUSTOMERS.NOTIFICATIONS.CUSTOMER_CREATED_DESC')
           )
           this.clientForm.reset();
           this.fetchClients();
         },
         error: error => {
-          console.error('Error adding client: ', error);
-          console.log('Client data: ', clientData);
+          console.error('Error adding customer: ', error);
+          console.log('Customer data: ', clientData);
           this._notifications.error(
-            this.translate.instant('CLIENTS.NOTIFICATIONS.CUSTOMER_CREATION_FAILURE'),
-            this.translate.instant('CLIENTS.NOTIFICATIONS.CUSTOMER_CREATION_FAILURE_DESC')
+            this.translate.instant('CUSTOMERS.NOTIFICATIONS.CUSTOMER_CREATION_FAILURE'),
+            this.translate.instant('CUSTOMERS.NOTIFICATIONS.CUSTOMER_CREATION_FAILURE_DESC')
           )
           this.blockUI.stop();
         }
       });
     } else {
       this._notifications.error(
-        this.translate.instant('CLIENTS.NOTIFICATIONS.INVALID_FORM'),
-        this.translate.instant('CLIENTS.NOTIFICATIONS.INVALID_FORM_DESC')
+        this.translate.instant('CUSTOMERS.NOTIFICATIONS.INVALID_FORM'),
+        this.translate.instant('CUSTOMERS.NOTIFICATIONS.INVALID_FORM_DESC')
       )
     }
   }
@@ -163,13 +163,13 @@ export class ClientsComponent implements OnInit {
       }
       this.clientsService.updateClient(this.selectedClientId, updateClientData).subscribe({
         next: response => {
-          this._notifications.success(this.translate.instant('CLIENTS.NOTIFICATIONS.CUSTOMER_UPDATED'), '');
+          this._notifications.success(this.translate.instant('CUSTOMERS.NOTIFICATIONS.UPDATE_SUCCESS'), '');
           this.fetchClients();
           this.clientForm.reset();
         },
         error: error => {
-          console.error(this.translate.instant('CLIENTS.ERRORS.CLIENT_UPDATE'), error);
-          this._notifications.error(this.translate.instant('CLIENTS.NOTIFICATIONS.CLIENT_UPDATE_FAILURE'), '');
+          console.error(this.translate.instant('CUSTOMERS.ERRORS.UPDATE_CUSTOMER'), error);
+          this._notifications.error(this.translate.instant('CUSTOMERS.NOTIFICATIONS.UPDATE_CUSTOMER'), '');
         }
       })
     }
@@ -183,8 +183,8 @@ export class ClientsComponent implements OnInit {
   confirmDeleteClient(client: Client): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: this.translate.instant('CLIENTS.CONFIRM_DELETE_CLIENT'),
-        message: this.translate.instant('CLIENTS.CONFIRM_DELETE_CLIENT_MESSAGE', { clientName: client.name })
+        title: this.translate.instant('CUSTOMERS.DIALOG.TITLE'),
+        message: this.translate.instant('CUSTOMERS.DIALOG.MESSAGE', { clientName: client.name })
       }
     });
 
@@ -197,23 +197,23 @@ export class ClientsComponent implements OnInit {
 
   deleteClient(customerId: number): void {
     this.blockUI.start(
-      this.translate.instant('CLIENTS.NOTIFICATIONS.DELETING_CLIENT')
+      this.translate.instant('CUSTOMERS.NOTIFICATIONS.DELETING_CUSTOMER')
     );
     this.clientsService.deleteClient(customerId).subscribe({
       next: response => {
         this._notifications.success(
-          this.translate.instant('CLIENTS.NOTIFICATIONS.CLIENT_DELETED'),
-          this.translate.instant('CLIENTS.NOTIFICATIONS.CLIENT_DELETED_DESC')
+          this.translate.instant('CUSTOMERS.NOTIFICATIONS.CUSTOMER_DELETED'),
+          this.translate.instant('CUSTOMERS.NOTIFICATIONS.CUSTOMER_DELETED_DESC')
         );
         this.fetchClients();
         this.blockUI.stop();
         this.clientForm.reset();
       },
       error: error => {
-        console.error('Error deleting client:', error);
+        console.error('Error deleting customer:', error);
         this._notifications.error(
-          this.translate.instant('CLIENTS.NOTIFICATIONS.CLIENT_DELETION_FAILURE'),
-          this.translate.instant('CLIENTS.NOTIFICATIONS.CLIENT_DELETION_FAILURE_DESC')
+          this.translate.instant('CUSTOMERS.NOTIFICATIONS.CUSTOMER_DELETE_FAILED'),
+          this.translate.instant('CUSTOMERS.NOTIFICATIONS.CUSTOMER_DELETE_FAILED_DESC')
         );
         this.blockUI.stop();
       }

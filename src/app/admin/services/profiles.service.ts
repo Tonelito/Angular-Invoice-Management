@@ -9,7 +9,6 @@ import {
 import {
   CreateProfile,
   Profile,
-  profileName,
   ProfileResponse,
   Profiles,
   Roles

@@ -1,6 +1,7 @@
 interface common {
     code: number;
     name: string;
+    description: string;
     delivery_time: number;
     price: number;
     status: boolean;
