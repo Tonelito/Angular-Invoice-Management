@@ -13,7 +13,7 @@ export interface ClientResponse {
 }
 
 export interface Client extends common {
-    clientId: number;
+    customerId: number;
 }
 
 export interface Clients extends Client {

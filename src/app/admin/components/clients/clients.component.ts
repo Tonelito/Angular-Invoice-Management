@@ -9,9 +9,13 @@ import { MyErrorStateMatcher } from 'src/app/shared/utilities/error-state-matche
 import { Client } from '../../utilities/models/client.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { REGEX_NUMBER, REGEX_NUMBER_DPI, REGEX_NUMBER_NIT } from 'src/app/shared/utilities/constants.utility';
+import {
+  REGEX_NUMBER,
+  REGEX_NUMBER_DPI,
+  REGEX_NUMBER_NIT
+} from 'src/app/shared/utilities/constants.utility';
 import { requeridPassportDPiNit } from 'src/app/shared/utilities/requeridForm.validator';
-
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-clients',
@@ -47,41 +51,44 @@ export class ClientsComponent implements OnInit {
     private readonly dialog: MatDialog,
     private readonly fb: FormBuilder
   ) {
-    this.clientForm = this.fb.group({
-      name: ['', [Validators.required]],
-      dpi: ['', [Validators.pattern(REGEX_NUMBER_DPI)]],
-      passport: ['', [Validators.pattern(REGEX_NUMBER)]],
-      nit: ['', [Validators.pattern(REGEX_NUMBER_NIT)]],
-      address: ['', [Validators.required]],
-    }, { validators: requeridPassportDPiNit() });
-
+    this.clientForm = this.fb.group(
+      {
+        name: ['', [Validators.required]],
+        dpi: ['', [Validators.pattern(REGEX_NUMBER_DPI)]],
+        passport: ['', [Validators.pattern(REGEX_NUMBER)]],
+        nit: ['', [Validators.pattern(REGEX_NUMBER_NIT)]],
+        address: ['', [Validators.required]]
+      },
+      { validators: requeridPassportDPiNit() }
+    );
   }
 
   ngOnInit(): void {
     this.fetchClients();
   }
 
-  fetchClientsDetails(clientId: number): void {
-    this.clientsService.getCustomerById(clientId).subscribe({
+  fetchClientsDetails(customerId: number): void {
+    this.clientsService.getCustomerById(customerId).subscribe({
       next: response => {
         console.log('Response:', response);
-        this.selectedClientId = clientId;
+        this.selectedClientId = customerId;
         this.clientForm.patchValue({
           name: response.object.name,
           dpi: response.object.dpi,
           passport: response.object.passport,
           nit: response.object.nit,
-          address: response.object.address,
+          address: response.object.address
         });
+        this.isEditing = true;
+        this.clientForm.markAsPristine();
+        this.fetchClients();
       },
 
       error: error => {
-        console.error('id: ', clientId);
-        console.error('Error loading client details: ', error);
-
+        console.error('id: ', customerId);
+        console.error('Error loading customer details: ', error);
       }
-    })
-
+    });
   }
 
   fetchClients(): void {
@@ -91,7 +98,7 @@ export class ClientsComponent implements OnInit {
       .subscribe({
         next: clients => {
           if (clients.object) {
-            console.log('Clients loaded: ', clients);
+            console.log('Customers loaded: ', clients);
             this.clients = clients.object.object;
             this.filteredClients = new MatTableDataSource(this.clients);
             this.currentPage = clients.object.currentPage;
@@ -100,7 +107,7 @@ export class ClientsComponent implements OnInit {
           this.blockUI.stop();
         },
         error: error => {
-          console.error('Error loading clients: ', error);
+          console.error('Error loading customers: ', error);
           this.blockUI.stop();
         }
       });
@@ -119,31 +126,31 @@ export class ClientsComponent implements OnInit {
         dpi: this.clientForm.get('dpi')?.value,
         passport: this.clientForm.get('passport')?.value,
         nit: this.clientForm.get('nit')?.value,
-        address: this.clientForm.get('address')?.value,
-      }
+        address: this.clientForm.get('address')?.value
+      };
       this.blockUI.start();
 
       this.clientsService.addClient(clientData).subscribe({
         next: response => {
-          console.log('Client added: ', response);
+          console.log('Customer added: ', response);
           this._notifications.success(
-            this.translate.instant('CLIENTS.NOTIFICATIONS.CUSTOMER_CREATED'),
+            this.translate.instant('CUSTOMERS.NOTIFICATIONS.CUSTOMER_CREATED'),
             this.translate.instant(
-              'CLIENTS.NOTIFICATIONS.CUSTOMER_CREATED_DESC'
+              'CUSTOMERS.NOTIFICATIONS.CUSTOMER_CREATED_DESC'
             )
           );
           this.clientForm.reset();
           this.fetchClients();
         },
         error: error => {
-          console.error('Error adding client: ', error);
-          console.log('Client data: ', clientData);
+          console.error('Error adding customer: ', error);
+          console.log('Customer data: ', clientData);
           this._notifications.error(
             this.translate.instant(
-              'CLIENTS.NOTIFICATIONS.CUSTOMER_CREATION_FAILURE'
+              'CUSTOMERS.NOTIFICATIONS.CUSTOMER_CREATION_FAILURE'
             ),
             this.translate.instant(
-              'CLIENTS.NOTIFICATIONS.CUSTOMER_CREATION_FAILURE_DESC'
+              'CUSTOMERS.NOTIFICATIONS.CUSTOMER_CREATION_FAILURE_DESC'
             )
           );
           this.blockUI.stop();
@@ -151,13 +158,102 @@ export class ClientsComponent implements OnInit {
       });
     } else {
       this._notifications.error(
-        this.translate.instant('CLIENTS.NOTIFICATIONS.INVALID_FORM'),
-        this.translate.instant('CLIENTS.NOTIFICATIONS.INVALID_FORM_DESC')
+        this.translate.instant('CUSTOMERS.NOTIFICATIONS.INVALID_FORM'),
+        this.translate.instant('CUSTOMERS.NOTIFICATIONS.INVALID_FORM_DESC')
       );
     }
   }
+
+  updateClient(): void {
+    if (this.clientForm.valid) {
+      const updateClientData = {
+        name: this.clientForm.value.name,
+        dpi: this.clientForm.value.dpi,
+        passport: this.clientForm.value.passport,
+        nit: this.clientForm.value.nit,
+        address: this.clientForm.value.address
+      };
+      this.clientsService
+        .updateClient(this.selectedClientId, updateClientData)
+        .subscribe({
+          next: response => {
+            this._notifications.success(
+              this.translate.instant('CUSTOMERS.NOTIFICATIONS.UPDATE_SUCCESS'),
+              ''
+            );
+            this.fetchClients();
+            this.clientForm.reset();
+          },
+          error: error => {
+            console.error(
+              this.translate.instant('CUSTOMERS.ERRORS.UPDATE_CUSTOMER'),
+              error
+            );
+            this._notifications.error(
+              this.translate.instant('CUSTOMERS.NOTIFICATIONS.UPDATE_CUSTOMER'),
+              ''
+            );
+          }
+        });
+    }
+  }
+
+  cancelEdit(): void {
+    this.isEditing = false;
+    this.clientForm.reset();
+  }
+
+  confirmDeleteClient(client: Client): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: this.translate.instant('CUSTOMERS.DIALOG.TITLE'),
+        message: this.translate.instant('CUSTOMERS.DIALOG.MESSAGE', {
+          clientName: client.name
+        })
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteClient(client.customerId);
+      }
+    });
+  }
+
+  deleteClient(customerId: number): void {
+    this.blockUI.start(
+      this.translate.instant('CUSTOMERS.NOTIFICATIONS.DELETING_CUSTOMER')
+    );
+    this.clientsService.deleteClient(customerId).subscribe({
+      next: response => {
+        this._notifications.success(
+          this.translate.instant('CUSTOMERS.NOTIFICATIONS.CUSTOMER_DELETED'),
+          this.translate.instant(
+            'CUSTOMERS.NOTIFICATIONS.CUSTOMER_DELETED_DESC'
+          )
+        );
+        this.fetchClients();
+        this.blockUI.stop();
+        this.clientForm.reset();
+      },
+      error: error => {
+        console.error('Error deleting customer:', error);
+        this._notifications.error(
+          this.translate.instant(
+            'CUSTOMERS.NOTIFICATIONS.CUSTOMER_DELETE_FAILED'
+          ),
+          this.translate.instant(
+            'CUSTOMERS.NOTIFICATIONS.CUSTOMER_DELETE_FAILED_DESC'
+          )
+        );
+        this.blockUI.stop();
+      }
+    });
+  }
+
   submitClient(): void {
     if (this.isEditing) {
+      this.updateClient();
     } else {
       this.addClient();
     }

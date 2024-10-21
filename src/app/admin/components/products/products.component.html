@@ -5,7 +5,6 @@
                 <mat-form-field appearance="outline">
                     <mat-label>{{ 'PRODUCTS.SEARCH' | translate }}</mat-label>
                     <input matInput placeholder="{{ 'PRODUCTS.SEARCH_PLACEHOLDER' | translate }}">
-
                     <button mat-icon-button matSuffix>
                         <mat-icon>search</mat-icon>
                     </button>
@@ -15,116 +14,126 @@
                 <div class="product-list" *ngIf="filteredProducts.data.length">
                     <div class="product-item" *ngFor="let products of filteredProducts.filteredData">
                         <div class="product-info">
-                            <div class="status-circle" [ngClass]="{active:products.status, inactive: !products.status}"></div>
+                            <div class="status-circle"
+                                [ngClass]="{active: products.status, inactive: !products.status}">
+                            </div>
                             <p>{{ products.name }}</p>
-                            <p>{{products.stock}}</p>
+                            <p>{{ products.stock }}</p>
                         </div>
                         <div class="buttons">
-                            <button mat-icon-button color="accent">
+                            <button mat-icon-button color="accent" (click)="fetchProductsDetails(products.productsId)">
                                 <mat-icon>edit</mat-icon>
                             </button>
-                            <button mat-icon-button color="accent">
+                            <button mat-icon-button color="accent" (click)="confirmDeleteProduct(products)">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
                     </div>
                 </div>
-                <mat-paginator>
+                <mat-paginator #paginator [length]="totalProducts" [pageSize]="pageSize" [pageIndex]="currentPage"
+                    hidePageSize (page)="onPageChange($event)">
                 </mat-paginator>
             </div>
         </div>
         <div class="product-form-container">
             <div class="form-container">
                 <div class="title">
-                    <h1>Product</h1>
+                    <h1>{{ 'PRODUCTS.FORM_TITLE' | translate }}</h1>
                 </div>
-                <form action="">
+                <form [formGroup]="productForm" (submit)="submitProduct()">
                     <div class="inputs-button">
                         <div class="row-1">
                             <mat-form-field hideRequiredMarker>
-                                <mat-label>Code</mat-label>
-                                <input matInput>
+                                <mat-label>{{ 'PRODUCTS.CODE' | translate }}</mat-label>
+                                <input matInput formControlName="code">
                                 <mat-error>
-                                    Code is required.
+                                    {{ 'PRODUCTS.ERRORS.REQUIRED_CODE' | translate }}
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field hideRequiredMarker>
-                                <mat-label>Product Name</mat-label>
-                                <input matInput>
+                                <mat-label>{{ 'PRODUCTS.NAME' | translate }}</mat-label>
+                                <input matInput formControlName="name">
                                 <mat-error>
-                                    Product Name is required.
+                                    {{ 'PRODUCTS.ERRORS.REQUIRED_NAME' | translate }}
                                 </mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row-2">
                             <mat-form-field hideRequiredMarker>
-                                <mat-label>Description</mat-label>
-                                <input matInput>
+                                <mat-label>{{ 'PRODUCTS.DESCRIPTION' | translate }}</mat-label>
+                                <input matInput formControlName="description">
                                 <mat-error>
-                                    Description is required.
+                                    {{ 'PRODUCTS.ERRORS.REQUIRED_DESCRIPTION' | translate }}
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field hideRequiredMarker>
-                                <mat-label>Company Name</mat-label>
-                                <input matInput>
+                                <mat-label>{{ 'PRODUCTS.COMPANY_NAME' | translate }}</mat-label>
+                                <input matInput formControlName="companyName">
                                 <mat-error>
-                                    Company is required.
+                                    {{ 'PRODUCTS.ERRORS.REQUIRED_COMPANY' | translate }}
                                 </mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row-3">
                             <mat-form-field hideRequiredMarker>
-                                <mat-label>Price</mat-label>
-                                <input matInput>
+                                <mat-label>{{ 'PRODUCTS.PRICE' | translate }}</mat-label>
+                                <input matInput formControlName="price">
                                 <mat-error>
-                                    Price is required.
+                                    {{ 'PRODUCTS.ERRORS.REQUIRED_PRICE' | translate }}
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field hideRequiredMarker>
-                                <mat-label>Stock</mat-label>
-                                <input matInput>
+                                <mat-label>{{ 'PRODUCTS.STOCK' | translate }}</mat-label>
+                                <input matInput formControlName="stock">
                                 <mat-error>
-                                    Stock is required.
+                                    {{ 'PRODUCTS.ERRORS.REQUIRED_QUANTITY' | translate }}
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field hideRequiredMarker>
-                                <mat-label>Delivery Time</mat-label>
-                                <input matInput>
+                                <mat-label>{{ 'PRODUCTS.DELIVERY_TIME' | translate }}</mat-label>
+                                <input matInput formControlName="deliveryTime">
                                 <mat-error>
-                                    Delivery Time is required.
+                                    {{ 'PRODUCTS.ERRORS.REQUIRED_DELIVERY_TIME' | translate }}
                                 </mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row-4">
                             <mat-form-field hideRequiredMarker>
-                                <mat-label>Status</mat-label>
-                                <input matInput>
+                                <mat-label>{{ 'PRODUCTS.STATUS' | translate }}</mat-label>
+                                <mat-select formControlName="status">
+                                    <mat-option [value]="true">{{ 'PRODUCTS.STATUS_TRUE' | translate }}</mat-option>
+                                    <mat-option [value]="false">{{ 'PRODUCTS.STATUS_FALSE' | translate }}</mat-option>
+                                </mat-select>
                                 <mat-error>
-                                    Status is required.
+                                    {{ 'PRODUCTS.ERRORS.REQUIRED_STATUS' | translate }}
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field hideRequiredMarker>
-                                <mat-label>Entry Date</mat-label>
-                                <input matInput [matDatepicker]="pickerStart">
+                                <mat-label>{{ 'PRODUCTS.ENTRY_DATE' | translate }}</mat-label>
+                                <input matInput [matDatepicker]="pickerStart" formControlName="entryDate">
                                 <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
                                 <mat-datepicker #pickerStart></mat-datepicker>
                                 <mat-error>
-                                    Entry Date is required.
+                                    {{ 'PRODUCTS.ERRORS.REQUIRED_ENTRY_DATE' | translate }}
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field hideRequiredMarker>
-                                <mat-label>Expirate Date</mat-label>
-                                <input matInput [matDatepicker]="pickerEnd">
+                                <mat-label>{{ 'PRODUCTS.EXPIRATE_DATE' | translate }}</mat-label>
+                                <input matInput [matDatepicker]="pickerEnd" formControlName="expirateDate">
                                 <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
                                 <mat-datepicker #pickerEnd></mat-datepicker>
                                 <mat-error>
-                                    Expirate Date is required.
+                                    {{ 'PRODUCTS.ERRORS.REQUIRED_EXPIRATE_DATE' | translate }}
                                 </mat-error>
                             </mat-form-field>
                         </div>
                         <div class="buttons">
-                            <button mat-flat-button color="accent">Save</button>
-                            <button mat-flat-button color="primary">Cancel</button>
+                            <button mat-flat-button color="accent" type="submit"
+                                [disabled]="isEditing && productForm.pristine || productForm.invalid">{{isEditing ?
+                                ('PRODUCTS.ACTIONS.SAVE_CHANGES' | translate) : ('PRODUCTS.SAVE' |
+                                translate)}}</button>
+                            <button mat-flat-button color="primary" (click)="cancelEdit()" *ngIf="isEditing">{{
+                                'PRODUCTS.ACTIONS.CANCEL' | translate }}</button>
                         </div>
                     </div>
                 </form>
@@ -132,3 +141,4 @@
         </div>
     </div>
 </div>
+<simple-notifications [options]="options"></simple-notifications>

@@ -38,6 +38,38 @@
       "LOGGING_IN": "Iniciando sesión"
     }
   },
+  "PASSWORD_RECOVERY": {
+    "EMAIL": "Correo",
+    "EMAIL_PLACEHOLDER": "Ingresa tu correo",
+    "SUBMIT": "Enviar",
+    "NEXT": "Siguiente",
+    "BACK": "Atrás",
+    "NOTIFICATIONS": {
+      "SUCCESS": "Correo enviado",
+      "SUCCESS_DESC": "Revisa tu correo para el código de recuperación",
+      "FAILURE": "Error al enviar el correo",
+      "FAILURE_DESC": "Por favor, intenta de nuevo"
+    },
+    "ERRORS": {
+      "REQUIRED_EMAIL": "El correo es obligatorio",
+      "INVALID_EMAIL": "Por favor, ingresa una dirección de correo válida"
+    },
+    "STEP1": {
+      "EMAIL_LABEL": "Email"
+    },
+    "STEP2": {
+      "CHANGE_PASSWORD_LABEL": "Cambiar Contraseña",
+      "VERIFICATION_CODE_LABEL": "Código de Verificación",
+      "VERIFICATION_CODE_PLACEHOLDER": "Ingresa el código de verificación",
+      "NEW_PASSWORD_LABEL": "Nueva Contraseña",
+      "NEW_PASSWORD_PLACEHOLDER": "Ingresa tu nueva contraseña",
+      "NEW_PASSWORD_REQUIRED": "La nueva contraseña es obligatoria",
+      "CONFIRM_PASSWORD_LABEL": "Confirmar Contraseña",
+      "CONFIRM_PASSWORD_PLACEHOLDER": "Confirma tu nueva contraseña",
+      "CONFIRM_PASSWORD_REQUIRED": "Por favor, confirma tu nueva contraseña",
+      "PASSWORDS_DO_NOT_MATCH": "Las contraseñas no coinciden"
+    }
+  },
   "AUDIT": {
     "TITLE": "Auditoría",
     "START_DATE": "Fecha de inicio",
@@ -131,9 +163,10 @@
     "SAVE": "Guardar",
     "ERRORS": {
       "REQUIRED_NAME": "El nombre del cliente es obligatorio",
-      "REQUIRED_EMAIL": "El correo del cliente es obligatorio",
-      "REQUIRED_PHONE": "El teléfono del cliente es obligatorio",
-      "INVALID_EMAIL": "Por favor, ingresa un correo electrónico válido",
+      "REQUIRED_ADDRESS": "La dirección es obligatoria",
+      "REQUIRED_DPI": "El DPI es obligatorio",
+      "REQUIRED_NIT": "El NIT es obligatorio",
+      "REQUIRED_PASSPORT": "El Pasaporte es obligatorio",
       "FETCH_CUSTOMERS": "Error al cargar los clientes.",
       "STATUS_TOGGLE": "Error al cambiar el estado del cliente.",
       "UPDATE_CUSTOMER": "Error al actualizar el cliente."
@@ -158,11 +191,16 @@
     },
     "DIALOG": {
       "TITLE": "Eliminar Cliente",
-      "MESSAGE": "¿Estás seguro de que deseas eliminar al cliente \"{{ customerName }}\"?"
+      "MESSAGE": "¿Estás seguro de que deseas eliminar al cliente?"
     },
     "FORM": {
       "EDIT_CUSTOMER": "Editar Cliente",
-      "EDIT_DESCRIPTION": "Actualiza el nombre completo, correo y teléfono de este cliente. Asegúrate de que toda la información sea correcta antes de guardar los cambios."
+      "EDIT_DESCRIPTION": "Actualiza el nombre completo, correo y teléfono de este cliente. Asegúrate de que toda la información sea correcta antes de guardar los cambios.",
+      "NAME": "Nombre del Cliente",
+      "ADDRESS": "Dirección",
+      "DPI": "DPI",
+      "NIT": "NIT",
+      "PASSPORT": "Pasaporte"
     },
     "TOOLTIP": {
       "ENABLE_CUSTOMER": "Habilitar Cliente",
@@ -232,17 +270,70 @@
       "SAVE_CHANGES": "Guardar Cambios"
     }
   },
-  "ORDERS": {
-    "TITLE": "Orden",
-    "CLIENT": "Cliente",
-    "QUANTITY": "Cantidad",
-    "PRODUCT": "Producto",
-    "PRICE": "Precio/Valor Unitario",
-    "TOTAL": "Total",
-    "TAXES": "Impuestos",
-    "ADD_ITEM": "Agregar item",
-    "SUBMIT": "Emitir",
-    "ORDER_SUBMITTED": "Orden Emitida",
-    "FORM_INVALID": "Formulario Invalido"
+  "PRODUCTS": {
+    "TITLE": "Productos",
+    "SEARCH": "Buscar...",
+    "SEARCH_PLACEHOLDER": "Nombre del Producto",
+    "FORM_TITLE": "Agregar Producto",
+    "NAME": "Nombre del Producto",
+    "DESCRIPTION": "Descripción",
+    "CODE": "Código",
+    "PRICE": "Precio",
+    "STOCK": "Stock",
+    "DELIVERY_TIME": "Tiempo de Entrega",
+    "COMPANY_NAME": "Nombre de la Empresa",
+    "ENTRY_DATE": "Fecha de Entrada",
+    "EXPIRATE_DATE": "Fecha de Caducidad",
+    "STATUS_TRUE": "Activo",
+    "STATUS_FALSE": "Inactivo",
+    "SAVE": "Guardar",
+    "ERRORS": {
+      "REQUIRED_NAME": "El nombre del producto es requerido",
+      "REQUIRED_DESCRIPTION": "La descripción del producto es requerida",
+      "REQUIRED_PRICE": "El precio del producto es requerido",
+      "REQUIRED_QUANTITY": "La cantidad del producto es requerida",
+      "REQUIRED_CODE": "El código del producto es requerido",
+      "REQUIRED_COMPANY": "El nombre de la empresa es requerido.",
+      "REQUIRED_DELIVERY_TIME": "El tiempo de entrega es requerido.",
+      "REQUIRED_ENTRY_DATE": "La fecha de entrada es requerida.",
+      "REQUIRED_EXPIRATE_DATE": "La fecha de caducidad es requerida.",
+      "FETCH_PRODUCTS": "Error al cargar productos.",
+      "STATUS_TOGGLE": "Error al cambiar el estado del producto.",
+      "UPDATE_PRODUCT": "Error al actualizar el producto."
+    },
+    "NOTIFICATIONS": {
+      "CREATING_PRODUCT": "Creando producto...",
+      "PRODUCT_CREATED": "Producto creado",
+      "PRODUCT_CREATED_DESC": "El producto ha sido creado con éxito",
+      "PRODUCT_CREATION_FAILURE": "La creación del producto falló",
+      "PRODUCT_CREATION_FAILURE_DESC": "Falló al crear el producto. Por favor, inténtelo de nuevo",
+      "INVALID_FORM": "Formulario inválido",
+      "INVALID_FORM_DESC": "Por favor, complete el formulario correctamente",
+      "DELETING_PRODUCT": "Eliminando producto...",
+      "PRODUCT_DELETED": "Producto eliminado",
+      "PRODUCT_DELETED_DESC": "El producto ha sido eliminado con éxito.",
+      "PRODUCT_DELETE_FAILED": "Falló al eliminar el producto",
+      "PRODUCT_DELETE_FAILED_DESC": "Hubo un error al eliminar el producto.",
+      "STATUS_SUCCESS": "Estado del producto cambiado con éxito.",
+      "STATUS_FAILURE": "No se pudo cambiar el estado del producto.",
+      "UPDATE_SUCCESS": "Producto actualizado con éxito.",
+      "UPDATE_FAILURE": "Error al actualizar el producto."
+    },
+    "DIALOG": {
+      "TITLE": "Eliminar Producto",
+      "MESSAGE": "¿Estás seguro de que deseas eliminar el producto \"{{ productName }}\"?"
+    },
+    "FORM": {
+      "EDIT_PRODUCT": "Editar Producto",
+      "EDIT_DESCRIPTION": "Actualiza el nombre, la descripción y el precio del producto. Asegúrate de que toda la información sea correcta antes de guardar los cambios."
+    },
+    "TOOLTIP": {
+      "ENABLE_PRODUCT": "Habilitar Producto",
+      "DISABLE_PRODUCT": "Deshabilitar Producto"
+    },
+    "ACTIONS": {
+      "CANCEL": "Cancelar",
+      "SAVE_CHANGES": "Guardar Cambios"
+    }
   }
 }

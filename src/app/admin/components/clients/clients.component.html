@@ -16,14 +16,15 @@
                 <div class="client-list" *ngIf="filteredClients.data.length">
                     <div class="client-item" *ngFor="let client of filteredClients.filteredData">
                         <div class="client-info">
-                            <div class="status-circle" [ngClass]="{active: client.status, inactive: !client.status}"></div>
+                            <div class="status-circle" [ngClass]="{active: client.status, inactive: !client.status}">
+                            </div>
                             <p>{{ client.name }}</p>
                         </div>
                         <div class="buttons">
-                            <button mat-icon-button color="accent" (click)="fetchClientsDetails(client.clientId)">
+                            <button mat-icon-button color="accent" (click)="fetchClientsDetails(client.customerId)">
                                 <mat-icon>edit</mat-icon>
                             </button>
-                            <button mat-icon-button color="accent">
+                            <button mat-icon-button color="accent" (click)="confirmDeleteClient(client)">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
@@ -39,55 +40,60 @@
         <div class="client-form-container">
             <div class="form-container">
                 <div class="title">
-                    <h1>Client</h1>
+                    <h1>{{ 'CUSTOMERS.TITLE' | translate }}</h1>
                 </div>
                 <form [formGroup]="clientForm" (submit)="submitClient()">
                     <div class="inputs-button">
                         <mat-form-field hideRequiredMarker>
-                            <mat-label>Client Name</mat-label>
+                            <mat-label>{{ 'CUSTOMERS.FORM.NAME' | translate }}</mat-label>
                             <input matInput formControlName="name">
                             <mat-error
                                 *ngIf="clientForm.get('name')?.hasError('required') && clientForm.get('name')?.touched">
-                                Client Name is required.
+                                {{ 'CUSTOMERS.ERRORS.REQUIRED_NAME' | translate }}
                             </mat-error>
                         </mat-form-field>
                         <mat-form-field hideRequiredMarker>
-                            <mat-label>Address</mat-label>
+                            <mat-label>{{ 'CUSTOMERS.FORM.ADDRESS' | translate }}</mat-label>
                             <input matInput formControlName="address">
                             <mat-error
                                 *ngIf="clientForm.get('address')?.hasError('required') && clientForm.get('address')?.touched">
-                                Address is required.
+                                {{ 'CUSTOMERS.ERRORS.REQUIRED_ADDRESS' | translate }}
                             </mat-error>
                         </mat-form-field>
                         <div class="identifications">
                             <mat-form-field hideRequiredMarker>
-                                <mat-label>DPI</mat-label>
+                                <mat-label>{{ 'CUSTOMERS.FORM.DPI' | translate }}</mat-label>
                                 <input matInput formControlName="dpi">
                                 <mat-error
                                     *ngIf="clientForm.get('dpi')?.hasError('pattern') && clientForm.get('dpi')?.touched">
-                                    Invalid DPI format.
+                                    {{ 'CUSTOMERS.ERRORS.REQUIRED_DPI' | translate }}
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field hideRequiredMarker>
-                                <mat-label>Nit</mat-label>
+                                <mat-label>{{ 'CUSTOMERS.FORM.NIT' | translate }}</mat-label>
                                 <input matInput formControlName="nit">
                                 <mat-error
                                     *ngIf="clientForm.get('nit')?.hasError('pattern') && clientForm.get('nit')?.touched">
-                                    Invalid Nit format.
+                                    {{ 'CUSTOMERS.ERRORS.REQUIRED_NIT' | translate }}
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field hideRequiredMarker>
-                                <mat-label>Passport Number</mat-label>
+                                <mat-label>{{ 'CUSTOMERS.FORM.PASSPORT' | translate }}</mat-label>
                                 <input matInput formControlName="passport">
                                 <mat-error
                                     *ngIf="clientForm.get('passport')?.hasError('pattern') && clientForm.get('passport')?.touched">
-                                    Invalid Passport format.
+                                    {{ 'CUSTOMERS.ERRORS.REQUIRED_PASSPORT' | translate }}
                                 </mat-error>
                             </mat-form-field>
                         </div>
                         <div class="buttons">
-                            <button mat-flat-button color="accent">Save</button>
-                            <button mat-flat-button color="primary">Cancel</button>
+                            <button mat-flat-button color="accent" type="submit"
+                                [disabled]="isEditing && clientForm.pristine || clientForm.invalid">{{ isEditing ?
+                                ('CUSTOMERS.ACTIONS.SAVE_CHANGES' | translate) : ('CUSTOMERS.SAVE' | translate)
+                                }}</button>
+                            <button mat-flat-button color="primary" (click)="cancelEdit()" *ngIf="isEditing">
+                                {{ 'CUSTOMERS.ACTIONS.CANCEL' | translate }}
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -95,3 +101,4 @@
         </div>
     </div>
 </div>
+<simple-notifications [options]="options"></simple-notifications>

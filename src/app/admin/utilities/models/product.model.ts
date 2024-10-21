@@ -1,6 +1,7 @@
 interface common {
     code: number;
     name: string;
+    description: string;
     delivery_time: number;
     price: number;
     status: boolean;
@@ -21,7 +22,6 @@ export interface Product extends common {
 
 export interface Products extends Product {
     note: string;
-
     object: Product[];
     totalElements: number;
     totalPages: number;

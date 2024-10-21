@@ -14,13 +14,21 @@ export class ClientsService {
   constructor(private http: HttpClient) { }
 
   getCustomers(page: number, size: number): Observable<Clients> {
-    return this.http.get<Clients>(`${this.url}s?page=${page}&size=${size}`);
+    return this.http.get<Clients>(`${this.url}/show-all?page=${page}&size=${size}`);
   }
   getCustomerById(id: number): Observable<ClientResponse> {
-    return this.http.get<ClientResponse>(`${this.url}/${id}`);
+    return this.http.get<ClientResponse>(`${this.url}/show-by-id/${id}`);
   }
 
   addClient(clientData: any): Observable<any> {
-    return this.http.post(`${this.url}`, clientData);
+    return this.http.post(`${this.url}/createa`, clientData);
+  }
+
+  updateClient(id: number, clientData: any): Observable<any> {
+    return this.http.put(`${this.url}/update/${id}`, clientData);
+  }
+
+  deleteClient(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.url}/delete/${id}`);
   }
 }

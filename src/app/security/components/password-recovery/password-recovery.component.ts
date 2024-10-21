@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { confirmPasswordValidator } from 'src/app/shared/utilities/confirm-password.validator';
 import { AuthService } from '../../services/auth.service';
 import { NotificationsService } from 'angular2-notifications';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { REGEX_PASSWORD } from 'src/app/shared/utilities/constants.utility';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core'; // Importar el servicio de traducción
 
 @Component({
   selector: 'app-password-recovery',
@@ -28,6 +30,8 @@ export class PasswordRecoveryComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private serviceAuth: AuthService,
     private readonly _notifications: NotificationsService,
+    private router: Router,
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -47,7 +51,6 @@ export class PasswordRecoveryComponent implements OnInit {
     });
   }
 
-
   toggleNewConfirmPasswordVisibility() {
     this.hideNewConfirmPassword = !this.hideNewConfirmPassword;
   }
@@ -66,14 +69,15 @@ export class PasswordRecoveryComponent implements OnInit {
     this.serviceAuth.passwordRecovery(email).subscribe({
       next: (response) => {
         console.log('Email sent', response);
-        this._notifications.success('Email sent', 'Check your email for the recovery code');
+        this._notifications.success(this.translate.instant('PASSWORD_RECOVERY.NOTIFICATIONS.SUCCESS'), this.translate.instant('LOGIN.NOTIFICATIONS.SUCCESS_DESC'));
       },
       error: (err) => {
         console.error('Error sending email:', err);
-        this._notifications.error('Error sending email', 'Please try again');
+        this._notifications.error(this.translate.instant('PASSWORD_RECOVERY.NOTIFICATIONS.FAILURE'), this.translate.instant('LOGIN.NOTIFICATIONS.FAILURE_DESC'));
       }
     });
   }
+
   onSubmitVerify() {
     if (this.secondFormGroup.invalid) {
       console.log('Form is invalid');
@@ -95,13 +99,13 @@ export class PasswordRecoveryComponent implements OnInit {
     this.serviceAuth.verifyCode(verifyData).subscribe({
       next: (response) => {
         console.log('Verification successful', response);
-        this._notifications.success('Verification successful', 'Password Recovery successfully');
+        this._notifications.success(this.translate.instant('PASSWORD_RECOVERY.NOTIFICATIONS.SUCCESS'), this.translate.instant('LOGIN.NOTIFICATIONS.SUCCESS_DESC'));
+        this.router.navigate(['/security/login']);
       },
       error: (err) => {
         console.error('Error during verification:', err);
-        this._notifications.error('Error during verification', 'Please try again');
+        this._notifications.error(this.translate.instant('PASSWORD_RECOVERY.NOTIFICATIONS.FAILURE'), this.translate.instant('LOGIN.NOTIFICATIONS.FAILURE_DESC'));
       }
     });
   }
-
 }

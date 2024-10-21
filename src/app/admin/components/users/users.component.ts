@@ -175,6 +175,10 @@ export class UsersComponent implements OnInit {
           );
           this.fetchUsers();
           this.userForm.reset();
+        },
+        error: error => {
+          console.error(this.translate.instant('USERS.ERRORS.UPDATE_USER'), error);
+          this._notifications.error(this.translate.instant('USERS.NOTIFICATIONS.UPDATE_FAILURE'), '');
         }
       });
     }
