@@ -52,7 +52,7 @@
             width: 45% !important;
 
             @media (min-width: 800px) and (max-width: 1200px) {
-              width: 45% !important;
+              width: 100% !important;
             }
 
             @media (max-width: 800px) {
@@ -60,9 +60,51 @@
             }
           }
 
-          button {
-            margin-top: 4px;
+          .icon-button {
+            mat-icon {
+              display: inline;
+            }
+
+            span {
+              display: none;
+            }
           }
+
+          .flat-button {
+            mat-icon {
+              display: none;
+            }
+
+            span {
+              display: inline;
+            }
+          }
+
+          @media (max-width: 1250px) {
+            flex-direction: column;
+            margin-bottom: 30px;
+            width: 100%;
+
+            .flat-button {
+              display: block;
+              margin-top: 10px;
+              width: 100%;
+              justify-content: center;
+              align-items: center;
+            }
+          }
+        }
+      }
+
+      .add-item-total {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+
+        .currency {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
         }
       }
     }

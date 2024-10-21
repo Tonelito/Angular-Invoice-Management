@@ -8,6 +8,7 @@ import { authGuard } from '../shared/utilities/guards/auth.guard';
 import { ClientsComponent } from './components/clients/clients.component';
 import { ProductsComponent } from './components/products/products.component';
 import { OrdersComponent } from './components/orders/orders.component';
+import { ReportsComponent } from './components/reports/reports.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,11 @@ const routes: Routes = [
   {
     path: 'orders',
     component: OrdersComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'reports',
+    component: ReportsComponent,
     canActivate: [authGuard]
   }
 ];

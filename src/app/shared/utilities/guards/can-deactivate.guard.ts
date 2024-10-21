@@ -5,10 +5,7 @@ import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-
 import { Observable } from 'rxjs';
 
 export const canDeactivateGuard: CanDeactivateFn<any> = (
-  component,
-  currentRoute,
-  currentState,
-  nextState
+  component
 ): Observable<boolean> | boolean => {
   const dialog = inject(MatDialog);
 

@@ -10,6 +10,10 @@ export const API_URL_USER = environment.apiUser;
 export const API_URL_CUSTOMER = environment.apiCustomer;
 export const API_URL_PRODUCTS = environment.apiProducts;
 export const API_URL_ORDERS = environment.apiOrder;
+export const API_URL_ORDER_DETAIL = environment.apiDetailOrder;
+export const API_URL_ORDER = environment.apiOrder;
+export const API_URL_PAYMENT = environment.apiPayment;
+export const API_URL_REPORTS = environment.apiReport;
 
 //LOCAL STORAGE
 export const AUTHORITIES = 'authorities';
@@ -18,7 +22,8 @@ export const EXP = 'exp';
 // REGEX
 export const REGEX_NAME = '^[a-zA-Z0-9_ ]{3,15}$';
 export const REGEX_DESCRIPTION = '^(?=.*\\S)[a-zA-Z0-9_ ]{3,75}$';
-export const REGEX_PASSWORD = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])[A-Za-z0-9!@#\\$%\\^&\\*]{6,8}$';
+export const REGEX_PASSWORD =
+  '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])[A-Za-z0-9!@#\\$%\\^&\\*]{6,8}$';
 export const REGEX_PHONE = '^[0-9]{10}$';
 export const REGEX_NUMBER = '^[0-9]*$';
 export const REGEX_NUMBER_DPI = '^[0-9]{13}$';

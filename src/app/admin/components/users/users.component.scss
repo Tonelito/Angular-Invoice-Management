@@ -60,7 +60,6 @@ $altura-formulario: 83vh;
         .users-list {
           display: flex;
           flex-direction: column;
-
           align-items: flex-start;
           flex: 1 0 0;
           align-self: stretch;
@@ -162,6 +161,7 @@ $altura-formulario: 83vh;
         border-radius: 20px;
         background: #c8c8c8;
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
         height: $altura-formulario - 1.85vh;
 
         .title {
@@ -196,166 +196,20 @@ $altura-formulario: 83vh;
                 width: 25% !important;
                 padding: 25px 0;
               }
-              .users-list {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                flex: 1 0 0;
-                align-self: stretch;
-
-                :hover {
-                  background: #f5f5f5;
-                }
-
-                .user-item {
-                  width: 100%;
-                  display: flex;
-                  padding: 7px 11px;
-                  align-items: center;
-                  justify-content: space-between;
-                  gap: 10px;
-
-                  .user-info {
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-
-                    p {
-                      white-space: nowrap;
-                      overflow: hidden;
-                      text-overflow: ellipsis;
-                      max-width: 200px;
-                    }
-
-                    .status-circle {
-                      width: 10px;
-                      height: 10px;
-                      border-radius: 50%;
-                      margin-right: 10px;
-                      display: inline-block;
-                      background-color: #48e13a;
-
-                      &.active {
-                        background-color: #1e9a13;
-                      }
-
-                      &.inactive {
-                        background-color: red;
-                      }
-                    }
-
-                    .user-text {
-                      display: flex;
-                      flex-direction: column;
-                    }
-
-                    p {
-                      font-weight: 500;
-                      margin: 0;
-                    }
-                  }
-
-                  .buttons {
-                    display: flex;
-                    gap: 5px;
-
-                    button {
-                      width: 36px;
-                      height: 36px;
-                      padding: 0;
-                      border-radius: 50%;
-                      display: flex;
-                      justify-content: center;
-                      align-items: center;
-
-                      mat-icon {
-                        font-size: 23px;
-                      }
-                    }
-                  }
-
-                  @media (max-width: 900px) {
-                    justify-content: center;
-                  }
-                }
-              }
             }
 
             @media (max-width: 900px) {
               display: flex;
               flex-direction: column;
-              .users-form-container {
-                display: flex;
-                padding: 10px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-                flex: 1 0 0;
-                align-self: stretch;
-
-                .form-container {
-                  display: flex;
-                  padding: 16px 29px;
-                  flex-direction: column;
-                  gap: 10px;
-                  align-self: stretch;
-                  border-radius: 20px;
-                  background: #c8c8c8;
-                  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
-                  height: $altura-formulario - 1.85vh;
-
-                  .title {
-                    display: flex;
-                    justify-content: space-between;
-                  }
-
-                  form {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 15px;
-
-                    .inputs-button {
-                      display: flex;
-                      flex-direction: column;
-                      gap: 10px;
-
-                      mat-form-field {
-                        width: 100%;
-
-                        @media (max-width: 900px) {
-                          width: 100%;
-                        }
-                      }
-
-                      .buttons {
-                        display: flex;
-                        gap: 10px;
-                        justify-content: right;
-
-                        button {
-                          width: 25% !important;
-                          padding: 25px 0;
-                        }
-                      }
-
-                      @media (max-width: 900px) {
-                        display: flex;
-                        flex-direction: column;
-                      }
-                    }
-                  }
-                }
-              }
             }
           }
         }
-
-        @media (max-width: 900px) {
-          display: flex;
-          flex-direction: column;
-        }
       }
+    }
+
+    @media (max-width: 900px) {
+      display: flex;
+      flex-direction: column;
     }
   }
 }

@@ -24,7 +24,7 @@ export class ProductsComponent {
     showProgressBar: false,
     pauseOnHover: true,
     clickToClose: true
-  }
+  };
   products: Product[] = [];
   filteredProducts: MatTableDataSource<Product> = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -45,19 +45,23 @@ export class ProductsComponent {
     private readonly fb: FormBuilder
   ) {
     this.productForm = this.fb.group({
+      code: ['', [Validators.required]],
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]],
       companyName: ['', [Validators.required]],
       price: ['', [Validators.required]],
       stock: ['', [Validators.required]],
       deliveryTime: ['', [Validators.required]],
       status: [true, [Validators.required]],
       entryDate: ['', [Validators.required]],
-      expirateDate: ['', [Validators.required]],
+      expirateDate: ['', [Validators.required]]
     });
   }
 
   ngOnInit(): void {
     this.fetchProducts();
   }
+
   fetchProductsDetails(productsId: number): void {
     this.productsService.getProductById(productsId).subscribe({
       next: product => {
@@ -77,29 +81,8 @@ export class ProductsComponent {
           this.isEditing = true;
           this.selectedProductId = product.object.productsId;
         }
-      }, error: error => {
-        this._notifications.error(
-          this.translate.instant('Error'),
-          error.error.message,
-          this.options
-        );
-      }
-    })
-  }
-
-  fetchProducts(): void {
-    this.blockUI.start();
-    this.productsService.getProducts(this.currentPage, this.pageSize).subscribe({
-      next: products => {
-        if (products.object) {
-          this.products = products.object;
-          this.filteredProducts = new MatTableDataSource(this.products);
-          this.currentPage = products.currentPage;
-          this.totalProducts = products.totalElements;
-        }
-        this.blockUI.stop();
-      }, error: error => {
-        this.blockUI.stop();
+      },
+      error: error => {
         this._notifications.error(
           this.translate.instant('Error'),
           error.error.message,
@@ -107,6 +90,31 @@ export class ProductsComponent {
         );
       }
     });
+  }
+
+  fetchProducts(): void {
+    this.blockUI.start();
+    this.productsService
+      .getProducts(this.currentPage, this.pageSize)
+      .subscribe({
+        next: products => {
+          if (products.object) {
+            this.products = products.object;
+            this.filteredProducts = new MatTableDataSource(this.products);
+            this.currentPage = products.currentPage;
+            this.totalProducts = products.totalElements;
+          }
+          this.blockUI.stop();
+        },
+        error: error => {
+          this.blockUI.stop();
+          this._notifications.error(
+            this.translate.instant('Error'),
+            error.error.message,
+            this.options
+          );
+        }
+      });
   }
 
   onPageChange(event: any): void {
@@ -129,14 +137,16 @@ export class ProductsComponent {
         expirationDate: this.productForm.value.expirateDate,
         entryDate: this.productForm.value.entryDate,
         stock: this.productForm.value.stock
-      }
+      };
       this.blockUI.start();
       this.productsService.addProduct(productData).subscribe({
         next: response => {
           this._notifications.success(
             this.translate.instant('Success'),
-            this.translate.instant('PRODUCTS.NOTIFICATIONS.PRODUCT_CREATED_DESC'),
-          )
+            this.translate.instant(
+              'PRODUCTS.NOTIFICATIONS.PRODUCT_CREATED_DESC'
+            )
+          );
           this.fetchProducts();
           this.productForm.reset();
         },
@@ -171,26 +181,28 @@ export class ProductsComponent {
         expirationDate: this.productForm.value.expirateDate,
         entryDate: this.productForm.value.entryDate,
         stock: this.productForm.value.stock
-      }
-      this.productsService.updateProduct(this.selectedProductId, updateProductData).subscribe({
-        next: response => {
-          this._notifications.success(
-            this.translate.instant('Success'),
-            this.translate.instant('PRODUCTS.NOTIFICATIONS.UPDATE_SUCCESS'),
-          )
-          this.fetchProducts();
-          this.productForm.reset();
-          this.isEditing = false;
-        },
-        error: error => {
-          this._notifications.error(
-            this.translate.instant('Error'),
-            error.error.message,
-            this.options
-          );
-          this.blockUI.stop();
-        }
-      });
+      };
+      this.productsService
+        .updateProduct(this.selectedProductId, updateProductData)
+        .subscribe({
+          next: response => {
+            this._notifications.success(
+              this.translate.instant('Success'),
+              this.translate.instant('PRODUCTS.NOTIFICATIONS.UPDATE_SUCCESS')
+            );
+            this.fetchProducts();
+            this.productForm.reset();
+            this.isEditing = false;
+          },
+          error: error => {
+            this._notifications.error(
+              this.translate.instant('Error'),
+              error.error.message,
+              this.options
+            );
+            this.blockUI.stop();
+          }
+        });
     }
   }
 
@@ -198,7 +210,9 @@ export class ProductsComponent {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: this.translate.instant('PRODUCTS.DIALOG.TITLE'),
-        message: this.translate.instant('PRODUCTS.DIALOG.MESSAGE', { productName: product.name })
+        message: this.translate.instant('PRODUCTS.DIALOG.MESSAGE', {
+          productName: product.name
+        })
       }
     });
 
@@ -217,8 +231,8 @@ export class ProductsComponent {
       next: response => {
         this._notifications.success(
           this.translate.instant('Success'),
-          this.translate.instant('PRODUCTS.NOTIFICATIONS.PRODUCT_DELETED_DESC'),
-        )
+          this.translate.instant('PRODUCTS.NOTIFICATIONS.PRODUCT_DELETED_DESC')
+        );
         this.fetchProducts();
         this.blockUI.stop();
         this.productForm.reset();

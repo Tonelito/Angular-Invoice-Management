@@ -1,0 +1,74 @@
+<block-ui>
+  <div class="container">
+    <div class="input-container">
+      <form
+        class="reports-form"
+        [formGroup]="reportsForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <!-- Start Date -->
+        <mat-form-field>
+          <mat-label>{{ 'AUDIT.START_DATE' | translate }}</mat-label>
+          <input
+            matInput
+            [max]="maxDate"
+            [matDatepicker]="pickerStart"
+            formControlName="startDate"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="pickerStart"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #pickerStart></mat-datepicker>
+          <mat-error *ngIf="reportsForm.get('startDate')?.hasError('required')">
+            {{ 'AUDIT.ERRORS.REQUIRED_START_DATE' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <!-- End Date -->
+        <mat-form-field>
+          <mat-label>{{ 'AUDIT.END_DATE' | translate }}</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerEnd"
+            [max]="maxDate"
+            formControlName="endDate"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="pickerEnd"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #pickerEnd></mat-datepicker>
+          <mat-error *ngIf="reportsForm.get('endDate')?.hasError('required')">
+            {{ 'AUDIT.ERRORS.REQUIRED_END_DATE' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <!-- User -->
+        <mat-form-field>
+          <mat-label>{{ 'AUDIT.USER' | translate }}</mat-label>
+          <input matInput formControlName="fullName" />
+        </mat-form-field>
+        <!-- Submit Button -->
+        <button mat-flat-button color="accent" type="submit">
+          {{ 'AUDIT.SEARCH' | translate }}
+        </button>
+      </form>
+    </div>
+    <!-- Table -->
+    <app-mat-table
+      [displayedColumns]="displayedColumns"
+      [tableData]="tableData"
+      [totalElements]="totalElements"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      (page)="onPageChange($event)"
+    >
+      <ng-template let-element>
+        <div class="expanded-content">
+          <p><strong>Request Body:</strong></p>
+          <pre>{{ element.formattedRequest }}</pre>
+        </div>
+      </ng-template>
+    </app-mat-table>
+  </div>
+</block-ui>
+<simple-notifications [options]="options"></simple-notifications>

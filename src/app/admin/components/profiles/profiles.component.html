@@ -18,7 +18,6 @@
             </mat-form-field>
           </form>
         </div>
-        <!-- No Profiles Message -->
         <div
           *ngIf="filteredProfiles && filteredProfiles.filteredData.length === 0"
         ></div>
@@ -74,7 +73,7 @@
         </div>
       </div>
       <div class="profiles-form-container">
-        <!-- Add/Edit Profile Form -->
+        <!-- Add Profile -->
         <div class="form-container">
           <div class="title">
             <h1>{{ 'PROFILES.FORM_TITLE' | translate }}</h1>
@@ -95,7 +94,6 @@
               }}</mat-icon>
             </button>
           </div>
-          <!-- Profile Form -->
           <form [formGroup]="profileForm" (submit)="submitProfile()">
             <div class="inputs-button">
               <!-- Name Input -->
@@ -106,6 +104,7 @@
                   formControlName="name"
                   [errorStateMatcher]="matcher"
                 />
+                <!-- Required Name -->
                 <mat-error
                   *ngIf="profileForm.get('name')?.hasError('required')"
                 >
@@ -121,6 +120,7 @@
                   formControlName="description"
                   [errorStateMatcher]="matcher"
                 />
+                <!-- Required Description -->
                 <mat-error
                   *ngIf="profileForm.get('description')?.hasError('required')"
                 >
