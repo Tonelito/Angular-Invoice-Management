@@ -15,6 +15,10 @@ export class ProductsService {
     return this.http.get<Products>(`${this.url}/show-all?page=${page}&size=${size}`);
   }
 
+  getProductByName(productData: any, page: number, size: number): Observable<Products> {
+    return this.http.post<Products>(`${this.url}/search-by-name?page=${page}&size=${size}`, productData);
+  }
+
   getProductById(id: number): Observable<ProductResponse> {
     return this.http.get<ProductResponse>(`${this.url}/show-by-id/${id}`);
   }
@@ -29,5 +33,9 @@ export class ProductsService {
 
   deleteProduct(id: number): Observable<void> {
     return this.http.delete<void>(`${this.url}/delete/${id}`);
+  }
+
+  changeStatus(id: number): Observable<any> {
+    return this.http.put(`${this.url}/toggle-status/${id}`, {});
   }
 }

@@ -102,22 +102,6 @@ describe('ProfilesService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('getProfileNames', () => {
-    it('should return profiles filtered by name', () => {
-      const searchName = 'test';
-
-      service.getProfileNames(searchName).subscribe(response => {
-        expect(response).toEqual(mockProfiles);
-      });
-
-      const req = httpMock.expectOne(
-        `${API_URL_PROFILES}/show-by-name/${searchName}`
-      );
-      expect(req.request.method).toBe('GET');
-      req.flush(mockProfiles);
-    });
-  });
-
   describe('getRoles', () => {
     it('should return all roles', () => {
       service.getRoles().subscribe(response => {

@@ -43,6 +43,7 @@ export class ClientsComponent implements OnInit {
   isEditing: boolean = false;
   selectedClientId!: number;
   clientStatus!: boolean;
+  searchForm: FormGroup;
 
   constructor(
     private readonly _notifications: NotificationsService,
@@ -61,27 +62,62 @@ export class ClientsComponent implements OnInit {
       },
       { validators: requeridPassportDPiNit() }
     );
+    this.searchForm = this.fb.group({
+      search: ['', []]
+    });
   }
 
   ngOnInit(): void {
     this.fetchClients();
   }
 
+  searchClients(): void {
+    const search = this.searchForm.value.search.trim();
+    if (search) {
+      this.fetchClientsByName();
+    } else {
+      this.fetchClients();
+    }
+  }
+
+  fetchClientsByName(): void {
+    const search = { name: this.searchForm.value.search };
+    this.blockUI.start();
+    this.clientsService
+      .getCustomerByName(search, this.currentPage, this.pageSize)
+      .subscribe({
+        next: clients => {
+          if (clients.object) {
+            this.clients = clients.object;
+            this.filteredClients = new MatTableDataSource(this.clients);
+            this.currentPage = clients.currentPage;
+            this.totalClients = clients.totalElements;
+          }
+          this.blockUI.stop();
+        },
+        error: error => {
+          console.error('Error loading customers: ', error);
+          this.blockUI.stop();
+        }
+      });
+  }
+
   fetchClientsDetails(customerId: number): void {
     this.clientsService.getCustomerById(customerId).subscribe({
       next: response => {
-        console.log('Response:', response);
         this.selectedClientId = customerId;
         this.clientForm.patchValue({
           name: response.object.name,
           dpi: response.object.dpi,
           passport: response.object.passport,
           nit: response.object.nit,
-          address: response.object.address
+          address: response.object.address,
+          status: response.object.status
         });
         this.isEditing = true;
         this.clientForm.markAsPristine();
         this.fetchClients();
+        this.clientStatus = response.object.status;
       },
 
       error: error => {
@@ -98,7 +134,6 @@ export class ClientsComponent implements OnInit {
       .subscribe({
         next: clients => {
           if (clients.object) {
-            console.log('Customers loaded: ', clients);
             this.clients = clients.object.object;
             this.filteredClients = new MatTableDataSource(this.clients);
             this.currentPage = clients.object.currentPage;
@@ -164,6 +199,30 @@ export class ClientsComponent implements OnInit {
     }
   }
 
+  changeStatus(customerId: number): void {
+    this.clientsService.changeStatus(customerId).subscribe({
+      next: response => {
+        this.fetchClientsDetails(customerId);
+        this._notifications.success(
+          this.translate.instant('CUSTOMERS.NOTIFICATIONS.STATUS_SUCCESS'),
+          ''
+        );
+        this.fetchClients();
+        this.fetchClientsDetails(customerId);
+      },
+      error: error => {
+        console.error(
+          this.translate.instant('CUSTOMERS.ERRORS.STATUS_TOGGLE'),
+          error
+        );
+        this._notifications.error(
+          this.translate.instant('CUSTOMERS.NOTIFICATIONS.STATUS_FAILURE'),
+          ''
+        );
+      }
+    });
+  }
+
   updateClient(): void {
     if (this.clientForm.valid) {
       const updateClientData = {
@@ -212,6 +271,8 @@ export class ClientsComponent implements OnInit {
         })
       }
     });
+
+    this.clientForm.reset();
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

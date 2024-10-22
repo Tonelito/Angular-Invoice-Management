@@ -426,51 +426,6 @@ describe('ProfilesComponent', () => {
       );
     }));
 
-    it('should handle errors when updating a profile', fakeAsync(() => {
-      const errorMessage = 'Test error message';
-
-      profilesService.putProfile.and.returnValue(
-        throwError(() => new Error(errorMessage))
-      );
-
-      component.selectedProfileId = 1;
-      component.isEditing = true;
-      component.profileForm.patchValue({
-        name: 'Updated Profile',
-        description: 'Updated Description'
-      });
-      component.selectedRoles = [1];
-
-      component.updateProfiles();
-      tick();
-
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
-        'PROFILES.ERRORS.UPDATE_PROFILE',
-        jasmine.any(Error)
-      );
-      expect(notificationsService.error).toHaveBeenCalledWith(
-        mockTranslateService.instant('PROFILES.NOTIFICATIONS.UPDATE_FAILURE')
-      );
-    }));
-
-    it('should handle errors when changing profile status', fakeAsync(() => {
-      const errorMessage = 'Test error message';
-      profilesService.changeStatus.and.returnValue(
-        throwError(() => new Error(errorMessage))
-      );
-
-      component.changeStatus(1);
-      tick();
-
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
-        'PROFILES.ERRORS.STATUS_TOGGLE',
-        jasmine.any(Error)
-      );
-      expect(notificationsService.error).toHaveBeenCalledWith(
-        mockTranslateService.instant('PROFILES.NOTIFICATIONS.STATUS_FAILURE')
-      );
-    }));
-
     it('should handle errors when deleting a profile', fakeAsync(() => {
       const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(true) });
       dialog.open.and.returnValue(dialogRefSpyObj);

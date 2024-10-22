@@ -3,14 +3,16 @@
         <div class="client-column">
             <!--Searchbar-->
             <div class="search">
-                <mat-form-field appearance="outline">
-                    <mat-label>{{ 'CUSTOMERS.SEARCH' | translate }}</mat-label>
-                    <input matInput placeholder="{{ 'CUSTOMERS.SEARCH_PLACEHOLDER' | translate }}">
-
-                    <button mat-icon-button matSuffix>
-                        <mat-icon>search</mat-icon>
-                    </button>
-                </mat-form-field>
+                <form [formGroup]="searchForm">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'CUSTOMERS.SEARCH' | translate }}</mat-label>
+                        <input matInput placeholder="{{ 'CUSTOMERS.SEARCH_PLACEHOLDER' | translate }}"
+                            formControlName="search">
+                        <button mat-icon-button matSuffix (click)="searchClients()">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </form>
             </div>
             <div class="client-list-container">
                 <div class="client-list" *ngIf="filteredClients.data.length">
@@ -41,62 +43,74 @@
             <div class="form-container">
                 <div class="title">
                     <h1>{{ 'CUSTOMERS.TITLE' | translate }}</h1>
+                    <button mat-mini-fab color="primary"
+                        matTooltip="{{ clientStatus ? ('CUSTOMERS.TOOLTIP.DISABLE_CUSTOMER' | translate) : ('CUSTOMERS.TOOLTIP.ENABLE_CUSTOMER' | translate) }}"
+                        (click)="changeStatus(selectedClientId)" *ngIf="isEditing">
+                        <mat-icon>{{ clientStatus ? 'mood_bad' : 'mood' }}</mat-icon>
+                    </button>
                 </div>
                 <form [formGroup]="clientForm" (submit)="submitClient()">
                     <div class="inputs-button">
                         <mat-form-field hideRequiredMarker>
                             <mat-label>{{ 'CUSTOMERS.FORM.NAME' | translate }}</mat-label>
-                            <input matInput formControlName="name">
+                            <input matInput formControlName="name" aria-describedby="nameError">
                             <mat-error
                                 *ngIf="clientForm.get('name')?.hasError('required') && clientForm.get('name')?.touched">
                                 {{ 'CUSTOMERS.ERRORS.REQUIRED_NAME' | translate }}
                             </mat-error>
                         </mat-form-field>
+
                         <mat-form-field hideRequiredMarker>
                             <mat-label>{{ 'CUSTOMERS.FORM.ADDRESS' | translate }}</mat-label>
-                            <input matInput formControlName="address">
+                            <input matInput formControlName="address" aria-describedby="addressError">
                             <mat-error
                                 *ngIf="clientForm.get('address')?.hasError('required') && clientForm.get('address')?.touched">
                                 {{ 'CUSTOMERS.ERRORS.REQUIRED_ADDRESS' | translate }}
                             </mat-error>
                         </mat-form-field>
+
                         <div class="identifications">
                             <mat-form-field hideRequiredMarker>
                                 <mat-label>{{ 'CUSTOMERS.FORM.DPI' | translate }}</mat-label>
-                                <input matInput formControlName="dpi">
+                                <input matInput formControlName="dpi" aria-describedby="dpiError">
                                 <mat-error
                                     *ngIf="clientForm.get('dpi')?.hasError('pattern') && clientForm.get('dpi')?.touched">
                                     {{ 'CUSTOMERS.ERRORS.REQUIRED_DPI' | translate }}
                                 </mat-error>
                             </mat-form-field>
+
                             <mat-form-field hideRequiredMarker>
                                 <mat-label>{{ 'CUSTOMERS.FORM.NIT' | translate }}</mat-label>
-                                <input matInput formControlName="nit">
+                                <input matInput formControlName="nit" aria-describedby="nitError">
                                 <mat-error
                                     *ngIf="clientForm.get('nit')?.hasError('pattern') && clientForm.get('nit')?.touched">
                                     {{ 'CUSTOMERS.ERRORS.REQUIRED_NIT' | translate }}
                                 </mat-error>
                             </mat-form-field>
+
                             <mat-form-field hideRequiredMarker>
                                 <mat-label>{{ 'CUSTOMERS.FORM.PASSPORT' | translate }}</mat-label>
-                                <input matInput formControlName="passport">
+                                <input matInput formControlName="passport" aria-describedby="passportError">
                                 <mat-error
                                     *ngIf="clientForm.get('passport')?.hasError('pattern') && clientForm.get('passport')?.touched">
                                     {{ 'CUSTOMERS.ERRORS.REQUIRED_PASSPORT' | translate }}
                                 </mat-error>
                             </mat-form-field>
                         </div>
+
                         <div class="buttons">
                             <button mat-flat-button color="accent" type="submit"
-                                [disabled]="isEditing && clientForm.pristine || clientForm.invalid">{{ isEditing ?
-                                ('CUSTOMERS.ACTIONS.SAVE_CHANGES' | translate) : ('CUSTOMERS.SAVE' | translate)
-                                }}</button>
+                                [disabled]="isEditing && clientForm.pristine || clientForm.invalid">
+                                {{ isEditing ? ('CUSTOMERS.ACTIONS.SAVE_CHANGES' | translate) : ('CUSTOMERS.SAVE' |
+                                translate) }}
+                            </button>
                             <button mat-flat-button color="primary" (click)="cancelEdit()" *ngIf="isEditing">
                                 {{ 'CUSTOMERS.ACTIONS.CANCEL' | translate }}
                             </button>
                         </div>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>

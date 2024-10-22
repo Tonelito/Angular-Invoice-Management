@@ -25,6 +25,7 @@ export class ProductsComponent {
     pauseOnHover: true,
     clickToClose: true
   };
+
   products: Product[] = [];
   filteredProducts: MatTableDataSource<Product> = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -36,6 +37,7 @@ export class ProductsComponent {
   isEditing: boolean = false;
   selectedProductId!: number;
   productStatus!: boolean;
+  searchForm: FormGroup;
 
   constructor(
     private readonly _notifications: NotificationsService,
@@ -56,13 +58,52 @@ export class ProductsComponent {
       entryDate: ['', [Validators.required]],
       expirateDate: ['', [Validators.required]]
     });
+    this.searchForm = this.fb.group({
+      search: ['', []]
+    });
   }
 
   ngOnInit(): void {
     this.fetchProducts();
   }
 
+  searchProduct(): void {
+    const search = this.searchForm.value.search?.trim();
+    if (search) {
+      this.fetchProductByName();
+    } else {
+      this.fetchProducts();
+    }
+  }
+
+  fetchProductByName(): void {
+    const search = { name: this.searchForm.value.search };
+    this.blockUI.start();
+    this.productsService
+      .getProductByName(search, this.currentPage, this.pageSize)
+      .subscribe({
+        next: products => {
+          if (products.object) {
+            this.products = products.object;
+            this.filteredProducts = new MatTableDataSource(this.products);
+            this.currentPage = products.currentPage;
+            this.totalProducts = products.totalElements;
+          }
+          this.blockUI.stop();
+        },
+        error: error => {
+          this._notifications.error(
+            this.translate.instant('Error'),
+            error.error.message,
+            this.options
+          );
+          this.blockUI.stop();
+        }
+      });
+  }
+
   fetchProductsDetails(productsId: number): void {
+    this.blockUI.start();
     this.productsService.getProductById(productsId).subscribe({
       next: product => {
         if (product.object) {
@@ -78,11 +119,16 @@ export class ProductsComponent {
             entryDate: product.object.entryDate,
             expirateDate: product.object.expirationDate
           });
-          this.isEditing = true;
           this.selectedProductId = product.object.productsId;
+          this.productStatus = product.object.status;
+          this.fetchProducts();
+          this.isEditing = true;
+          this.productForm.markAsPristine();
+          this.blockUI.stop();
         }
       },
       error: error => {
+        this.blockUI.stop();
         this._notifications.error(
           this.translate.instant('Error'),
           error.error.message,
@@ -107,12 +153,12 @@ export class ProductsComponent {
           this.blockUI.stop();
         },
         error: error => {
-          this.blockUI.stop();
           this._notifications.error(
             this.translate.instant('Error'),
             error.error.message,
             this.options
           );
+          this.blockUI.stop();
         }
       });
   }
@@ -168,6 +214,26 @@ export class ProductsComponent {
     }
   }
 
+  changeStatus(productId: number): void {
+    this.productsService.changeStatus(productId).subscribe({
+      next: response => {
+        this._notifications.success(
+          this.translate.instant('PRODUCTS.NOTIFICATIONS.STATUS_SUCCESS')
+        );
+        this.fetchProducts();
+        this.fetchProductsDetails(productId);
+      },
+      error: error => {
+        console.error('Error changing status:', error);
+        this._notifications.error(
+          this.translate.instant('PRODUCTS.NOTIFICATIONS.STATUS_FAILURE'),
+          error.error.message,
+          this.options
+        );
+      }
+    });
+  }
+
   updateProduct(): void {
     if (this.productForm.valid) {
       const updateProductData = {
@@ -215,7 +281,7 @@ export class ProductsComponent {
         })
       }
     });
-
+    this.productForm.reset();
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.deleteProduct(product.productsId);

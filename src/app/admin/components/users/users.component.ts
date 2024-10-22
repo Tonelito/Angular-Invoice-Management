@@ -118,29 +118,29 @@ export class UsersComponent implements OnInit {
   }
 
   fetchUserByName(): void {
-    const search = {
-      fullName: this.searchForm.value.search
-    };
+    const search = { fullName: this.searchForm.value.search };
     this.blockUI.start();
-    this.userService.getUserByName(search).subscribe({
-      next: users => {
-        if (users.object) {
-          this.users = users.object;
-          this.filteredUsers = new MatTableDataSource(this.users);
-          this.currentPage = users.currentPage;
-          this.totalUsers = users.totalElements;
+    this.userService
+      .getUserByName(search, this.currentPage, this.pageSize)
+      .subscribe({
+        next: users => {
+          if (users.object) {
+            this.users = users.object;
+            this.filteredUsers = new MatTableDataSource(this.users);
+            this.currentPage = users.currentPage;
+            this.totalUsers = users.totalElements;
+          }
+          this.blockUI.stop();
+        },
+        error: error => {
+          console.error('Error fetching users:', error);
+          this._notifications.warn(
+            'User not found',
+            'An error occurred while fetching users'
+          );
+          this.blockUI.stop();
         }
-        this.blockUI.stop();
-      },
-      error: error => {
-        console.error('Error fetching users:', error);
-        this._notifications.warn(
-          'User not found',
-          'An error occurred while fetching users'
-        );
-        this.blockUI.stop();
-      }
-    });
+      });
   }
 
   fetchProfiles(): void {
@@ -177,8 +177,14 @@ export class UsersComponent implements OnInit {
           this.userForm.reset();
         },
         error: error => {
-          console.error(this.translate.instant('USERS.ERRORS.UPDATE_USER'), error);
-          this._notifications.error(this.translate.instant('USERS.NOTIFICATIONS.UPDATE_FAILURE'), '');
+          console.error(
+            this.translate.instant('USERS.ERRORS.UPDATE_USER'),
+            error
+          );
+          this._notifications.error(
+            this.translate.instant('USERS.NOTIFICATIONS.UPDATE_FAILURE'),
+            ''
+          );
         }
       });
     }
@@ -204,6 +210,7 @@ export class UsersComponent implements OnInit {
 
       this.userService.addUser(userData).subscribe({
         next: response => {
+          console.log('User created:', response);
           this._notifications.success(
             this.translate.instant('USERS.NOTIFICATIONS.USER_CREATED'),
             this.translate.instant('USERS.NOTIFICATIONS.USER_CREATED_DESC')
@@ -243,7 +250,7 @@ export class UsersComponent implements OnInit {
           ''
         );
         this.fetchUsers();
-        this.userForm.reset();
+        this.fetchUserDetails(userId);
       },
       error: error => {
         console.error(

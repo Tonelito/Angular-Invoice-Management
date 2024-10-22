@@ -70,7 +70,6 @@
                   ? ('USERS.TOOLTIP.DISABLE_USER' | translate)
                   : ('USERS.TOOLTIP.ENABLE_USER' | translate)
               }}"
-              title="Deshabilitar Usuario"
               (click)="changeStatus(selectedUserId)"
               *ngIf="isEditing"
             >
@@ -81,6 +80,7 @@
           </div>
           <form [formGroup]="userForm" (submit)="submitUser()">
             <div class="inputs-button">
+              <!-- Email Input -->
               <mat-form-field hideRequiredMarker>
                 <mat-label>{{ 'USERS.EMAIL' | translate }}</mat-label>
                 <input
@@ -88,13 +88,20 @@
                   formControlName="email"
                   placeholder="{{ 'USERS.EMAIL' | translate }}"
                 />
-                <mat-error *ngIf="userForm.get('email')?.hasError('required')">
+                <mat-error
+                  *ngIf="
+                    userForm.get('email')?.errors &&
+                    (userForm.get('email')?.touched ||
+                      userForm.get('email')?.dirty)
+                  "
+                >
                   <mat-label>{{
                     'USERS.ERRORS.REQUIRED_EMAIL' | translate
                   }}</mat-label>
                 </mat-error>
               </mat-form-field>
-              <!-- input-User -->
+
+              <!-- User Input -->
               <mat-form-field hideRequiredMarker>
                 <mat-label>{{ 'USERS.USER' | translate }}</mat-label>
                 <input
@@ -103,14 +110,19 @@
                   placeholder="{{ 'USERS.USER' | translate }}"
                 />
                 <mat-error
-                  *ngIf="userForm.get('fullName')?.hasError('required')"
+                  *ngIf="
+                    userForm.get('fullName')?.errors &&
+                    (userForm.get('fullName')?.touched ||
+                      userForm.get('fullName')?.dirty)
+                  "
                 >
                   <mat-label>{{
                     'USERS.ERRORS.REQUIRED_FULL_NAME' | translate
                   }}</mat-label>
                 </mat-error>
               </mat-form-field>
-              <!-- input-Profile -->
+
+              <!-- Profile Input -->
               <mat-form-field hideRequiredMarker>
                 <mat-label>{{ 'USERS.PROFILE' | translate }}</mat-label>
                 <mat-select formControlName="profile">
@@ -122,13 +134,18 @@
                   </mat-option>
                 </mat-select>
                 <mat-error
-                  *ngIf="userForm.get('profile')?.hasError('required')"
+                  *ngIf="
+                    userForm.get('profile')?.errors &&
+                    (userForm.get('profile')?.touched ||
+                      userForm.get('profile')?.dirty)
+                  "
                 >
                   <mat-label>{{
                     'USERS.ERRORS.REQUIRED_PROFILE' | translate
                   }}</mat-label>
                 </mat-error>
               </mat-form-field>
+
               <div class="buttons">
                 <button
                   mat-flat-button

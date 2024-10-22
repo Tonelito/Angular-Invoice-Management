@@ -9,6 +9,7 @@ import {
 import {
   CreateProfile,
   Profile,
+  ProfileName,
   ProfileResponse,
   Profiles,
   Roles
@@ -24,9 +25,14 @@ export class ProfilesService {
 
   constructor(private readonly http: HttpClient) {}
 
-  getProfileNames(nameSearchDto: string): Observable<Profiles> {
-    return this.http.get<Profiles>(
-      `${this.profile_url}/show-by-name/${nameSearchDto}`
+  getProfileByName(
+    profileData: any,
+    page: number,
+    size: number
+  ): Observable<ProfileName> {
+    return this.http.post<ProfileName>(
+      `${this.profile_url}/show-by-name?page=${page}&size=${size}`,
+      profileData
     );
   }
 

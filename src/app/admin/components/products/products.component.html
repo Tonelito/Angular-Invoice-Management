@@ -2,16 +2,19 @@
   <div class="product-dashboard">
     <div class="product-column">
       <div class="search">
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'PRODUCTS.SEARCH' | translate }}</mat-label>
-          <input
-            matInput
-            placeholder="{{ 'PRODUCTS.SEARCH_PLACEHOLDER' | translate }}"
-          />
-          <button mat-icon-button matSuffix>
-            <mat-icon>search</mat-icon>
-          </button>
-        </mat-form-field>
+        <form [formGroup]="searchForm">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'PRODUCTS.SEARCH' | translate }}</mat-label>
+            <input
+              matInput
+              placeholder="{{ 'PRODUCTS.SEARCH_PLACEHOLDER' | translate }}"
+              formControlName="search"
+            />
+            <button mat-icon-button matSuffix (click)="searchProduct()">
+              <mat-icon>search</mat-icon>
+            </button>
+          </mat-form-field>
+        </form>
       </div>
       <div class="product-list-container">
         <div class="product-list" *ngIf="filteredProducts.data.length">
@@ -63,67 +66,139 @@
       <div class="form-container">
         <div class="title">
           <h1>{{ 'PRODUCTS.FORM_TITLE' | translate }}</h1>
+          <button
+            mat-mini-fab
+            color="primary"
+            matTooltip="{{
+              productStatus
+                ? ('PRODUCTS.TOOLTIP.DISABLE_PRODUCT' | translate)
+                : ('PRODUCTS.TOOLTIP.ENABLE_PRODUCT' | translate)
+            }}"
+            (click)="changeStatus(selectedProductId)"
+            *ngIf="isEditing"
+          >
+            <mat-icon>{{
+              productStatus ? 'motion_photos_off' : 'motion_photos_on'
+            }}</mat-icon>
+          </button>
         </div>
         <form [formGroup]="productForm" (submit)="submitProduct()">
           <div class="inputs-button">
             <div class="row-1">
+              <!-- Code Input -->
               <mat-form-field hideRequiredMarker>
                 <mat-label>{{ 'PRODUCTS.CODE' | translate }}</mat-label>
                 <input matInput formControlName="code" />
-                <mat-error>
+                <mat-error
+                  *ngIf="
+                    productForm.get('code')?.errors &&
+                    (productForm.get('code')?.touched ||
+                      productForm.get('code')?.dirty)
+                  "
+                >
                   {{ 'PRODUCTS.ERRORS.REQUIRED_CODE' | translate }}
                 </mat-error>
               </mat-form-field>
+
+              <!-- Name Input -->
               <mat-form-field hideRequiredMarker>
                 <mat-label>{{ 'PRODUCTS.NAME' | translate }}</mat-label>
                 <input matInput formControlName="name" />
-                <mat-error>
+                <mat-error
+                  *ngIf="
+                    productForm.get('name')?.errors &&
+                    (productForm.get('name')?.touched ||
+                      productForm.get('name')?.dirty)
+                  "
+                >
                   {{ 'PRODUCTS.ERRORS.REQUIRED_NAME' | translate }}
                 </mat-error>
               </mat-form-field>
             </div>
+
             <div class="row-2">
+              <!-- Description Input -->
               <mat-form-field hideRequiredMarker>
                 <mat-label>{{ 'PRODUCTS.DESCRIPTION' | translate }}</mat-label>
                 <input matInput formControlName="description" />
-                <mat-error>
+                <mat-error
+                  *ngIf="
+                    productForm.get('description')?.errors &&
+                    (productForm.get('description')?.touched ||
+                      productForm.get('description')?.dirty)
+                  "
+                >
                   {{ 'PRODUCTS.ERRORS.REQUIRED_DESCRIPTION' | translate }}
                 </mat-error>
               </mat-form-field>
+
+              <!-- Company Name Input -->
               <mat-form-field hideRequiredMarker>
                 <mat-label>{{ 'PRODUCTS.COMPANY_NAME' | translate }}</mat-label>
                 <input matInput formControlName="companyName" />
-                <mat-error>
+                <mat-error
+                  *ngIf="
+                    productForm.get('companyName')?.errors &&
+                    (productForm.get('companyName')?.touched ||
+                      productForm.get('companyName')?.dirty)
+                  "
+                >
                   {{ 'PRODUCTS.ERRORS.REQUIRED_COMPANY' | translate }}
                 </mat-error>
               </mat-form-field>
             </div>
+
             <div class="row-3">
+              <!-- Price Input -->
               <mat-form-field hideRequiredMarker>
                 <mat-label>{{ 'PRODUCTS.PRICE' | translate }}</mat-label>
                 <input matInput formControlName="price" />
-                <mat-error>
+                <mat-error
+                  *ngIf="
+                    productForm.get('price')?.errors &&
+                    (productForm.get('price')?.touched ||
+                      productForm.get('price')?.dirty)
+                  "
+                >
                   {{ 'PRODUCTS.ERRORS.REQUIRED_PRICE' | translate }}
                 </mat-error>
               </mat-form-field>
+
+              <!-- Stock Input -->
               <mat-form-field hideRequiredMarker>
                 <mat-label>{{ 'PRODUCTS.STOCK' | translate }}</mat-label>
                 <input matInput formControlName="stock" />
-                <mat-error>
+                <mat-error
+                  *ngIf="
+                    productForm.get('stock')?.errors &&
+                    (productForm.get('stock')?.touched ||
+                      productForm.get('stock')?.dirty)
+                  "
+                >
                   {{ 'PRODUCTS.ERRORS.REQUIRED_QUANTITY' | translate }}
                 </mat-error>
               </mat-form-field>
+
+              <!-- Delivery Time Input -->
               <mat-form-field hideRequiredMarker>
                 <mat-label>{{
                   'PRODUCTS.DELIVERY_TIME' | translate
                 }}</mat-label>
                 <input matInput formControlName="deliveryTime" />
-                <mat-error>
+                <mat-error
+                  *ngIf="
+                    productForm.get('deliveryTime')?.errors &&
+                    (productForm.get('deliveryTime')?.touched ||
+                      productForm.get('deliveryTime')?.dirty)
+                  "
+                >
                   {{ 'PRODUCTS.ERRORS.REQUIRED_DELIVERY_TIME' | translate }}
                 </mat-error>
               </mat-form-field>
             </div>
+
             <div class="row-4">
+              <!-- Status Select -->
               <mat-form-field hideRequiredMarker>
                 <mat-label>{{ 'PRODUCTS.STATUS' | translate }}</mat-label>
                 <mat-select formControlName="status">
@@ -134,10 +209,18 @@
                     'PRODUCTS.STATUS_FALSE' | translate
                   }}</mat-option>
                 </mat-select>
-                <mat-error>
+                <mat-error
+                  *ngIf="
+                    productForm.get('status')?.errors &&
+                    (productForm.get('status')?.touched ||
+                      productForm.get('status')?.dirty)
+                  "
+                >
                   {{ 'PRODUCTS.ERRORS.REQUIRED_STATUS' | translate }}
                 </mat-error>
               </mat-form-field>
+
+              <!-- Entry Date Input -->
               <mat-form-field hideRequiredMarker>
                 <mat-label>{{ 'PRODUCTS.ENTRY_DATE' | translate }}</mat-label>
                 <input
@@ -150,10 +233,18 @@
                   [for]="pickerStart"
                 ></mat-datepicker-toggle>
                 <mat-datepicker #pickerStart></mat-datepicker>
-                <mat-error>
+                <mat-error
+                  *ngIf="
+                    productForm.get('entryDate')?.errors &&
+                    (productForm.get('entryDate')?.touched ||
+                      productForm.get('entryDate')?.dirty)
+                  "
+                >
                   {{ 'PRODUCTS.ERRORS.REQUIRED_ENTRY_DATE' | translate }}
                 </mat-error>
               </mat-form-field>
+
+              <!-- Expirate Date Input -->
               <mat-form-field hideRequiredMarker>
                 <mat-label>{{
                   'PRODUCTS.EXPIRATE_DATE' | translate
@@ -168,11 +259,18 @@
                   [for]="pickerEnd"
                 ></mat-datepicker-toggle>
                 <mat-datepicker #pickerEnd></mat-datepicker>
-                <mat-error>
+                <mat-error
+                  *ngIf="
+                    productForm.get('expirateDate')?.errors &&
+                    (productForm.get('expirateDate')?.touched ||
+                      productForm.get('expirateDate')?.dirty)
+                  "
+                >
                   {{ 'PRODUCTS.ERRORS.REQUIRED_EXPIRATE_DATE' | translate }}
                 </mat-error>
               </mat-form-field>
             </div>
+
             <div class="buttons">
               <button
                 mat-flat-button

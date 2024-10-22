@@ -26,3 +26,12 @@ export interface Clients extends Client {
         pageSize: number;
     }
 }
+
+export interface ClientName {
+    name: string;
+    object: Client[];
+    totalElements: number;
+    totalPages: number;
+    currentPage: number;
+    pageSize: number;
+}

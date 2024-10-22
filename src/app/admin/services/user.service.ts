@@ -26,8 +26,8 @@ export class UserService {
       `${this.url}/show-all?page=${page}&size=${size}`
     );
   }
-  getUserByName(userData: any): Observable<Users> {
-    return this.http.post<Users>(`${this.url}/search`, userData);
+  getUserByName(userData: any, page: number, size: number): Observable<Users> {
+    return this.http.post<Users>(`${this.url}/search?page=${page}&size=${size}`, userData);
   }
   changeStatus(id: number): Observable<any> {
     return this.http.put(`${this.url}/toggle-status/${id}`, {});
