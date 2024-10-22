@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
@@ -13,7 +13,7 @@ import { Users } from '../utilities/models/user.model';
 export class UserService {
   url = API_URL_USER;
   url2 = API_URL_PROFILES;
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) {}
 
   addUser(userData: any): Observable<any> {
     return this.http.post(`${this.url}/create`, userData);

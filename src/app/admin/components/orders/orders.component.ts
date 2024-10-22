@@ -17,6 +17,7 @@ import {
 import { OrderService } from '../../services/order.service';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { CookieUtil } from 'src/app/shared/utilities/storage-utility';
 
 @Component({
   selector: 'app-orders',
@@ -35,6 +36,7 @@ export class OrdersComponent implements OnInit {
   filteredProducts!: Observable<Product[]>;
   selectedClient: Customer | null = null;
   selectedProduct: Product | null = null;
+  selectedPaymentMethod: number | null = null;
 
   @BlockUI() blockUI!: NgBlockUI;
   public options = {
@@ -54,6 +56,14 @@ export class OrdersComponent implements OnInit {
   ) {
     this.orderForm = this.fb.group({
       client: ['', Validators.required],
+      invoice_id: [
+        0,
+        [
+          Validators.required,
+          Validators.min(1),
+          Validators.pattern(REGEX_ONLY_NUMBERS)
+        ]
+      ],
       items: this.fb.array([this.createItem()])
     });
     this.breakpointObserver
@@ -72,8 +82,12 @@ export class OrdersComponent implements OnInit {
   //autocomplete functions
   private setupAutoComplete(): void {
     this.filteredClients = this.orderForm.get('client')!.valueChanges.pipe(
-      startWith(null),
-      map(value => this._filterClients(value || ''))
+      startWith(''),
+      map(value =>
+        typeof value === 'string'
+          ? this._filterClients(value)
+          : this.customers.slice()
+      )
     );
 
     this.items.controls.forEach((control, index) => {
@@ -124,6 +138,10 @@ export class OrdersComponent implements OnInit {
     return this.products.filter(product =>
       product.name.toLowerCase().includes(filterValue)
     );
+  }
+
+  onClientSelected(client: Customer) {
+    this.selectedClient = client;
   }
 
   //form functions
@@ -234,11 +252,14 @@ export class OrdersComponent implements OnInit {
   }
 
   paymentMethodDialog() {
-    const dialogRef = this.dialog.open(PaymentDialogComponent, {});
+    const dialogRef = this.dialog.open(PaymentDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        //post order and order details redirect
+      if (result !== null) {
+        this.selectedPaymentMethod = result;
+      }
+      if (this.selectedPaymentMethod !== null) {
+        this.createOrder(this.selectedPaymentMethod);
       }
     });
   }
@@ -248,7 +269,7 @@ export class OrdersComponent implements OnInit {
     this.blockUI.start();
     this.service.getCustomers().subscribe({
       next: (response: Customers) => {
-        if (response && response.object) {
+        if (response?.object) {
           this.customers = response.object;
           console.log(this.customers);
         }
@@ -265,7 +286,7 @@ export class OrdersComponent implements OnInit {
     this.blockUI.start();
     this.service.getProducts().subscribe({
       next: (response: Products) => {
-        if (response && response.object) {
+        if (response?.object) {
           this.products = response.object;
           console.log(this.products);
         }
@@ -278,7 +299,50 @@ export class OrdersComponent implements OnInit {
     });
   }
 
-  postOrder() {}
+  createOrder(paymentMethodId: number) {
+    const userId = parseInt(CookieUtil.getValue('user_id') ?? '0', 10);
+    const orderData = {
+      invoiceId: this.orderForm.get('invoice_id')?.value,
+      subtotal: this.getOrderSubtotal(),
+      total: this.getOrderTotal(),
+      totalTaxes: this.getOrderTotal() - this.getOrderSubtotal(),
+      paymentMethodId: paymentMethodId,
+      customer: this.selectedClient?.customerId ?? 0,
+      statusInvoiceId: 1,
+      userId: userId
+    };
 
-  postOrderDetails() {}
+    this.blockUI.start();
+    this.service.sendOrder(orderData).subscribe({
+      next: response => {
+        const invoiceId = response.invoiceId;
+        this.createOrderDetails(invoiceId);
+      },
+      error: error => {
+        this._notifications.error('Error creando la orden.');
+        this.blockUI.stop();
+      }
+    });
+  }
+
+  createOrderDetails(invoiceId: number) {
+    const orderDetails = this.items.controls.map(item => ({
+      name: item.get('product')?.value,
+      price: item.get('price')?.value,
+      amount: item.get('quantity')?.value,
+      invoiceId: invoiceId,
+      detailInvoiceProductsId: invoiceId
+    }));
+
+    this.service.sendOrderDetails(orderDetails).subscribe({
+      next: () => {
+        this._notifications.success('Orden creada exitosamente.');
+        this.blockUI.stop();
+      },
+      error: error => {
+        this._notifications.error('Error enviando los detalles de la orden.');
+        this.blockUI.stop();
+      }
+    });
+  }
 }

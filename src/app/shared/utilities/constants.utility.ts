@@ -13,8 +13,7 @@ export const API_URL_ORDERS = environment.apiOrder;
 export const API_URL_ORDER_DETAIL = environment.apiDetailOrder;
 export const API_URL_ORDER = environment.apiOrder;
 export const API_URL_PAYMENT = environment.apiPayment;
-export const API_URL_REPORTS = environment.apiReport;
-
+export const API_URL_REPORT = environment.apiReport;
 //LOCAL STORAGE
 export const AUTHORITIES = 'authorities';
 export const EXP = 'exp';

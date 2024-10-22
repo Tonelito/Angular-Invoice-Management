@@ -2,5 +2,5 @@ projectKey=invoice-management
 serverUrl=http://localhost:9000
 serverVersion=10.6.0.92116
 dashboardUrl=http://localhost:9000/dashboard?id=invoice-management
-ceTaskId=81649e41-fa38-4da1-9979-e352325a973f
-ceTaskUrl=http://localhost:9000/api/ce/task?id=81649e41-fa38-4da1-9979-e352325a973f
+ceTaskId=39072fc9-a25c-4c0b-89ee-a0f5d33af525
+ceTaskUrl=http://localhost:9000/api/ce/task?id=39072fc9-a25c-4c0b-89ee-a0f5d33af525
