@@ -5,8 +5,7 @@ import { CookieUtil } from './shared/utilities/storage-utility';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
   constructor(

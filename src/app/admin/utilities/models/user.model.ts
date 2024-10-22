@@ -1,4 +1,4 @@
-interface common {
+interface Common {
     email: string;
     fullName: string;
     status: boolean;
@@ -15,7 +15,7 @@ export interface Section {
     fullName: string;
 }
 
-export interface User extends common {
+export interface User extends Common {
     userId: number;
 }
 

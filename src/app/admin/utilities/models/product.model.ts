@@ -1,4 +1,4 @@
-interface common {
+interface Common {
     code: number;
     name: string;
     description: string;
@@ -16,7 +16,7 @@ export interface ProductResponse {
     object: Product;
 }
 
-export interface Product extends common {
+export interface Product extends Common {
     productsId: number;
 }
 

@@ -3,6 +3,10 @@
     <h1>{{ 'ORDERS.TITLE' | translate }}</h1>
     <div class="client">
       <mat-form-field>
+        <mat-label> ID </mat-label>
+        <input type="number" matInput formControlName="invoice_id" />
+      </mat-form-field>
+      <mat-form-field>
         <mat-label>{{ 'ORDERS.CLIENT' | translate }}</mat-label>
         <input
           type="text"
@@ -11,10 +15,14 @@
           [matAutocomplete]="clientAuto"
           [value]="selectedClient?.name"
         />
-        <mat-autocomplete autoActiveFirstOption #clientAuto="matAutocomplete">
+        <mat-autocomplete
+          autoActiveFirstOption
+          #clientAuto="matAutocomplete"
+          (optionSelected)="onClientSelected($event.option.value)"
+        >
           <mat-option
             *ngFor="let option of filteredClients | async"
-            [value]="option.name"
+            [value]="option"
           >
             {{ option.name }}
           </mat-option>

@@ -1,4 +1,4 @@
-interface common {
+interface Common {
     name: string;
     dpi: string;
     passport: string;
@@ -12,7 +12,7 @@ export interface ClientResponse {
     object: Client;
 }
 
-export interface Client extends common {
+export interface Client extends Common {
     customerId: number;
 }
 

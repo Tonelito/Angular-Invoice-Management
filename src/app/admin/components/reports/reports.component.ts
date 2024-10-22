@@ -21,13 +21,7 @@ export class ReportsComponent {
   maxDate: Date;
 
   //table
-  displayedColumns: string[] = [
-    'noOrdered',
-    'customerId',
-    'amount',
-    'taxes',
-    'total'
-  ];
+  displayedColumns: string[] = ['noOrdered', 'nameClient', 'taxes', 'total'];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   tableData: any[] = [];
   totalElements = 0;
@@ -95,11 +89,10 @@ export class ReportsComponent {
   }
 
   updateTableData(response: any) {
-    this.tableData = response.object.object.map((entry: any) => ({
+    this.tableData = response.object.map((entry: any) => ({
       ...entry,
       noOrdered: entry.noOrdered,
-      customerId: entry.customerId,
-      amount: entry.amount,
+      nameClient: entry.nameClient,
       taxes: entry.taxes,
       total: entry.total,
       formattedRequest: formatRequestData(entry.request)

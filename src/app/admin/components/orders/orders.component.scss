@@ -26,6 +26,8 @@
       border-radius: 20px;
       .client {
         width: 100%;
+        display: flex;
+        gap: 15px;
 
         mat-form-field {
           width: 45% !important;
@@ -37,6 +39,10 @@
           @media (max-width: 800px) {
             width: 100% !important;
           }
+        }
+        @media (max-width: 800px) {
+          display: flex;
+          flex-direction: column;
         }
       }
 

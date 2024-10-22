@@ -38,6 +38,6 @@ export class OrderService {
   }
 
   sendOrder(OrderDetails: any): Observable<any> {
-    return this.http.post<any>(`${this.order_url}/create`, OrderDetails);
+    return this.http.post<any>(`${this.order_url}`, OrderDetails);
   }
 }

@@ -1,4 +1,5 @@
 $altura-formulario: 83vh;
+
 .client-container {
   display: flex;
   padding: 25px;
@@ -31,10 +32,6 @@ $altura-formulario: 83vh;
           width: 100%;
           gap: 10px;
         }
-      }
-
-      @media (max-width: 900px) {
-        width: 100%;
       }
 
       mat-form-field {
@@ -81,6 +78,8 @@ $altura-formulario: 83vh;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 max-width: 200px;
+                font-weight: 500;
+                margin: 0;
               }
 
               .status-circle {
@@ -103,11 +102,6 @@ $altura-formulario: 83vh;
               .client-text {
                 display: flex;
                 flex-direction: column;
-              }
-
-              p {
-                font-weight: 500;
-                margin: 0;
               }
             }
 
@@ -135,6 +129,10 @@ $altura-formulario: 83vh;
             }
           }
         }
+      }
+
+      @media (max-width: 900px) {
+        width: 100%;
       }
     }
 

@@ -61,7 +61,7 @@
       "CHANGE_PASSWORD_LABEL": "Change Password",
       "VERIFICATION_CODE_LABEL": "Verification Code",
       "VERIFY_CODE_LABEL": "Verify Code",
-      "VERIFICATION_CODE_PLACEHOLDER": "Enter the verification code",
+      "VERIFY_CODE_PLACEHOLDER": "Enter the verification code",
       "NEW_PASSWORD_LABEL": "New Password",
       "NEW_PASSWORD_PLACEHOLDER": "Enter your new password",
       "NEW_PASSWORD_REQUIRED": "Password must be at least 8 characters long (1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character)",

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LoginService } from '../../security/services/login.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, tap } from 'rxjs';
 import { CookieUtil } from '../utilities/storage-utility';
 import { DecodeTokenService } from './decode-token.service';
 import * as CONSTS from '../utilities/constants.utility';
@@ -21,8 +20,9 @@ export class AuthService {
 
   login(loginData: any): Observable<any> {
     return this.loginService.login(loginData).pipe(
-      tap(
-        (response: any) => {
+      tap({
+        next: (response: any) => {
+          // Updated to use the new object signature
           const token = response?.token;
 
           if (!token) {
@@ -45,10 +45,10 @@ export class AuthService {
           this.setToken(token);
           this.router.navigate(['/admin/home']);
         },
-        error => {
+        error: error => {
           console.log('Login error:', error);
         }
-      )
+      })
     );
   }
 

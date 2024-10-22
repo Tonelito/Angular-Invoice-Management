@@ -61,7 +61,7 @@
       "CHANGE_PASSWORD_LABEL": "Cambiar Contraseña",
       "VERIFICATION_CODE_LABEL": "Código de Verificación",
       "VERIFY_CODE_LABEL": "Verificar Código",
-      "VERIFICATION_CODE_PLACEHOLDER": "Ingresa el código de verificación",
+      "VERIFY_CODE_PLACEHOLDER": "Ingresa el código de verificación",
       "NEW_PASSWORD_LABEL": "Nueva Contraseña",
       "NEW_PASSWORD_PLACEHOLDER": "Ingresa tu nueva contraseña",
       "NEW_PASSWORD_REQUIRED": "contraseña de 8 caracteres como mínimo(1 mayúscula, 1 minúscula, 1 número y 1 carácter especial)",

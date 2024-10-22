@@ -1,5 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-payment-dialog',
@@ -7,13 +7,15 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./payment-dialog.component.scss']
 })
 export class PaymentDialogComponent {
+  selectedPaymentMethod: number = 1;
+
   constructor(public dialogRef: MatDialogRef<PaymentDialogComponent>) {}
 
   onConfirm(): void {
-    this.dialogRef.close(true);
+    this.dialogRef.close(this.selectedPaymentMethod);
   }
 
   onCancel(): void {
-    this.dialogRef.close(false);
+    this.dialogRef.close(null);
   }
 }

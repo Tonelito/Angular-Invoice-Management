@@ -1,7 +1,7 @@
 <h1>Select client payment method</h1>
 <mat-label>{{ 'ORDERS.PAYMENT' | translate }}</mat-label>
 <mat-form-field>
-  <mat-select [value]="1">
+  <mat-select [(value)]="selectedPaymentMethod">
     <mat-option [value]="1">
       {{ 'ORDERS.CASH' | translate }}
     </mat-option>
