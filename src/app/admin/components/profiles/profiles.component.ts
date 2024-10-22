@@ -45,6 +45,8 @@ export class ProfilesComponent implements OnInit {
   pageSize = 10;
   currentPage = 0;
   totalProfiles = 0;
+  searchForm: FormGroup;
+
 
   constructor(
     private readonly _notifications: NotificationsService,
@@ -56,6 +58,9 @@ export class ProfilesComponent implements OnInit {
     this.profileForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern(REGEX_NAME)]],
       description: ['', [Validators.required, Validators.pattern(REGEX_DESCRIPTION)]]
+    });
+    this.searchForm = this.fb.group({
+      search: ['', []],
     });
   }
 
@@ -70,28 +75,31 @@ export class ProfilesComponent implements OnInit {
     this.fetchProfiles();
   }
 
-  fetchProfileDetails(profileId: number): void {
-    this.profilesService.getProfile(profileId).subscribe({
-      next: response => {
-        this.selectedProfileId = response.object.profileId;
-        this.profileForm.patchValue({
-          name: response.object.name,
-          description: response.object.description,
-          status: response.object.status
-        });
-        this.selectedRoles = response.object.rolsId.map(role => role.rolId);
-        this.isEditing = true;
-        this.profileStatus = response.object.status;
-        this.profileForm.markAsPristine();
-        this.fetchProfiles();
-        console.log('status:', this.profileStatus);
-        console.log('Profile details:', response);
+  searchProfiles(): void {
+    const search = this.searchForm.value.search?.trim();
+    if (search) {
+      this.fetchProfileByName();
+    } else {
+      this.fetchProfiles();
+    }
+  }
+
+  fetchProfileByName(): void {
+    const search = { name: this.searchForm.value.search };
+    this.blockUI.start();
+    this.profilesService.getProfileByName(search, this.currentPage, this.pageSize).subscribe({
+      next: profiles => {
+        if (profiles.object) {
+          this.profiles = profiles.object;
+          this.filteredProfiles = new MatTableDataSource(this.profiles);
+          this.currentPage = profiles.currentPage;
+          this.totalProfiles = profiles.totalElements;
+        }
+        this.blockUI.stop();
       },
       error: error => {
-        console.error(
-          this.translate.instant('PROFILES.ERRORS.FETCH_PROFILE'),
-          error
-        );
+        console.error('Error fetching profiles:', error);
+        this.blockUI.stop();
       }
     });
   }
@@ -111,6 +119,31 @@ export class ProfilesComponent implements OnInit {
       error: error => {
         console.error('Error fetching profiles:', error);
         this.blockUI.stop();
+      }
+    });
+  }
+
+
+  fetchProfileDetails(profileId: number): void {
+    this.profilesService.getProfile(profileId).subscribe({
+      next: response => {
+        this.selectedProfileId = response.object.profileId;
+        this.profileForm.patchValue({
+          name: response.object.name,
+          description: response.object.description,
+          status: response.object.status
+        });
+        this.selectedRoles = response.object.rolsId.map(role => role.rolId);
+        this.isEditing = true;
+        this.profileStatus = response.object.status;
+        this.profileForm.markAsPristine();
+        this.fetchProfiles();
+      },
+      error: error => {
+        console.error(
+          this.translate.instant('PROFILES.ERRORS.FETCH_PROFILE'),
+          error
+        );
       }
     });
   }
@@ -221,9 +254,9 @@ export class ProfilesComponent implements OnInit {
           this.translate.instant('PROFILES.NOTIFICATIONS.STATUS_SUCCESS', ''),
           ''
         );
-        this.profileForm.reset();
         this.selectedRoles = [];
         this.fetchProfiles();
+        this.fetchProfileDetails(profileId);
       },
       error: error => {
         console.log(profileId);
@@ -255,8 +288,9 @@ export class ProfilesComponent implements OnInit {
           profileName: profile.name
         })
       }
-    });
 
+    });
+    this.profileForm.reset();
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.deleteProfile(profile.profileId);
@@ -311,16 +345,6 @@ export class ProfilesComponent implements OnInit {
     }
 
     this.profileForm.markAsDirty();
-  }
-
-  searchProfiles(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.searchQuery = filterValue.trim().toLowerCase();
-    this.filteredProfiles.filter = this.searchQuery;
-
-    if (this.filteredProfiles.paginator) {
-      this.filteredProfiles.paginator.firstPage();
-    }
   }
 
   cleanDescription(description: string): string {

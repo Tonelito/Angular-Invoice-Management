@@ -9,6 +9,7 @@ import {
 import {
   CreateProfile,
   Profile,
+  ProfileName,
   ProfileResponse,
   Profiles,
   Roles
@@ -24,29 +25,29 @@ export class ProfilesService {
 
   constructor(private readonly http: HttpClient) { }
 
-  getProfileNames(nameSearchDto: string): Observable<Profiles> {
-    return this.http.get<Profiles>(`${this.profile_url}/show-by-name/${nameSearchDto}`);
+  getProfileByName(profileData: any, page: number, size: number): Observable<ProfileName> {
+    return this.http.post<ProfileName>(`${this.profile_url}/show-by-name?page=${page}&size=${size}`, profileData);
   }
 
   getRoles(): Observable<Roles> {
-    return this.http.get<Roles>(`${this.role_url}/show-all`);
+    return this.http.get<Roles>(`${ this.role_url }/show-all`);
   }
 
   getProfiles(page: number = 0, pageSize: number = 10): Observable<Profiles> {
     return this.http.get<Profiles>(
-      `${this.profile_url}/show-all?page=${page}&size=${pageSize}`
+      `${ this.profile_url }/show-all?page=${page}&size=${ pageSize }`
     );
   }
 
   getProfile(id: number): Observable<ProfileResponse> {
     return this.http.get<ProfileResponse>(
-      `${this.profile_url}/show-by-id/${id}`
+      `${ this.profile_url }/show-by-id/${id}`
     );
   }
 
   postProfile(profileData: CreateProfile): Observable<ProfileResponse> {
     return this.http.post<ProfileResponse>(
-      `${this.profile_url}/create`,
+      `${ this.profile_url }/create`,
       profileData
     );
   }
@@ -56,20 +57,20 @@ export class ProfilesService {
     profileData: CreateProfile
   ): Observable<ProfileResponse> {
     return this.http.put<ProfileResponse>(
-      `${this.profile_url}/update/${id}`,
+      `${ this.profile_url }/update/${ id }`,
       profileData
     );
   }
 
   changeStatus(id: number): Observable<Profile> {
     return this.http.patch<Profile>(
-      `${this.profile_url}/status-change/${id}`,
+      `${ this.profile_url }/status-change/${id}`,
       {}
     );
   }
 
   deleteProfileDetails(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.profileDetails_url}/delete/${id}`);
+    return this.http.delete<void>(`${ this.profileDetails_url }/delete/${id}`);
   }
 
   deleteProfile(id: number): Observable<void> {

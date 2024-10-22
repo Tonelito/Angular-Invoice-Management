@@ -4,21 +4,20 @@
       <div class="profiles-column">
         <!-- Searchbar -->
         <div class="search">
-          <form>
+          <form [formGroup]="searchForm">
             <mat-form-field appearance="outline">
               <mat-label>{{ 'PROFILES.SEARCH' | translate }}</mat-label>
-              <input matInput placeholder="{{ 'PROFILES.SEARCH_PLACEHOLDER' | translate }}" />
+              <input matInput placeholder="{{ 'PROFILES.SEARCH_PLACEHOLDER' | translate }}" formControlName="search" />
 
-              <button mat-icon-button matSuffix>
+              <button mat-icon-button matSuffix (click)="searchProfiles()">
                 <mat-icon>search</mat-icon>
               </button>
             </mat-form-field>
           </form>
         </div>
-        <div *ngIf="filteredProfiles && filteredProfiles.filteredData.length === 0"></div>
         <div class="profiles-list-container">
           <!-- Profiles List -->
-          <div class="profiles-list">
+          <div class="profiles-list" *ngIf="filteredProfiles && filteredProfiles.filteredData.length > 0">
             <!-- Item Profile -->
             <div class="profile-item" *ngFor="let profile of filteredProfiles.filteredData">
               <!-- Profile Info -->
@@ -54,7 +53,7 @@
             <h1>{{ 'PROFILES.FORM_TITLE' | translate }}</h1>
             <button mat-mini-fab color="primary"
               matTooltip="{{ profileStatus ? ('USERS.TOOLTIP.DISABLE_USER' | translate) : ('USERS.TOOLTIP.ENABLE_USER' | translate) }}"
-              title="Deshabilitar Usuario" (click)="changeStatus(selectedProfileId)" *ngIf="isEditing">
+              (click)="changeStatus(selectedProfileId)" *ngIf="isEditing">
               <mat-icon>{{ profileStatus ? 'person_off' : 'person_check' }}</mat-icon>
             </button>
           </div>
@@ -65,7 +64,8 @@
                 <mat-label>{{ 'PROFILES.NAME' | translate }}</mat-label>
                 <input matInput formControlName="name" [errorStateMatcher]="matcher" />
                 <!-- Required Name -->
-                <mat-error *ngIf="profileForm.get('name')?.hasError('required')">
+                <mat-error
+                  *ngIf="profileForm.get('name')?.errors && (profileForm.get('name')?.touched || profileForm.get('name')?.dirty)">
                   {{ 'PROFILES.ERRORS.REQUIRED_NAME' | translate }}
                 </mat-error>
               </mat-form-field>
@@ -75,7 +75,8 @@
                 <mat-label>{{ 'PROFILES.DESCRIPTION' | translate }}</mat-label>
                 <input matInput formControlName="description" [errorStateMatcher]="matcher" />
                 <!-- Required Description -->
-                <mat-error *ngIf="profileForm.get('description')?.hasError('required')">
+                <mat-error
+                  *ngIf="profileForm.get('description')?.hasError('required') && (profileForm.get('description')?.touched || profileForm.get('description')?.dirty)">
                   {{ 'PROFILES.ERRORS.REQUIRED_DESCRIPTION' | translate }}
                 </mat-error>
               </mat-form-field>

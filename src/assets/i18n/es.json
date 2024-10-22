@@ -57,14 +57,32 @@
     "STEP2": {
       "CHANGE_PASSWORD_LABEL": "Cambiar Contraseña",
       "VERIFICATION_CODE_LABEL": "Código de Verificación",
+      "VERIFY_CODE_LABEL": "Verificar Código",
       "VERIFICATION_CODE_PLACEHOLDER": "Ingresa el código de verificación",
       "NEW_PASSWORD_LABEL": "Nueva Contraseña",
       "NEW_PASSWORD_PLACEHOLDER": "Ingresa tu nueva contraseña",
-      "NEW_PASSWORD_REQUIRED": "La nueva contraseña es obligatoria",
+      "NEW_PASSWORD_REQUIRED": "contraseña de 8 caracteres como mínimo(1 mayúscula, 1 minúscula, 1 número y 1 carácter especial)",
       "CONFIRM_PASSWORD_LABEL": "Confirmar Contraseña",
       "CONFIRM_PASSWORD_PLACEHOLDER": "Confirma tu nueva contraseña",
-      "CONFIRM_PASSWORD_REQUIRED": "Por favor, confirma tu nueva contraseña",
+      "CONFIRM_PASSWORD_REQUIRED": "Password must be at least 8 characters long (1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character)",
       "PASSWORDS_DO_NOT_MATCH": "Las contraseñas no coinciden"
+    }
+  },
+  "PASSWORD_CHANGE": {
+    "TITLE": "Cambiar Contraseña",
+    "CURRENT_PASSWORD_LABEL": "Contraseña Actual",
+    "CURRENT_PASSWORD_PLACEHOLDER": "Contraseña Actual",
+    "CURRENT_PASSWORD_REQUIRED": "La contraseña actual es obligatoria",
+    "NEW_PASSWORD_LABEL": "Nueva Contraseña",
+    "NEW_PASSWORD_PLACEHOLDER": "Nueva Contraseña",
+    "NEW_PASSWORD_REQUIRED": "Password must be at least 8 characters long (1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character)",
+    "CONFIRM_PASSWORD_LABEL": "Confirmar Contraseña",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirmar Contraseña",
+    "CONFIRM_PASSWORD_REQUIRED": "Password must be at least 8 characters long (1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character)",
+    "PASSWORDS_DO_NOT_MATCH": "Las contraseñas no coinciden",
+    "BUTTONS": {
+      "CANCEL": "Cancelar",
+      "ACCEPT": "Aceptar"
     }
   },
   "AUDIT": {
@@ -280,6 +298,7 @@
     "STATUS_TRUE": "Activo",
     "STATUS_FALSE": "Inactivo",
     "SAVE": "Guardar",
+    "STATUS": "Estado",
     "ERRORS": {
       "REQUIRED_NAME": "El nombre del producto es requerido",
       "REQUIRED_DESCRIPTION": "La descripción del producto es requerida",
@@ -314,7 +333,7 @@
     },
     "DIALOG": {
       "TITLE": "Eliminar Producto",
-      "MESSAGE": "¿Estás seguro de que deseas eliminar el producto \"{{ productName }}\"?"
+      "MESSAGE": "¿Estás seguro de que deseas eliminar el producto?"
     },
     "FORM": {
       "EDIT_PRODUCT": "Editar Producto",

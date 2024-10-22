@@ -30,6 +30,15 @@ export interface Profiles {
   };
 }
 
+export interface ProfileName {
+  name: string;
+  object: Profile[];
+  totalElements: number;
+  totalPages: number;
+  currentPage: number;
+  pageSize: number;
+}
+
 export interface ProfileWithRoles extends Profile {
   rolsId: Role[];
 }

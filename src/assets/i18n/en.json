@@ -57,14 +57,32 @@
     "STEP2": {
       "CHANGE_PASSWORD_LABEL": "Change Password",
       "VERIFICATION_CODE_LABEL": "Verification Code",
+      "VERIFY_CODE_LABEL": "Verify Code",
       "VERIFICATION_CODE_PLACEHOLDER": "Enter the verification code",
       "NEW_PASSWORD_LABEL": "New Password",
       "NEW_PASSWORD_PLACEHOLDER": "Enter your new password",
-      "NEW_PASSWORD_REQUIRED": "New password is required",
+      "NEW_PASSWORD_REQUIRED": "Password must be at least 8 characters long (1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character)",
       "CONFIRM_PASSWORD_LABEL": "Confirm Password",
       "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm your new password",
-      "CONFIRM_PASSWORD_REQUIRED": "Please confirm your new password",
+      "CONFIRM_PASSWORD_REQUIRED": "Password must be at least 8 characters long (1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character)",
       "PASSWORDS_DO_NOT_MATCH": "Passwords do not match"
+    }
+  },
+  "PASSWORD_CHANGE": {
+    "TITLE": "Change Password",
+    "CURRENT_PASSWORD_LABEL": "Current Password",
+    "CURRENT_PASSWORD_PLACEHOLDER": "Current Password",
+    "CURRENT_PASSWORD_REQUIRED": "Current password is required",
+    "NEW_PASSWORD_LABEL": "New Password",
+    "NEW_PASSWORD_PLACEHOLDER": "New Password",
+    "NEW_PASSWORD_REQUIRED": "New password is required",
+    "CONFIRM_PASSWORD_LABEL": "Confirm Password",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm Password",
+    "CONFIRM_PASSWORD_REQUIRED": "Confirm password is required",
+    "PASSWORDS_DO_NOT_MATCH": "Passwords do not match",
+    "BUTTONS": {
+      "CANCEL": "Cancel",
+      "ACCEPT": "Accept"
     }
   },
   "AUDIT": {
@@ -157,6 +175,7 @@
     "FULL_NAME": "Full Name",
     "PROFILE": "Profile",
     "SAVE": "Save",
+    "USER": "User",
     "ERRORS": {
       "REQUIRED_EMAIL": "User email is required",
       "REQUIRED_FULL_NAME": "Full name is required",
@@ -254,6 +273,7 @@
       "PASSPORT": "Passport"
     },
     "TOOLTIP": {
+      "ENABLE_CUSTOMER": "Enable Customer",
       "DISABLE_CUSTOMER": "Disable Customer"
     },
     "ACTIONS": {
@@ -282,6 +302,7 @@
     "STATUS_TRUE": "Active",
     "STATUS_FALSE": "Inactive",
     "SAVE": "Save",
+    "STATUS": "Status",
     "ERRORS": {
       "REQUIRED_NAME": "Product name is required",
       "REQUIRED_DESCRIPTION": "Product description is required",
@@ -316,7 +337,7 @@
     },
     "DIALOG": {
       "TITLE": "Delete Product",
-      "MESSAGE": "Are you sure you want to delete the product \"{{ productName }}\"?"
+      "MESSAGE": "Are you sure you want to delete the product?"
     },
     "FORM": {
       "EDIT_PRODUCT": "Edit Product",

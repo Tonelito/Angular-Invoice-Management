@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from 'src/app/shared/utilities/error.utility';
-import { User, Users } from '../../utilities/models/user.model';
+import { User } from '../../utilities/models/user.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ProfilesService } from '../../services/profiles.service';
@@ -36,7 +36,7 @@ export class UsersComponent implements OnInit {
   filteredProfiles: any[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   searchQuery = '';
-  pageSize = 9;
+  pageSize = 11;
   currentPage = 0;
   totalUsers = 0;
   isEditing: boolean = false;
@@ -80,7 +80,6 @@ export class UsersComponent implements OnInit {
   fetchUserDetails(userId: number): void {
     this.userService.getUserId(userId).subscribe({
       next: response => {
-        console.log('Usuario obtenido:', response);
         this.selectedUserId = response.userId;
         this.userForm.patchValue({
           email: response.email,
@@ -108,7 +107,6 @@ export class UsersComponent implements OnInit {
     this.userService.getUsers(this.currentPage, this.pageSize).subscribe({
       next: users => {
         if (users.object) {
-          console.log('Users loaded:', users);
           this.users = users.object;
           this.filteredUsers = new MatTableDataSource(this.users);
           this.currentPage = users.currentPage;
@@ -124,14 +122,11 @@ export class UsersComponent implements OnInit {
   }
 
   fetchUserByName(): void {
-    const search = {
-      fullName: this.searchForm.value.search,
-    };
+    const search = { fullName: this.searchForm.value.search, };
     this.blockUI.start();
-    this.userService.getUserByName(search).subscribe({
+    this.userService.getUserByName(search, this.currentPage, this.pageSize).subscribe({
       next: users => {
         if (users.object) {
-          console.log('Users loaded:', users);
           this.users = users.object;
           this.filteredUsers = new MatTableDataSource(this.users);
           this.currentPage = users.currentPage;
@@ -242,7 +237,7 @@ export class UsersComponent implements OnInit {
           this.translate.instant('USERS.NOTIFICATIONS.UPDATE_SUCCESS'), ''
         );
         this.fetchUsers();
-        this.userForm.reset();
+        this.fetchUserDetails(userId);
       },
       error: error => {
         console.error(
